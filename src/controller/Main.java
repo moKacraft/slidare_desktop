@@ -14,7 +14,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -24,10 +29,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import model.DragDropTracking;
 import org.jnativehook.NativeHookException;
 import service.ConfigManager;
 import service.ServiceFactory;
+import utils.security.encryption;
 
 public class Main extends Application
 {
@@ -71,7 +80,7 @@ public class Main extends Application
                     System.out.println("Receving File");
                     String transferId = (String) args[2];
                     try {
-                        FileOutputStream fos = new FileOutputStream((String) args[0]);
+                        FileOutputStream fos = new FileOutputStream((String) args[3]);
                         java.net.Socket sock = new java.net.Socket("54.224.110.79", (int)args[1]);
                         InputStream is = sock.getInputStream();
                         byte[] buffer = new byte[4096];
@@ -84,8 +93,26 @@ public class Main extends Application
                         is.close();
                         sock.close();
                         socket.emit("transfer finished", transferId);
+                        
+                        encryption _crypt = new  encryption();
+                        
+                        _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], (byte[]) args[6], (byte[]) args[7], (String) args[8]);
                     } catch (IOException ex) {
                         Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoSuchAlgorithmException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (NoSuchPaddingException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidKeySpecException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidAlgorithmParameterException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidKeyException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (BadPaddingException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IllegalBlockSizeException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });

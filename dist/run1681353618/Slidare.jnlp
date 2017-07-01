@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="Slidare.jnlp">
+  <information>
+    <title>Slidare</title>
+    <vendor>Flavien MAILLOT</vendor>
+    <description>Sharing anywhere, anytime
+Flavien MAILLOT :
+www.flavien-maillot.com</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="Slidare_Desktop.jar" size="261549" download="eager" />
+    <jar href="lib\commons-codec-1.10.jar" size="284184" download="eager" />
+    <jar href="lib\engine.io-client-0.8.3.jar" size="105080" download="eager" />
+    <jar href="lib\javaee-api-7.0.jar" size="1930692" download="eager" />
+    <jar href="lib\jnativehook-2.0.2.jar" size="194982" download="eager" />
+    <jar href="lib\json-20090211.jar" size="45944" download="eager" />
+    <jar href="lib\json-simple-1.1.1.jar" size="23737" download="eager" />
+    <jar href="lib\okhttp-3.8.0.jar" size="398107" download="eager" />
+    <jar href="lib\okio-1.13.0.jar" size="81811" download="eager" />
+    <jar href="lib\socket.io-client-0.8.3.jar" size="61615" download="eager" />
+    <jar href="lib\tyrus-standalone-client-1.9.jar" size="2028010" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="Slidare" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="controller.Main"  name="Slidare" />
+  <update check="background"/>
+</jnlp>
