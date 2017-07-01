@@ -69,11 +69,12 @@ public void setPopUpType(Boolean state)
     {
         this.setSize(120, 120 );
         this.setLocation(300 ,150 * numberOfFrame);
-         this.setVisible(true);
-        this.setAlwaysOnTop(true);
+      
         this.toFront();
       this.setUndecorated(true);
         this.setShape(new RoundRectangle2D.Double(10, 10, 100, 100, 50, 50));
+           this.setVisible(true);
+        this.setAlwaysOnTop(true);
    // this.setSize(300, 200);
    //this.setVisible(true);
      
