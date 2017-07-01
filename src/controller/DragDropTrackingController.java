@@ -5,12 +5,9 @@
  */
 package controller;
 
-import java.awt.Desktop;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -18,7 +15,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
-import javax.management.Notification;
 import model.TrackingInfo;
 import view.DragDropTestFrame;
 
@@ -89,7 +85,6 @@ public class DragDropTrackingController extends Controller implements Initializa
             if (changeActivationButtonKey == true)
             {
                 activationButton.setText(event.getCode().getName());
-                //keyName = event.getCode().getName();
                 TrackingInfo.keyName = event.getCode().getName();;
                 changeActivationButtonKey = false;
             }

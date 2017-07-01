@@ -19,6 +19,7 @@ private static final long serialVersionUID = 1L;
 private JLabel myLabel;
 private Boolean isMain = false;
 public static int numberOfFrame = 0;
+public  int numberOfContact = 0;
    
 
 public DragDropTestFrame() 
@@ -49,17 +50,29 @@ public DragDropTestFrame()
 
 }
 
+public void visible(Boolean state)
+{
+    this.setVisible(state);
+    
+}
+
 public void setMessage(String text)
 {
     myLabel.setText(text);
 }
 
+public void setNumberOfContact(int nb)
+{
+    
+    numberOfContact = nb;
+    numberOfFrame = nb;
+}
 
 public void setPopUpType(Boolean state)
 {
     if (state == true)
     {
-        numberOfFrame = 0;
+      
         this.setSize(250, 250);
         this.toFront();
         this.setAlwaysOnTop(true);
@@ -78,9 +91,6 @@ public void setPopUpType(Boolean state)
    // this.setSize(300, 200);
    //this.setVisible(true);
      
-        numberOfFrame++;
-        if (numberOfFrame > 2)
-            numberOfFrame = 0;
        
     }
         

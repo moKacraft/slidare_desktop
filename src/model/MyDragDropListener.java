@@ -6,17 +6,11 @@
 package model;
 
 import controller.Main;
-import io.socket.client.IO;
-import view.DragDropTestFrame;
 import java.awt.dnd.*;
-import java.awt.*;
 import java.io.File;
 import java.util.List;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.net.URISyntaxException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

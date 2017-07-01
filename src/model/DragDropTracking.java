@@ -30,7 +30,8 @@ public class DragDropTracking
     private  List<DragDropTestFrame> listFrame;
     private boolean PopupEntered = true;
     public static DragDropTracking dragDropTracking;
-    private boolean showPopup = false;  
+    private boolean showPopup = false;
+    private int numberOfContact = 0;
        
     
     public DragDropTracking() throws NativeHookException
@@ -57,6 +58,11 @@ public class DragDropTracking
         // Add the appropriate listeners.
         GlobalScreen.addNativeMouseListener(mouseListener);
         GlobalScreen.addNativeMouseMotionListener(mouseListener);
+        CreatContactPopup("Johny");
+        CreatContactPopup("Paul");
+        CreatContactPopup("harry");
+         CreatContactPopup("Lol");
+          CreatContactPopup("pop");
         //System.out.println("azea");
         
     }
@@ -76,7 +82,18 @@ public class DragDropTracking
      dragDropFrame.setVisible(false);
    }
   
-   
+   public void CreatContactPopup(String name)
+   {
+        DragDropTestFrame tmp;
+        listFrame.add(tmp = new DragDropTestFrame());
+        tmp.setPopUpType(false);
+        tmp.setMessage(name);
+        tmp.setVisible(false);
+        ++numberOfContact; 
+           tmp.setNumberOfContact(numberOfContact);
+         PopupEntered = true;
+        
+   }
     
  
     
@@ -87,18 +104,13 @@ public class DragDropTracking
        
         if (PopupEntered == true)
         {
-            System.out.println("---*-**--*--*-0");
-        showPopup = true;
-        DragDropTestFrame tmp;
-        listFrame.add(tmp = new DragDropTestFrame());
-        tmp.setPopUpType(false);
-        tmp.setMessage("Paul");
-        listFrame.add(tmp = new DragDropTestFrame());
-        tmp.setPopUpType(false);
-        tmp.setMessage("Bob");
-        listFrame.add(tmp = new DragDropTestFrame());
-        tmp.setPopUpType(false);
-        tmp.setMessage("John");
+         int cnt = 0;
+          while (cnt < numberOfContact)
+          {
+            listFrame.get(cnt).visible(true);
+            showPopup = false;
+            ++cnt;
+          }
              PopupEntered = false;
    
         }
@@ -109,17 +121,22 @@ public class DragDropTracking
     { 
        
         
-        if (showPopup == true && listFrame != null && listFrame.isEmpty() == false)
+        if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false)
         {
           PopupEntered = true;
-   
+          int cnt = 0;
+          while (cnt < numberOfContact)
+          {
+            listFrame.get(cnt).visible(false);
             showPopup = false;
-         (listFrame.get(0)).dispose();
+            ++cnt;
+          }
+         //(listFrame.get(0)).dispose();
          
-         (listFrame.get(1)).dispose();
-         (listFrame.get(2)).dispose();
-         listFrame.clear();
-         listFrame.removeAll(listFrame);
+         //(listFrame.get(1)).dispose();
+         //(listFrame.get(2)).dispose();
+         //listFrame.clear();
+         //listFrame.removeAll(listFrame);
    
         }
     }
