@@ -133,8 +133,7 @@ public class EventlogController extends Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            //        System.out.println(images.length);
+//        System.out.println(images.length);
 //        System.err.println("TESTTESTESTETSTESTESTTESTEST");
 //        String test = url.toString();
 //        int x = test.lastIndexOf('/');
@@ -142,57 +141,7 @@ public class EventlogController extends Controller implements Initializable {
 //        if ("sample.fxml".equals(fullapppath)) {
 //            System.err.println("ARG");
 //            return ;
-//        }
-           socket = IO.socket("http://54.224.110.79:8080");
-            
-            socket.on("server ready", new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    System.out.println("Server ready");
-                    Socket sock;
-                    try {
-                        sock = new Socket("54.224.110.79", (int)args[0]);
-                        OutputStream is = sock.getOutputStream();
-                        FileInputStream fis = new FileInputStream("/Users/julienathomas/nc");
-                        BufferedInputStream bis = new BufferedInputStream(fis);
-                        byte[] buffer = new byte[4096];
-                        int ret;
-                        while ((ret = fis.read(buffer)) > 0) {
-                            is.write(buffer, 0, ret);
-                        }
-                        fis.close();
-                        bis.close();
-                        is.close();
-                        sock.close();
-                    } catch (IOException ex) {
-                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            }).on("sophie@slidare.com", new Emitter.Listener() {
-                @Override
-                public void call(Object... args) {
-                    System.out.println("Receving File");
-                    String transferId = (String) args[2];
-                    try {
-                        FileOutputStream fos = new FileOutputStream((String) args[0]);
-                        Socket sock = new Socket("54.224.110.79", (int)args[1]);
-                        InputStream is = sock.getInputStream();
-                        byte[] buffer = new byte[4096];
-                        int ret;
-                        while ((ret = is.read(buffer)) > 0) {
-                            fos.write(buffer, 0, ret);
-                        }
-                        System.out.println("Transfer Finished");
-                        fos.close();
-                        is.close();
-                        sock.close();
-                        socket.emit("transfer finished", transferId);
-                    } catch (IOException ex) {
-                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-            socket.connect();
+//        }       
 //        
 //        try {
 //            socket = IO.socket("http://52.33.232.161:8080");
@@ -308,9 +257,6 @@ public class EventlogController extends Controller implements Initializable {
 //                }
 //            }
 //        }).start();
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     @FXML
