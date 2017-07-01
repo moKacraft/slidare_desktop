@@ -96,6 +96,8 @@ public class Main extends Application
                         
                         encryption _crypt = new  encryption();
                         
+                        System.out.println((byte[]) args[6]);
+                        System.out.println((byte[]) args[7]);
                         _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], (byte[]) args[6], (byte[]) args[7], (String) args[8]);
                     } catch (IOException ex) {
                         Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
