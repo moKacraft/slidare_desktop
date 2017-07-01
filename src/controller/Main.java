@@ -5,7 +5,16 @@
  */
 package controller;
 
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -23,12 +32,69 @@ import service.ServiceFactory;
 public class Main extends Application
 {
 	public static Stage parentWindow;
+        public static Socket socket;
 	
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args)
 	{
+            try {
+               socket = IO.socket("http://54.224.110.79:8080");
+               System.out.println("socket init");
+               socket.on("server ready", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("Server ready");
+                    java.net.Socket sock;
+                    try {
+                        sock = new java.net.Socket("54.224.110.79", (int)args[0]);
+                        OutputStream is = sock.getOutputStream();
+                        FileInputStream fis = new FileInputStream((String)args[1]);
+                        BufferedInputStream bis = new BufferedInputStream(fis);
+                        byte[] buffer = new byte[4096];
+                        int ret;
+                        while ((ret = fis.read(buffer)) > 0) {
+                            is.write(buffer, 0, ret);
+                        }
+                        fis.close();
+                        bis.close();
+                        is.close();
+                        sock.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }).on("sophie@slidare.com", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("Receving File");
+                    String transferId = (String) args[2];
+                    try {
+                        FileOutputStream fos = new FileOutputStream((String) args[0]);
+                        java.net.Socket sock = new java.net.Socket("54.224.110.79", (int)args[1]);
+                        InputStream is = sock.getInputStream();
+                        byte[] buffer = new byte[4096];
+                        int ret;
+                        while ((ret = is.read(buffer)) > 0) {
+                            fos.write(buffer, 0, ret);
+                        }
+                        System.out.println("Transfer Finished");
+                        fos.close();
+                        is.close();
+                        sock.close();
+                        socket.emit("transfer finished", transferId);
+                    } catch (IOException ex) {
+                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+
+               socket.connect();
+            } catch (URISyntaxException ex) {
+                System.out.println(ex.getMessage());
+                System.out.println(ex.getReason());
+            }
 		Application.launch(Main.class, (java.lang.String[]) null);
 	}
 	

@@ -153,7 +153,7 @@ public class EventlogController extends Controller implements Initializable {
                     try {
                         sock = new Socket("54.224.110.79", (int)args[0]);
                         OutputStream is = sock.getOutputStream();
-                        FileInputStream fis = new FileInputStream("/Users/julienathomas/nc");
+                        FileInputStream fis = new FileInputStream((String)args[1]);
                         BufferedInputStream bis = new BufferedInputStream(fis);
                         byte[] buffer = new byte[4096];
                         int ret;
