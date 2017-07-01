@@ -49,6 +49,12 @@ public DragDropTestFrame()
 
 }
 
+public void visible(Boolean state)
+{
+    this.setVisible(state);
+    
+}
+
 public void setMessage(String text)
 {
     myLabel.setText(text);
