@@ -5,6 +5,8 @@
  */
 package model;
 
+import controller.Main;
+import io.socket.client.IO;
 import view.DragDropTestFrame;
 import java.awt.dnd.*;
 import java.awt.*;
@@ -12,7 +14,9 @@ import java.io.File;
 import java.util.List;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import sun.applet.Main;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,7 +28,7 @@ public class MyDragDropListener implements DropTargetListener{
      public static Boolean ActivatePopUps = false;
      public static int valueDragDrop = 0;
      public int concernedDragDrop;
-     
+
     public MyDragDropListener(Boolean state)
     {
         MainPopUp = state;
@@ -62,9 +66,17 @@ public class MyDragDropListener implements DropTargetListener{
                     for (Object file : files) {
 
                         // Print out the file path
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                System.out.println("File path inside is '" + file + "'.");
+                                String[] users = new String[1];
+                                users[0]= "sophie@slidare.com";
+                                Main.socket.emit("request file transfer", "nc.txt", file, users);
+                            }
+                        }).start();
                         System.out.println("File path is '" + file + "'.");
                          DragDropTracking.dragDropTracking.showPathText(file.toString());
-                         
                     }
 
                 }
