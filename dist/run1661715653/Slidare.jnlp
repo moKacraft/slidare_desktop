@@ -10,7 +10,7 @@ www.flavien-maillot.com</description>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="Slidare_Desktop.jar" size="260665" download="eager" />
+    <jar href="Slidare_Desktop.jar" size="260666" download="eager" />
     <jar href="lib\commons-codec-1.10.jar" size="284184" download="eager" />
     <jar href="lib\engine.io-client-0.8.3.jar" size="105080" download="eager" />
     <jar href="lib\hamcrest-core-1.3.jar" size="45280" download="eager" />
