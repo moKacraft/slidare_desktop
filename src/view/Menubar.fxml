@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<HBox id="AnchorPane12" fx:id="MenuBarHB" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="theme" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MenubarController">
+			<children>
+				<MenuBar HBox.hgrow="ALWAYS">
+					<menus>
+						<Menu mnemonicParsing="false" text="File">
+							<items>
+								<MenuItem mnemonicParsing="false" onAction="#loadConfig" text="%Menubar_loadconfig" />
+								<MenuItem id="setting" mnemonicParsing="false" onAction="#switchScene" text="%Menu_setting" />
+								<SeparatorMenuItem />
+								<MenuItem mnemonicParsing="false" onAction="#logout" text="%Menubar_logout" />
+								<MenuItem onAction="#quitFired" text="%Menubar_quit" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="%Menubar_config">
+							<items>
+                  <MenuItem id="manageaccount" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_configaccount" />
+								<MenuItem id="managegroups" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_configgroup" />
+								<MenuItem id="managecontacts" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_configcontact" />
+                  <MenuItem id="managedragdrop" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_configdragdrop" />
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="%Menubar_help">
+							<items>
+								<MenuItem id="eventlog" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_eventlog" />
+								<SeparatorMenuItem />
+								<MenuItem mnemonicParsing="false" onAction="#aboutUs" text="%Menubar_helpabout" />
+							</items>
+						</Menu>
+					</menus>
+					<HBox.margin>
+						<Insets />
+					</HBox.margin>
+				</MenuBar>
+			</children>
+		</HBox>

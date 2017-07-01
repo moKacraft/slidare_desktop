@@ -1,0 +1,25 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+@font-face {
+    font-family: Maiandra GD;
+    src: url('MAIAN.TTF');
+}
+
+.mainFxmlClass {
+
+}
+
+#AnchorPane
+{
+	-fx-background-color: linear-gradient(#69B4E4 0%, #0070B9 100%);	
+}
+
+#title
+{
+	-fx-font-family: "Maiandra GD";
+	-fx-font-size: 32pt; 
+	-fx-text-fill: white; 
+	-fx-font-weight: bold;
+}

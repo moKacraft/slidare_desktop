@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="theme" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AccountTrackingController">
+	<children>
+		<SplitPane id="splitPaneHorizontal1" dividerPositions="0.25125" focusTraversable="true" prefHeight="535.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
+			<items>
+				<AnchorPane id="anchorPane1" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+					<children>
+						<ListView fx:id="list" prefHeight="535.0" prefWidth="198.0" styleClass="darkList" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+					</children>
+				</AnchorPane>
+				<AnchorPane id="anchorPane2" fx:id="contactsView" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+					<children>
+						<AnchorPane id="anchorPane4" fx:id="details" minHeight="0.0" minWidth="0.0">
+							<children>
+								<HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="45.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="universityLabel" minWidth="-Infinity" prefWidth="85.0" text="Université" />
+										<TextField id="textField1" fx:id="universityField" prefHeight="26.0" prefWidth="352.0" text="UNIVERSITY" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutY="14.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="jobLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Emploi" />
+										<TextField id="textField1" fx:id="jobField" prefHeight="26.0" prefWidth="352.0" text="JOB" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
+							</children>
+						</AnchorPane>
+						<AnchorPane id="anchorPane4" fx:id="details1" minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="598.0" visible="false">
+							<children>
+								<HBox id="HBox" alignment="CENTER" layoutY="14.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="firstnameLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Prénom" />
+										<TextField id="textField1" fx:id="firstnameField" prefHeight="26.0" prefWidth="352.0" text="FIRSTNAME" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="45.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="428.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="lastnameLabel" minWidth="-Infinity" prefWidth="85.0" text="Nom de famille" />
+										<TextField id="textField1" fx:id="lastnameField" prefHeight="26.0" prefWidth="352.0" text="LASTNAME" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="77.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="395.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="phonelabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Téléphone" />
+										<TextField id="textField1" fx:id="phoneField" prefHeight="26.0" prefWidth="352.0" text="07000000" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
+                        <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="123.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                           <children>
+                              <Label id="label4" fx:id="phonelabel1" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Ville" />
+                              <TextField id="textField1" fx:id="cityField" prefHeight="26.0" prefWidth="352.0" text="CITY" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="163.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="325.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                           <children>
+                              <Label id="label4" fx:id="phonelabel11" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Naissance" />
+                              <TextField id="textField1" fx:id="birthField" prefHeight="26.0" prefWidth="352.0" text="jj/mm/aaaa" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+							</children>
+						</AnchorPane>
+					</children>
+				</AnchorPane>
+			</items>
+		</SplitPane>
+		<HBox id="HBox" alignment="CENTER" spacing="15.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="32.0">
+			<children>
+				<!--<Button id="button1" fx:id="newIssue" onAction="#newContactFired" text="Nouveau" />-->
+				<Button id="button1" fx:id="saveIssue" onAction="#saveAccountFired" text="Sauvarger" />
+			</children>
+		</HBox>
+		<ImageView id="Slidare_desktop" layoutX="14.0" layoutY="30.0">
+			<image>
+				<Image preserveRatio="true" smooth="true" url="@slidarelogo.png" />
+			</image>
+		</ImageView>
+		<fx:include fx:id="menubar" source="Menubar.fxml" />
+	</children>
+	<stylesheets>
+		<URL value="@ContactTracking.css" />
+	</stylesheets>
+</AnchorPane>

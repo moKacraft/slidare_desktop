@@ -1,0 +1,9 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Projet Slidare
+${licensePrefix}Sharing anywhere, anytime
+${licensePrefix}
+<#if licenseLast??>
+${licenseLast}
+</#if>
