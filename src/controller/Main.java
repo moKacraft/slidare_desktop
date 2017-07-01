@@ -33,6 +33,7 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import model.DragDropTracking;
+import org.apache.commons.codec.binary.Base64;
 import org.jnativehook.NativeHookException;
 import service.ConfigManager;
 import service.ServiceFactory;
@@ -96,7 +97,7 @@ public class Main extends Application
                         
                         encryption _crypt = new  encryption();
                         
-                        _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], (byte[]) args[6], (byte[]) args[7], (String) args[8]);
+                        _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], Base64.decodeBase64((String) args[6]), Base64.decodeBase64((String) args[7]), (String) args[8]);
                     } catch (IOException ex) {
                         Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (NoSuchAlgorithmException ex) {
