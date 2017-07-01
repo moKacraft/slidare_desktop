@@ -61,7 +61,8 @@ public class DragDropTracking
         CreatContactPopup("Johny");
         CreatContactPopup("Paul");
         CreatContactPopup("harry");
-        
+         CreatContactPopup("Lol");
+          CreatContactPopup("pop");
         //System.out.println("azea");
         
     }
@@ -89,7 +90,8 @@ public class DragDropTracking
         tmp.setMessage(name);
         tmp.setVisible(false);
         ++numberOfContact; 
-         PopupEntered = false;
+           tmp.setNumberOfContact(numberOfContact);
+         PopupEntered = true;
         
    }
     
@@ -119,7 +121,7 @@ public class DragDropTracking
     { 
        
         
-        if (showPopup == true && listFrame != null && listFrame.isEmpty() == false)
+        if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false)
         {
           PopupEntered = true;
           int cnt = 0;
