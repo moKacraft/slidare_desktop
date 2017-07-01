@@ -11,6 +11,18 @@ import java.io.File;
 import java.util.List;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.InvalidParameterSpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import utils.security.encryption;
 
 /**
  *
@@ -69,7 +81,35 @@ public class MyDragDropListener implements DropTargetListener{
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
                                 users[0]= "sophie@slidare.com";
-                                Main.socket.emit("request file transfer", f.getName(), file, users);
+                                
+                                try {
+                                    encryption _crypt = new  encryption();
+                                    
+                                    String key =  encryption.SHA256("my secret key", 32);
+                                    _crypt.encryptFile(file.toString(), "encrypted", key);
+                                    
+                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
+                                } catch (NoSuchAlgorithmException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (NoSuchPaddingException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (UnsupportedEncodingException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IOException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (InvalidKeySpecException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (InvalidKeyException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (InvalidParameterSpecException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (BadPaddingException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (IllegalBlockSizeException ex) {
+                                    Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                                
                             }
                         }).start();
                         System.out.println("File path is '" + file + "'.");
