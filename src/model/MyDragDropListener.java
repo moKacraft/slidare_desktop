@@ -69,10 +69,12 @@ public class MyDragDropListener implements DropTargetListener{
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                File f = new File(file.toString());
+                                System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
                                 users[0]= "sophie@slidare.com";
-                                Main.socket.emit("request file transfer", "nc.txt", file, users);
+                                Main.socket.emit("request file transfer", f.getName(), file, users);
                             }
                         }).start();
                         System.out.println("File path is '" + file + "'.");
