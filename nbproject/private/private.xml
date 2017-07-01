@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/MyDragDropListener.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Controller.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/DragDropTrackingController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ConnectController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/EventlogController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/view/DragDropTestFrame.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Main.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/DragDropTracking.java</file>
+        </group>
     </open-files>
 </project-private>
