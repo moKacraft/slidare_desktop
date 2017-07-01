@@ -1,0 +1,17 @@
+//This is how to use CryptLib.java
+
+	   try {
+	    	CryptLib _crypt = new CryptLib();
+	    	String output= "";
+	    	String plainText = "This is the text to be encrypted.";
+	    	String key = CryptLib.SHA256("my secret key", 32); //32 bytes = 256 bit
+	    	String iv = CryptLib.generateRandomIV(16); //16 bytes = 128 bit
+	    	output = _crypt.encrypt(plainText, key, iv); //encrypt
+	    	System.out.println("encrypted text=" + output);
+	    	output = _crypt.decrypt(output, key,iv); //decrypt
+	    	System.out.println("decrypted text=" + output);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+If you are getting "java.security.InvalidKeyException: Illegal key size" error while compiling, see this - http://stackoverflow.com/questions/6481627/java-security-illegal-key-size-or-default-parameters
