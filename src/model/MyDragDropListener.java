@@ -13,6 +13,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import org.apache.commons.codec.binary.Base64;
 import utils.security.encryption;
 
 /**
@@ -87,8 +89,9 @@ public class MyDragDropListener implements DropTargetListener{
                                     
                                     String key =  encryption.SHA256("my secret key", 32);
                                     _crypt.encryptFile(file.toString(), "encrypted", key);
+//                                    _crypt.decryptFile("./encrypted", "./decrypted", _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
                                     
-                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
+                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()), Base64.encodeBase64String(_crypt.get_fileIV()), _crypt.get_fileKey());
                                 } catch (NoSuchAlgorithmException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (NoSuchPaddingException ex) {
@@ -107,8 +110,7 @@ public class MyDragDropListener implements DropTargetListener{
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (IllegalBlockSizeException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                
+                                }                                
                                 
                             }
                         }).start();
