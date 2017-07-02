@@ -50,21 +50,37 @@ public class Main extends Application
 {
 	public static Stage parentWindow;
         public static Socket socket;
+        public static JDialog dialogSend;
+        public static JLabel labelSend;
 	
 	/**
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args)
 	{
+            dialogSend = new JDialog();
+            labelSend = new JLabel("Please wait...");
+            dialogSend.setLocationRelativeTo(null);
+            dialogSend.setTitle("Please Wait...");
+            dialogSend.add(labelSend);
+            dialogSend.setPreferredSize(new Dimension(300,100));
+            dialogSend.pack();
+                   
             try {
                socket = IO.socket("http://54.224.110.79:8080");
                System.out.println("socket init");
                socket.on("server ready", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
+                    
+                    dialogSend.setVisible(true);     
                     System.out.println("Server ready");
-                    java.net.Socket sock;
+                    
+                    new Thread(new Runnable() {
+                               @Override
+                               public void run() {
                     try {
+                        java.net.Socket sock;
                         sock = new java.net.Socket("54.224.110.79", (int)args[0]);
                         OutputStream is = sock.getOutputStream();
                         FileInputStream fis = new FileInputStream((String)args[1]);
@@ -81,6 +97,8 @@ public class Main extends Application
                     } catch (IOException ex) {
                         Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    }
+                            }).start();
                 }
             }).on("sophie@slidare.com", new Emitter.Listener() {
                 @Override
@@ -169,8 +187,16 @@ public class Main extends Application
                         }
                     });
                 }
+            }).on("receiving data", new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                       System.out.println("args[0] " + (String)args[0] + "args[1] " + args[1]);
+                       labelSend.setText((String) args[0]);
+                       if ((boolean) args[1] == true)
+                        dialogSend.setVisible(false);
+                    }
             });
-               socket.connect();
+            socket.connect();
                
             } catch (URISyntaxException ex) {
                 System.out.println(ex.getMessage());
