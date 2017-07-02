@@ -21,12 +21,16 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.crypto.BadPaddingException;
@@ -77,53 +81,86 @@ public class Main extends Application
                 }
             }).on("sophie@slidare.com", new Emitter.Listener() {
                 @Override
-                public void call(Object... args) {
-                    System.out.println("Receving File");
-                    String transferId = (String) args[2];
-                    try {
-                        FileOutputStream fos = new FileOutputStream((String) args[3]);
-                        java.net.Socket sock = new java.net.Socket("54.224.110.79", (int)args[1]);
-                        InputStream is = sock.getInputStream();
-                        byte[] buffer = new byte[4096];
-                        int ret;
-                        while ((ret = is.read(buffer)) > 0) {
-                            fos.write(buffer, 0, ret);
+                public void call(Object... args) 
+                {
+                   Platform.runLater(new Runnable() {
+                       @Override
+                        public void run() 
+                        {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Info");
+                            alert.setHeaderText("File Received");
+                            alert.setContentText("");
+                            Optional<ButtonType> result = alert.showAndWait();
+                             System.out.println(result);
+
+                            if (result.isPresent() && result.get() != ButtonType.OK)
+                            {
+
+                                 return;
+
+                            }
+
+
+                            new Thread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   System.out.println("Receving File");
+                                   String transferId = (String) args[2];
+                                   try {
+                                       FileOutputStream fos = new FileOutputStream((String) args[3]);
+                                       java.net.Socket sock = new java.net.Socket("54.224.110.79", (int)args[1]);
+                                       InputStream is = sock.getInputStream();
+                                       byte[] buffer = new byte[4096];
+                                       int ret;
+                                       while ((ret = is.read(buffer)) > 0) {
+                                           fos.write(buffer, 0, ret);
+                                       }
+                                       System.out.println("Transfer Finished");
+                                       fos.close();
+                                       is.close();
+                                       sock.close();
+                                       socket.emit("transfer finished", transferId);
+
+                                       encryption _crypt = new  encryption();
+                                       byte[] salt = Base64.decodeBase64((String) args[6]);
+                                       byte[] iv = Base64.decodeBase64((String) args[7]);
+                                       System.out.println(salt);
+                                       System.out.println(iv);
+                                       System.out.println(salt.length);
+                                       System.out.println(iv.length);
+                                       _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], salt, iv, (String) args[8]);
+                                   } catch (IOException ex) {
+                                       Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (NoSuchAlgorithmException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (NoSuchPaddingException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (InvalidKeySpecException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (InvalidAlgorithmParameterException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (InvalidKeyException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (BadPaddingException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   } catch (IllegalBlockSizeException ex) {
+                                       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                                  }
+                            }).start();
                         }
-                        System.out.println("Transfer Finished");
-                        fos.close();
-                        is.close();
-                        sock.close();
-                        socket.emit("transfer finished", transferId);
-                        
-                        encryption _crypt = new  encryption();
-                        
-                        _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], Base64.decodeBase64((String) args[6]), Base64.decodeBase64((String) args[7]), (String) args[8]);
-                    } catch (IOException ex) {
-                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoSuchAlgorithmException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (NoSuchPaddingException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidKeySpecException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidAlgorithmParameterException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (InvalidKeyException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (BadPaddingException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    } catch (IllegalBlockSizeException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    });
                 }
             });
-
                socket.connect();
+               
             } catch (URISyntaxException ex) {
                 System.out.println(ex.getMessage());
                 System.out.println(ex.getReason());
             }
 		Application.launch(Main.class, (java.lang.String[]) null);
+                
 	}
 	
 	public static void loadScene(String sceneName, String title) throws IOException

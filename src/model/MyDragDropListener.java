@@ -13,6 +13,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -88,6 +89,7 @@ public class MyDragDropListener implements DropTargetListener{
                                     
                                     String key =  encryption.SHA256("my secret key", 32);
                                     _crypt.encryptFile(file.toString(), "encrypted", key);
+//                                    _crypt.decryptFile("./encrypted", "./decrypted", _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
                                     
                                     
                                     System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length + "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
@@ -111,8 +113,7 @@ public class MyDragDropListener implements DropTargetListener{
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (IllegalBlockSizeException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                
+                                }                                
                                 
                             }
                         }).start();

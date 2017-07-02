@@ -16,6 +16,8 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,10 +40,12 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javax.crypto.BadPaddingException;
@@ -64,6 +68,9 @@ public class EventlogController extends Controller implements Initializable {
  
     @FXML
     public AnchorPane anchorID;
+
+    @FXML
+    public ImageView imageview;
     
     DialogSys ds = new DialogSys();
     BufferedImage[] images = null;
@@ -74,8 +81,34 @@ public class EventlogController extends Controller implements Initializable {
      * @param url
      * @param rb
      */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {   
+    public void initialize(URL url, ResourceBundle rb) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Configuration config = new Configuration();
+                config.setPort(8085);
+                config.setHostname("192.168.1.25");
+                config.setMaxFramePayloadLength(300000);
+                SocketIOServer server = new SocketIOServer(config);
+                server.addConnectListener(
+                        (client) -> {
+                            System.out.println("Client has Connected!");
+                        });
+                server.addEventListener("image", String.class,
+                        (client, message, ackRequest) -> {
+                            byte[] data = Base64.decodeBase64((String) message);
+
+                            BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
+                            System.out.println(img);
+                            Image card = SwingFXUtils.toFXImage(img, null );
+                            System.out.println(card);
+                            imageview.setImage(card);
+                            System.out.println("Client said: " + data.length);
+                        });
+                server.start();
+                
+            }
+        }).start();
     }
     
     @FXML
@@ -103,8 +136,6 @@ public class EventlogController extends Controller implements Initializable {
         {
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
-            int i = 0;
-            System.out.println(i++ + "length " + imageInByte.length);
             baos.close();
             socket.emit("image", Base64.encodeBase64String(imageInByte));
         }
