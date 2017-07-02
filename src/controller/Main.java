@@ -146,9 +146,9 @@ public class Main extends Application
                                            fos.write(buffer, 0, ret);
                                            
                                            sumCount += ret;
-                                           System.out.println("Percentace: " + (sumCount / (int) args[9] * 100.0) + "%");
+                                           System.out.println("Percentace: " + (int)((sumCount / (int) args[9] * 100.0)) + "%");
                                            //Thread.sleep(1000);
-                                           label.setText("Percentace: " + (sumCount / (int) args[9] * 100.0) + "%");
+                                           label.setText("Percentace: " + (int)((sumCount / (int) args[9] * 100.0)) + "%");
                                        }
                                        dialog.setVisible(false);
                                        System.out.println("Transfer Finished");
