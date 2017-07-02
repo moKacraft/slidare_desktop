@@ -21,12 +21,16 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.crypto.BadPaddingException;
@@ -77,7 +81,31 @@ public class Main extends Application
                 }
             }).on("sophie@slidare.com", new Emitter.Listener() {
                 @Override
-                public void call(Object... args) {
+                public void call(Object... args) 
+                {
+                   Platform.runLater(new Runnable() {
+                       @Override
+                   public void run() 
+                   {
+                          Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Info");
+		alert.setHeaderText("File Received");
+		alert.setContentText("");
+                Optional<ButtonType> result = alert.showAndWait();
+                    System.out.println(result);
+                
+                if (result.isPresent() && result.get() != ButtonType.OK)
+                {
+                   
+                     return;
+                    
+                }
+
+                   
+                new Thread(new Runnable() {
+                
+                @Override
+                public void run() {
                     System.out.println("Receving File");
                     String transferId = (String) args[2];
                     try {
@@ -115,15 +143,20 @@ public class Main extends Application
                     } catch (IllegalBlockSizeException ex) {
                         Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     }
+              }
+              
+                   });
                 }
             });
 
                socket.connect();
+               
             } catch (URISyntaxException ex) {
                 System.out.println(ex.getMessage());
                 System.out.println(ex.getReason());
             }
 		Application.launch(Main.class, (java.lang.String[]) null);
+                
 	}
 	
 	public static void loadScene(String sceneName, String title) throws IOException

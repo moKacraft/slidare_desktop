@@ -29,6 +29,7 @@ public class DragDropTrackingController extends Controller implements Initializa
    private boolean stateActivationApp = true;
    private DragDropTestFrame dragDropFrame;
    private String keyName = "CTRL";
+   private Alert alert;
     
     @FXML
     private ToggleButton activationApp;
@@ -40,22 +41,16 @@ public class DragDropTrackingController extends Controller implements Initializa
     @Override
 	public void initialize(URL url, ResourceBundle rsrcs)
 	{
-            
+             
         }
         
         @FXML
 	public void changeActivationKey(ActionEvent event)
 	{
             changeActivationButtonKey = true;
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("");
-		alert.setHeaderText("PRESS A KEY");
-                alert.setContentText("");
-                alert.showAndWait();
+           
                 
-                if (alert.getResult() == ButtonType.CLOSE || alert.getResult() == ButtonType.CANCEL)
-        		changeActivationButtonKey = false;
-        }
+        }	
         
         
         
