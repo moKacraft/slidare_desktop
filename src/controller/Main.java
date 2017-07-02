@@ -63,6 +63,7 @@ public class Main extends Application
             dialogSend.setLocationRelativeTo(null);
             dialogSend.setTitle("Please Wait...");
             dialogSend.add(labelSend);
+            dialogSend.setAlwaysOnTop(true);
             dialogSend.setPreferredSize(new Dimension(300,100));
             dialogSend.pack();
                    
@@ -127,6 +128,7 @@ public class Main extends Application
                                     dialog.setTitle("Please Wait...");
                                     dialog.add(label);
                                     dialog.setPreferredSize(new Dimension(300, 100));
+                                    dialog.setAlwaysOnTop(true);
                                     dialog.pack();
                                     
                                    System.out.println("Receving File");
