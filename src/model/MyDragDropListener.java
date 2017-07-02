@@ -94,7 +94,7 @@ public class MyDragDropListener implements DropTargetListener{
                                     
                                     System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length + "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
                                     
-                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()), Base64.encodeBase64String(_crypt.get_fileIV()), _crypt.get_fileKey());
+                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()), Base64.encodeBase64String(_crypt.get_fileIV()), _crypt.get_fileKey(), f.length());
                                 } catch (NoSuchAlgorithmException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (NoSuchPaddingException ex) {
