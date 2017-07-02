@@ -38,14 +38,14 @@ public class DragDropTracking
     {
         dragDropFrame = new DragDropTestFrame();
         dragDropFrame.setPopUpType(true);
-         listFrame = new ArrayList<DragDropTestFrame>();
-           dragDropTracking = this;  
+        listFrame = new ArrayList<DragDropTestFrame>();
+        dragDropTracking = this;  
         
           
            
         GlobalScreen.registerNativeHook();
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
-            logger.setLevel(Level.OFF);
+        logger.setLevel(Level.OFF);
         
         keyListener = new KeyListener();   
         GlobalScreen.addNativeKeyListener(keyListener);
@@ -61,8 +61,8 @@ public class DragDropTracking
         CreatContactPopup("Johny");
         CreatContactPopup("Paul");
         CreatContactPopup("harry");
-         CreatContactPopup("Lol");
-          CreatContactPopup("pop");
+        CreatContactPopup("Lol");
+        CreatContactPopup("pop");
         //System.out.println("azea");
         
     }
@@ -90,8 +90,8 @@ public class DragDropTracking
         tmp.setMessage(name);
         tmp.setVisible(false);
         ++numberOfContact; 
-           tmp.setNumberOfContact(numberOfContact);
-         PopupEntered = true;
+        tmp.setNumberOfContact(numberOfContact);
+        PopupEntered = true;
         
    }
     

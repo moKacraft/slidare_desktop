@@ -36,6 +36,8 @@ import javafx.stage.Stage;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 import model.DragDropTracking;
 import org.apache.commons.codec.binary.Base64;
 import org.jnativehook.NativeHookException;
@@ -85,26 +87,28 @@ public class Main extends Application
                 {
                    Platform.runLater(new Runnable() {
                        @Override
-                        public void run() 
-                        {
+                        public void run() {
                             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                             alert.setTitle("Info");
                             alert.setHeaderText("File Received");
                             alert.setContentText("");
                             Optional<ButtonType> result = alert.showAndWait();
-                             System.out.println(result);
+                            System.out.println(result);
 
-                            if (result.isPresent() && result.get() != ButtonType.OK)
-                            {
-
-                                 return;
-
+                            if (result.isPresent() && result.get() != ButtonType.OK) {
+                                return;
                             }
-
 
                             new Thread(new Runnable() {
                                @Override
                                public void run() {
+                                    JDialog dialog = new JDialog();
+                                    JLabel label = new JLabel("Please wait...");
+                                    dialog.setLocationRelativeTo(null);
+                                    dialog.setTitle("Please Wait...");
+                                    dialog.add(label);
+                                    dialog.pack();
+                                    
                                    System.out.println("Receving File");
                                    String transferId = (String) args[2];
                                    try {
@@ -113,9 +117,20 @@ public class Main extends Application
                                        InputStream is = sock.getInputStream();
                                        byte[] buffer = new byte[4096];
                                        int ret;
+                                       
+                                       double sumCount = 0.0;
+                                       
+                                       dialog.setVisible(true);
+                                       
                                        while ((ret = is.read(buffer)) > 0) {
                                            fos.write(buffer, 0, ret);
+                                           
+                                           sumCount += ret;
+                                           System.out.println("Percentace: " + (sumCount / (int) args[9] * 100.0) + "%");
+                                           //Thread.sleep(1000);
+                                           label.setText("Percentace: " + (sumCount / (int) args[9] * 100.0) + "%");
                                        }
+                                       dialog.setVisible(false);
                                        System.out.println("Transfer Finished");
                                        fos.close();
                                        is.close();
