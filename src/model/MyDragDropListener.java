@@ -88,6 +88,8 @@ public class MyDragDropListener implements DropTargetListener{
                                     encryption _crypt = new  encryption();
                                     
                                     String key =  encryption.SHA256("my secret key", 32);
+                                    Main.dialogSend.setVisible(true);
+                                    Main.labelSend.setText("Encrypting file...");
                                     _crypt.encryptFile(file.toString(), "encrypted", key);
 //                                    _crypt.decryptFile("./encrypted", "./decrypted", _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
                                     
