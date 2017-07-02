@@ -16,7 +16,10 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
+<<<<<<< HEAD
 import java.io.ByteArrayInputStream;
+=======
+>>>>>>> ea6a89d3f4001b817df7a7caee2c46a62a8816e5
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -39,7 +42,10 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+<<<<<<< HEAD
 import javafx.embed.swing.SwingFXUtils;
+=======
+>>>>>>> ea6a89d3f4001b817df7a7caee2c46a62a8816e5
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -81,6 +87,7 @@ public class EventlogController extends Controller implements Initializable {
      * @param rb
      */
     @Override
+<<<<<<< HEAD
     public void initialize(URL url, ResourceBundle rb) {
         new Thread(new Runnable() {
             @Override
@@ -109,11 +116,18 @@ public class EventlogController extends Controller implements Initializable {
                 
             }
         }).start();
+=======
+    public void initialize(URL url, ResourceBundle rb) {   
+>>>>>>> ea6a89d3f4001b817df7a7caee2c46a62a8816e5
     }
     
     @FXML
     public void action1(ActionEvent event) throws IOException, URISyntaxException {
+<<<<<<< HEAD
         socket = IO.socket("http://127.0.0.1:8082");
+=======
+        socket = IO.socket("http://83.113.70.210:8085");
+>>>>>>> ea6a89d3f4001b817df7a7caee2c46a62a8816e5
         socket.on("test", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -136,8 +150,15 @@ public class EventlogController extends Controller implements Initializable {
         {
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
+<<<<<<< HEAD
             baos.close();
             socket.emit("image", imageInByte);
+=======
+            int i = 0;
+            System.out.println(i++ + "length " + imageInByte.length);
+            baos.close();
+            socket.emit("image", Base64.encodeBase64String(imageInByte));
+>>>>>>> ea6a89d3f4001b817df7a7caee2c46a62a8816e5
         }
        }
     }

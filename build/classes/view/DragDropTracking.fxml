@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.*?>
 <?import javafx.geometry.*?>
@@ -37,7 +38,10 @@
                                     <HBox prefHeight="27.0" prefWidth="800.0">
                                        <children>
                                           <Label prefHeight="31.0" prefWidth="399.0" text=" Bouton d'activation" />
-                                          <Button fx:id="activationButton" mnemonicParsing="false" onAction="#changeActivationKey" prefHeight="51.0" prefWidth="400.0" text="CTRL" />
+                                          <Button fx:id="activationButton" mnemonicParsing="false" onAction="#changeActivationKey" prefHeight="51.0" prefWidth="400.0" text="CTRL">
+                                             <effect>
+                                                <Glow />
+                                             </effect></Button>
                                        </children>
                                     </HBox>
                                     <HBox layoutY="31.0" prefHeight="89.0" prefWidth="810.0">
