@@ -11,6 +11,7 @@ import static controller.Main.socket;
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 import java.awt.AWTException;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -82,6 +83,23 @@ public class EventlogController extends Controller implements Initializable {
      * @param rb
      */
     public void initialize(URL url, ResourceBundle rb) {
+       DatagramSocket serverSocket;
+        try {
+            serverSocket = new DatagramSocket(8756);
+            byte[] receiveData = new byte[300000];
+            byte[] sendData = new byte[300000];
+            while(true)
+                {
+                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                 serverSocket.receive(receivePacket);
+                 String sentence = new String( receivePacket.getData());
+                 System.out.println("RECEIVED: " + sentence);
+                }
+        } catch (SocketException ex) {
+            Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -113,7 +131,7 @@ public class EventlogController extends Controller implements Initializable {
     
     @FXML
     public void action1(ActionEvent event) throws IOException, URISyntaxException {
-        socket = IO.socket("http://83.113.70.210:8085");
+        socket = IO.socket("http://93.31.237.180:8085");
         socket.on("test", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -125,21 +143,42 @@ public class EventlogController extends Controller implements Initializable {
     
     @FXML
     public void action2(ActionEvent event) throws IOException, NoSuchAlgorithmException, AWTException {
-        Rectangle rec=new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
-        Robot r= new Robot();
-        BufferedImage img;
-        while (1 == 1) {
-        img = r.createScreenCapture(rec);
+        new Thread(new Runnable() {
+        @Override
+            public void run() {
+            try {
+                Rectangle rec=new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
+                Robot r= new Robot();
+                BufferedImage img;
+                
+                while (1 == 1) {
+                    img = r.createScreenCapture(rec);
+                    
+                    java.awt.Image tmp = img.getScaledInstance(img.getWidth() /4 , img.getHeight() / 4, java.awt.Image.SCALE_SMOOTH);
+                    BufferedImage dimg = new BufferedImage(img.getWidth() / 4, img.getHeight() / 4, BufferedImage.TYPE_INT_ARGB);
+                    Graphics2D g2d = dimg.createGraphics();
+                    g2d.drawImage(tmp, 0, 0, null);
+                    g2d.dispose();
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if(ImageIO.write(img, "png",baos))
-        {
-            baos.flush();
-            byte[] imageInByte = baos.toByteArray();
-            baos.close();
-            socket.emit("image", Base64.encodeBase64String(imageInByte));
-        }
-       }
+                    
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    if(ImageIO.write(dimg, "png",baos))
+                    {
+                        baos.flush();
+                        byte[] imageInByte = baos.toByteArray();
+                        baos.close();
+                        socket.emit("image", Base64.encodeBase64String(imageInByte));
+                    }
+                    Thread.sleep(50);
+                }} catch (AWTException ex) {
+                Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          }
+        }).start();
     }
 }
 
