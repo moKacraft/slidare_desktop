@@ -79,6 +79,7 @@ public class DragDropTrackingController extends Controller implements Initializa
 	{
             if (changeActivationButtonKey == true)
             {
+                
                 activationButton.setText(event.getCode().getName());
                 TrackingInfo.keyName = event.getCode().getName();;
                 changeActivationButtonKey = false;

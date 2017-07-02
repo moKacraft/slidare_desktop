@@ -10,11 +10,7 @@ www.flavien-maillot.com</description>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-<<<<<<< HEAD
-    <jar href="Slidare_Desktop.jar" size="259974" download="eager" />
-=======
-    <jar href="Slidare_Desktop.jar" size="259514" download="eager" />
->>>>>>> dd3aec0b0cae6cbad7a11014570af908194d2446
+    <jar href="Slidare_Desktop.jar" size="259442" download="eager" />
     <jar href="lib\commons-codec-1.10.jar" size="284184" download="eager" />
     <jar href="lib\engine.io-client-0.8.3.jar" size="105080" download="eager" />
     <jar href="lib\jackson-annotations-2.8.9.jar" size="55784" download="eager" />

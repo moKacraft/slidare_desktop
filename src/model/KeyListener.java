@@ -29,17 +29,31 @@ public class KeyListener implements NativeKeyListener {
      @Override
     public void nativeKeyPressed(NativeKeyEvent e) 
     {
+        String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+ 
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true)
+        {
+            key1 = "Ctrl";
+        }
+        
         System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
          System.out.println("Key Pressed 2: " + TrackingInfo.keyName);
      
-        if ((TrackingInfo.keyName != null) && ( NativeKeyEvent.getKeyText(e.getKeyCode())).matches(TrackingInfo.keyName) == true)
+        if ((TrackingInfo.keyName != null) &&  key1.matches(TrackingInfo.keyName) == true)
         {
             DragDropTracking.dragDropTracking.showBubble();
         }
     }
 
-    public void nativeKeyReleased(NativeKeyEvent e) {
-         if ((TrackingInfo.keyName != null) && ( NativeKeyEvent.getKeyText(e.getKeyCode())).matches(TrackingInfo.keyName) == true)
+    public void nativeKeyReleased(NativeKeyEvent e) 
+    {
+        String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+ 
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true)
+        {
+            key1 = "Ctrl";
+        }
+         if ((TrackingInfo.keyName != null) && key1.matches(TrackingInfo.keyName) == true)
         {
            
             DragDropTracking.dragDropTracking.hideBubble();
