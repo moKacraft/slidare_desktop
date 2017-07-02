@@ -8,6 +8,7 @@ package controller;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import java.awt.Dimension;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -107,6 +108,7 @@ public class Main extends Application
                                     dialog.setLocationRelativeTo(null);
                                     dialog.setTitle("Please Wait...");
                                     dialog.add(label);
+                                    dialog.setPreferredSize(new Dimension(300, 100));
                                     dialog.pack();
                                     
                                    System.out.println("Receving File");
