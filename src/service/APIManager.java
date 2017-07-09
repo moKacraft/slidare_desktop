@@ -91,8 +91,7 @@ public class APIManager implements iService
 	{
 		try
 		{
-                    System.out.println("hello darling");
-			this.client.getHttpClientService()
+                    	this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/userContacts")
 				.setHeader("Authorization", "Bearer " + token)
@@ -116,8 +115,7 @@ public class APIManager implements iService
 		try
 		{
                     
-                     System.out.println("hello darling");
-			this.client.getHttpClientService()
+                 	this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/userContact/"+id)
 				.setHeader("Authorization", "Bearer " + token)
@@ -146,8 +144,7 @@ public class APIManager implements iService
 	{
 		try
 		{
-                     System.out.println("hello darling");
-			this.client.getHttpClientService()
+                	this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/createUser")
 				.setBody(obj)

@@ -18,12 +18,14 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.InvalidParameterSpecException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import org.apache.commons.codec.binary.Base64;
+import org.json.simple.JSONObject;
 import utils.security.encryption;
 
 /**
@@ -36,6 +38,7 @@ public class MyDragDropListener implements DropTargetListener{
      public static Boolean ActivatePopUps = false;
      public static int valueDragDrop = 0;
      public int concernedDragDrop;
+    // public List<JSONObject> listContacts = new ArrayList<JSONObject>();
 
     public MyDragDropListener(Boolean state)
     {
@@ -78,7 +81,7 @@ public class MyDragDropListener implements DropTargetListener{
                                 System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
-                                users[0] = "sophie@slidare.com";
+                                users[0] =  (String)(DragDropTracking.listContacts.get(concernedDragDrop - 1).get("email"));
                                 
                                 try {
                                     encryption _crypt = new  encryption();

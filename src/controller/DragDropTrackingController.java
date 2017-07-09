@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import model.TrackingInfo;
 import view.DragDropTestFrame;
 import model.TrackingServiceStub;
+import utils.streaming.Settings;
 
 /**
  *
@@ -30,6 +31,7 @@ public class DragDropTrackingController extends Controller implements Initializa
    private DragDropTestFrame dragDropFrame;
    private String keyName = "CTRL";
    private Alert alert;
+   private Settings settings = Settings.getTimSettingInstance("tim.properties");
     
     @FXML
     private ToggleButton activationApp;
@@ -42,6 +44,8 @@ public class DragDropTrackingController extends Controller implements Initializa
 	public void initialize(URL url, ResourceBundle rsrcs)
 	{
              //TrackingServiceStub
+            activationButton.setText(settings.getProperty("key"));
+            TrackingInfo.keyName = settings.getProperty("key");
         }
         
         @FXML
@@ -79,9 +83,12 @@ public class DragDropTrackingController extends Controller implements Initializa
 	{
             if (changeActivationButtonKey == true)
             {
-                
                 activationButton.setText(event.getCode().getName());
-                TrackingInfo.keyName = event.getCode().getName();;
+                TrackingInfo.keyName = event.getCode().getName();
+                
+                settings.setProperty("key", event.getCode().getName());
+                settings.saveSettings();
+                
                 changeActivationButtonKey = false;
             }
         }

@@ -20,7 +20,7 @@ private JLabel myLabel;
 private Boolean isMain = false;
 public static int numberOfFrame = 0;
 public  int numberOfContact = 0;
-   
+ public MyDragDropListener  myDragDropListener;
 
 public DragDropTestFrame() 
 {
@@ -36,7 +36,7 @@ public DragDropTestFrame()
     
 
     // Create the drag and drop listener
-    MyDragDropListener myDragDropListener = new MyDragDropListener(true);
+     myDragDropListener = new MyDragDropListener(true);
 
     // Connect the label with a drag and drop listener
     new DropTarget(myLabel, myDragDropListener);
