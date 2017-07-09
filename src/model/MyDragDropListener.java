@@ -96,6 +96,7 @@ public class MyDragDropListener implements DropTargetListener
                                     System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length +
                                             "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
 
+                                    Main.labelSend.setText("Sending file...");
                                     Main.socket.emit("request file transfer", f.getName(),
                                     file, users, _crypt.get_fileEncryptedName(), f.getName(),
                                     _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()),

@@ -122,7 +122,7 @@ public class ConnectController extends Controller implements Initializable
 //			System.exit(0);
             return (true);
         } else {
-            return (true);
+            return (false);
         }
     }
     
@@ -256,8 +256,7 @@ public class ConnectController extends Controller implements Initializable
                                         java.net.Socket sock = new java.net.Socket("34.227.142.101", (int)args[1]);
                                         InputStream is = sock.getInputStream();
                                         byte[] buffer = new byte[4096];
-                                        int ret;
-                                        
+                                        int ret;        
                                         double sumCount = 0.0;
                                         
                                         dialog.setVisible(true);
