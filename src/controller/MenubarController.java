@@ -6,10 +6,14 @@
 package controller;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,10 +23,15 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.FrameRecorder;
 import service.ConfigManager;
 import service.FileManager;
 import service.ServiceFactory;
 import utils.DialogSys;
+import utils.streaming.Settings;
 
 /**
  *
@@ -33,6 +42,8 @@ public class MenubarController implements Initializable
 
 	@FXML
 	private HBox MenuBarHB;
+        
+        private static Frame grabbedFrame;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
@@ -96,8 +107,51 @@ public class MenubarController implements Initializable
 					Main.loadScene("/view/DragDropTracking.fxml", "DragDrop_title");
 					break;
 				case "eventlog":
-					DialogSys ds = new DialogSys();
-					ds.showPopup(MenuBarHB, "/view/eventlog.fxml", "Eventlog");
+//					DialogSys ds = new DialogSys();
+//					ds.showPopup(MenuBarHB, "/view/eventlog.fxml", "Eventlog");
+                                        utils.streaming.Controller controller = new utils.streaming.Controller();
+                                        Settings settings = controller.getSettings();
+
+
+                                        Toolkit kit = Toolkit.getDefaultToolkit();
+                                        Dimension screenSize = kit.getScreenSize();
+                                        int screenWidth = screenSize.width;
+                                        int screenHeight = screenSize.height;
+
+                                        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+                                        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
+                                        grabber.setFormat("gdigrab");
+                                        grabber.setFrameRate(frameRate);
+                                        grabber.setImageWidth(screenWidth);
+                                        grabber.setImageHeight(screenHeight);
+                                        grabber.start();
+                                        utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
+                                        frame.setCanvasSize(screenWidth/2, screenHeight/2);
+                                        frame.setController(controller);
+                                        //controller.startRtmpRecorder();
+                                        new Thread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   try {
+                                       while (frame.isVisible()) {
+                                           try {
+                                               System.out.println("dans le while");
+                                               grabbedFrame = grabber.grab();
+                                               //frame.showImage(grabbedFrame);
+                                               controller.recorder(grabbedFrame);
+                                           } catch (FrameGrabber.Exception ex) {
+                                               Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                                           } catch (FrameRecorder.Exception ex) {
+                                               Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                                           }
+                                       }
+                                       frame.dispose();
+                                       controller.clean();
+                                       grabber.stop();
+                                   } catch (FrameGrabber.Exception ex) {
+                                       Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                                   }
+                               }}).start();
 					break;
 				default:
 					System.err.println("Switch inconnu");

@@ -149,7 +149,7 @@ public class APIManager implements iService
                      System.out.println("hello darling");
 			this.client.getHttpClientService()
 				.init()
-				.setUrl("http://54.224.110.79:50000/createUser")
+				.setUrl("http://34.227.142.101:50000/createUser")
 				.setBody(obj)
 				.buildAndExecutePost();
 			this.code = this.client.getHttpClientService().getReponseCode();
