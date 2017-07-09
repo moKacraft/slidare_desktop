@@ -36,8 +36,8 @@ public class KeyListener implements NativeKeyListener {
             key1 = "Ctrl";
         }
         
-        System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        System.out.println("Key Pressed 2: " + TrackingInfo.keyName);
+        //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+        //System.out.println("Key Pressed 2: " + TrackingInfo.keyName);
      
         if ((TrackingInfo.keyName != null) &&  key1.matches(TrackingInfo.keyName) == true)
         {

@@ -34,12 +34,13 @@ public class DragDropTracking
     private DragDropTestFrame dragDropFrame;
     private MouseListener mouseListener;
     private KeyListener keyListener;
-    private  List<DragDropTestFrame> listFrame;
+    private  List<DragDropTestFrame> listFrame = new ArrayList<DragDropTestFrame>();
     private boolean PopupEntered = true;
     public static DragDropTracking dragDropTracking;
     private boolean showPopup = false;
     private int numberOfContact = 0;
     private boolean createdContacts = false;
+    public  static List<JSONObject> listContacts = new ArrayList<JSONObject>();
     
     private Settings settings = Settings.getTimSettingInstance("tim.properties");
 
@@ -87,6 +88,8 @@ public class DragDropTracking
      public void showBubble()   
    {     
      dragDropFrame.setVisible(true);
+      if (createdContacts  == true)
+          return;
      APIManager manager = (APIManager) ServiceFactory.getAPIManager();
 //     System.out.println(this.cfg.getConfig().getToken());
      manager.userContacts(this.cfg.getConfig().getToken());
@@ -94,15 +97,18 @@ public class DragDropTracking
     this.packageManager.setJSONObject(this.APIManager.getLastResponse());
     JSONObject contacts = this.packageManager.getJSONOBject();
     JSONArray arr = (JSONArray) contacts.get("contacts");
-    arr.get(0);
-    System.out.println(contacts);
-    System.out.println(arr.size());
+    if (arr == null)
+        return;
+//    arr.get(0);
+   /// System.out.println(contacts);
+    //System.out.println(arr.size());
 
      if (createdContacts  == false)
      {
        for (int i = 0;i < arr.size() ; i++)
         {
-            System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
+      ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
+             listContacts.add(((JSONObject) arr.get(i)));
             CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
         }
        createdContacts = true;
