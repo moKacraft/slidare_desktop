@@ -178,9 +178,7 @@ public class TrackingServiceStub implements TrackingService
 			{
                             
                          	final Contact contact = change.getValueAdded();
-                                System.out.println("aaa");
                                 contacts.add(contact);
-				System.out.println("** " + contact.getFirstname());
 				String groupName = getGroup(contact.getGroup()).getName();
 				projectsMap.get(groupName).add(contact.getId());
 			}

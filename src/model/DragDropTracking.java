@@ -18,6 +18,12 @@ import view.DragDropTestFrame;
 import model.MouseListener;
 import org.jnativehook.NativeHookException;
 import utils.streaming.Settings;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import service.APIManager;
+import service.ConfigManager;
+import service.PackageManager;
+import service.ServiceFactory;
 
 /**
  *
@@ -36,14 +42,20 @@ public class DragDropTracking
     private boolean createdContacts = false;
     
     private Settings settings = Settings.getTimSettingInstance("tim.properties");
+
+    private PackageManager packageManager;
+    private APIManager APIManager;
+    private ConfigManager cfg;
        
     
     public DragDropTracking() throws NativeHookException
     {
         dragDropFrame = new DragDropTestFrame();
         dragDropFrame.setPopUpType(true, 1);
-        listFrame = new ArrayList<DragDropTestFrame>();
-        dragDropTracking = this;
+        dragDropTracking = this;  
+        this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
+        this.APIManager = (APIManager) ServiceFactory.getAPIManager();
+        this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
         
         GlobalScreen.registerNativeHook();
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
@@ -75,12 +87,23 @@ public class DragDropTracking
      public void showBubble()   
    {     
      dragDropFrame.setVisible(true);
+     APIManager manager = (APIManager) ServiceFactory.getAPIManager();
+//     System.out.println(this.cfg.getConfig().getToken());
+     manager.userContacts(this.cfg.getConfig().getToken());
+
+    this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+    JSONObject contacts = this.packageManager.getJSONOBject();
+    JSONArray arr = (JSONArray) contacts.get("contacts");
+    arr.get(0);
+    System.out.println(contacts);
+    System.out.println(arr.size());
+
      if (createdContacts  == false)
      {
-       for (int i = 0;i <TrackingServiceStub.contacts.size() ; i++)
+       for (int i = 0;i < arr.size() ; i++)
         {
-            System.out.println(TrackingServiceStub.contacts.isEmpty());
-            CreatContactPopup(TrackingServiceStub.contacts.get(i).getFirstname(), (i/5) + 2);
+            System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
+            CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
         }
        createdContacts = true;
      }
@@ -104,13 +127,8 @@ public class DragDropTracking
         
    }
     
- 
-    
     public void ShowMiniPopUp()
     {
-             System.out.println("//////////////////////////");
-             System.out.println("//////////////////////////");
-       
         if (PopupEntered == true)
         {
          int cnt = 0;
