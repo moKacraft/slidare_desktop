@@ -76,7 +76,7 @@ public class Contact implements ObservableContact
 
 	public void setFirstname(String _firstname)
 	{
-		this.firstname.set(_firstname);
+         	this.firstname.set(_firstname);
 	}
 
 	@Override

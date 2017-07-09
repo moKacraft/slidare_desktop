@@ -8,6 +8,8 @@ package model;
 import controller.AccountBusiness;
 import controller.ContactsBusiness;
 import controller.GroupBusiness;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -75,7 +77,7 @@ public class TrackingServiceStub implements TrackingService
 			switch (status)
 			{
 				case 1:
-					System.out.println(".onChanged() add1");
+					System.out.println(".onChanged() add1 "+ group.getName());
 					if (group != null)
 						projectsMap.put(group.getName(), FXCollections.<String>observableArrayList());
 					break;
@@ -163,16 +165,22 @@ public class TrackingServiceStub implements TrackingService
 	/**
 	 * Lorsqu'un contact est ajouté ou retiré de la liste
 	 */
+        static List<Contact> contacts = new ArrayList<Contact>();
+        
 	final MapChangeListener<String, Contact> contactsMapChangeListener = new MapChangeListener<String, Contact>()
 	{
 		@Override
 		public void onChanged(Change<? extends String, ? extends Contact> change)
 		{
+                    //System.out.println("azeaze");
 //			System.out.println("contactsMapChangeListener .onChanged()");
 			if (change.wasAdded())
 			{
-				final Contact contact = change.getValueAdded();
-				
+                            
+                         	final Contact contact = change.getValueAdded();
+                                System.out.println("aaa");
+                                contacts.add(contact);
+				System.out.println("** " + contact.getFirstname());
 				String groupName = getGroup(contact.getGroup()).getName();
 				projectsMap.get(groupName).add(contact.getId());
 			}
@@ -259,6 +267,7 @@ public class TrackingServiceStub implements TrackingService
 		assert contactsMap.containsKey(contact.getId()) == false;
 		assert projectsMap.get(projectName).contains(contact.getId()) == false;
 		contactsMap.put(contact.getId(), contact);
+                System.out.println(contactsMap.values());
 		return contact;
 	}
 

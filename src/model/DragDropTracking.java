@@ -32,12 +32,13 @@ public class DragDropTracking
     public static DragDropTracking dragDropTracking;
     private boolean showPopup = false;
     private int numberOfContact = 0;
+    private boolean createdContacts = false;
        
     
     public DragDropTracking() throws NativeHookException
     {
         dragDropFrame = new DragDropTestFrame();
-        dragDropFrame.setPopUpType(true);
+        dragDropFrame.setPopUpType(true, 1);
         listFrame = new ArrayList<DragDropTestFrame>();
         dragDropTracking = this;  
         
@@ -58,11 +59,7 @@ public class DragDropTracking
         // Add the appropriate listeners.
         GlobalScreen.addNativeMouseListener(mouseListener);
         GlobalScreen.addNativeMouseMotionListener(mouseListener);
-        CreatContactPopup("Johny");
-        CreatContactPopup("Paul");
-        CreatContactPopup("harry");
-        CreatContactPopup("Lol");
-        CreatContactPopup("pop");
+      
         //System.out.println("azea");
         
     }
@@ -75,6 +72,15 @@ public class DragDropTracking
      public void showBubble()   
    {     
      dragDropFrame.setVisible(true);
+     if (createdContacts  == false)
+     {
+       for (int i = 0;i <TrackingServiceStub.contacts.size() ; i++)
+        {
+            System.out.println(TrackingServiceStub.contacts.isEmpty());
+            CreatContactPopup(TrackingServiceStub.contacts.get(i).getFirstname(), (i/5) + 2);
+        }
+       createdContacts = true;
+     }
    }
    
     public void hideBubble()   
@@ -82,11 +88,11 @@ public class DragDropTracking
      dragDropFrame.setVisible(false);
    }
   
-   public void CreatContactPopup(String name)
+   public void CreatContactPopup(String name, int width)
    {
         DragDropTestFrame tmp;
         listFrame.add(tmp = new DragDropTestFrame());
-        tmp.setPopUpType(false);
+        tmp.setPopUpType(false, width);
         tmp.setMessage(name);
         tmp.setVisible(false);
         ++numberOfContact; 

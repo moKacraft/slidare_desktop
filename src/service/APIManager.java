@@ -91,6 +91,7 @@ public class APIManager implements iService
 	{
 		try
 		{
+                    System.out.println("hello darling");
 			this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/userContacts")
@@ -114,6 +115,8 @@ public class APIManager implements iService
 	{
 		try
 		{
+                    
+                     System.out.println("hello darling");
 			this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/userContact/"+id)
@@ -143,6 +146,7 @@ public class APIManager implements iService
 	{
 		try
 		{
+                     System.out.println("hello darling");
 			this.client.getHttpClientService()
 				.init()
 				.setUrl("http://34.227.142.101:50000/createUser")

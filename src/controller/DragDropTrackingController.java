@@ -17,7 +17,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import model.TrackingInfo;
 import view.DragDropTestFrame;
-
+import model.TrackingServiceStub;
 
 /**
  *
@@ -41,7 +41,7 @@ public class DragDropTrackingController extends Controller implements Initializa
     @Override
 	public void initialize(URL url, ResourceBundle rsrcs)
 	{
-             
+             //TrackingServiceStub
         }
         
         @FXML

@@ -42,6 +42,7 @@ public class ContactsBusiness
 	
 	public ContactsBusiness()
 	{
+            System.out.println("zaeazez");
 		this.fileManager = (FileManager) ServiceFactory.getFileManager();
 		this.configManager = (ConfigManager) ServiceFactory.getConfigManager();
 		this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
@@ -117,6 +118,7 @@ public class ContactsBusiness
 			contact.setLastname((String) jsonObject.get("lastname"));
 			contact.setComment((String) jsonObject.get("comment"));
 			this.contacts.put(contact.getId(), contact);
+                        System.out.println(contact.getFirstname());
 		}
 	}
 	

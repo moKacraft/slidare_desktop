@@ -169,6 +169,7 @@ public class AccountTrackingController extends Controller implements Initializab
 	{
 		if (model == null)
 		{
+                    System.out.println("zaeazqqqqq");
 			model = new TrackingServiceStub();
 			//Récupération de la liste des groupes
 			displayedProjectNames = model.getAccountMenu();
