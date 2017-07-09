@@ -70,7 +70,7 @@ public class APIManager implements iService
 		{
 			this.client.getHttpClientService()
 				.init()
-				.setUrl("http://54.224.110.79:50000/loginUser")
+				.setUrl("http://34.227.142.101:50000/loginUser")
 				.setBody(obj)
 				.buildAndExecutePost();
 			this.code = this.client.getHttpClientService().getReponseCode();
@@ -93,7 +93,7 @@ public class APIManager implements iService
 		{
 			this.client.getHttpClientService()
 				.init()
-				.setUrl("http://54.224.110.79:50000/userContacts")
+				.setUrl("http://34.227.142.101:50000/userContacts")
 				.setHeader("Authorization", "Bearer " + token)
 				.buildAndExecuteGet();
 			this.code = this.client.getHttpClientService().getReponseCode();
@@ -116,7 +116,7 @@ public class APIManager implements iService
 		{
 			this.client.getHttpClientService()
 				.init()
-				.setUrl("http://54.224.110.79:50000/userContact/"+id)
+				.setUrl("http://34.227.142.101:50000/userContact/"+id)
 				.setHeader("Authorization", "Bearer " + token)
 				.buildAndExecuteGet();
 			this.code = this.client.getHttpClientService().getReponseCode();
@@ -145,7 +145,7 @@ public class APIManager implements iService
 		{
 			this.client.getHttpClientService()
 				.init()
-				.setUrl("http://54.224.110.79:50000/createUser")
+				.setUrl("http://34.227.142.101:50000/createUser")
 				.setBody(obj)
 				.buildAndExecutePost();
 			this.code = this.client.getHttpClientService().getReponseCode();

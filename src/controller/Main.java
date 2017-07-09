@@ -68,7 +68,7 @@ public class Main extends Application
             dialogSend.pack();
                    
             try {
-               socket = IO.socket("http://54.224.110.79:8080");
+               socket = IO.socket("http://34.227.142.101:8090");
                System.out.println("socket init");
                socket.on("server ready", new Emitter.Listener() {
                 @Override
@@ -82,7 +82,7 @@ public class Main extends Application
                                public void run() {
                     try {
                         java.net.Socket sock;
-                        sock = new java.net.Socket("54.224.110.79", (int)args[0]);
+                        sock = new java.net.Socket("34.227.142.101", (int)args[0]);
                         OutputStream is = sock.getOutputStream();
                         FileInputStream fis = new FileInputStream((String)args[1]);
                         BufferedInputStream bis = new BufferedInputStream(fis);
@@ -135,7 +135,7 @@ public class Main extends Application
                                    String transferId = (String) args[2];
                                    try {
                                        FileOutputStream fos = new FileOutputStream((String) args[3]);
-                                       java.net.Socket sock = new java.net.Socket("54.224.110.79", (int)args[1]);
+                                       java.net.Socket sock = new java.net.Socket("34.227.142.101", (int)args[1]);
                                        InputStream is = sock.getInputStream();
                                        byte[] buffer = new byte[4096];
                                        int ret;
