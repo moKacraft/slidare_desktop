@@ -13,7 +13,7 @@ import javafx.beans.value.ObservableValue;
  */
 public interface ObservableGroup extends iGroup
 {
-	public ObservableValue<String> IdProperty();
-	public ObservableValue<iGroup.GroupStatus> StatusProperty();
-	public ObservableValue<String> NameProperty(); 
+    public ObservableValue<String> IdProperty();
+    public ObservableValue<iGroup.GroupStatus> StatusProperty();
+    public ObservableValue<String> NameProperty(); 
 }

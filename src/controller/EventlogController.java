@@ -28,42 +28,41 @@ import javax.swing.JPopupMenu;
  *
  * @author Madeline
  */
-public class EventlogController extends Controller implements Initializable {
+public class EventlogController extends Controller implements Initializable 
+{
 
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+        final Browser browser = new Browser();
+        BrowserPreferences preferences = browser.getPreferences();
+        preferences.setPluginsEnabled(true);
+        preferences.setJavaScriptEnabled(true);
+        browser.setPreferences(preferences);
+        BrowserView view = new BrowserView(browser);
         
-//        try {
-            JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-            final Browser browser = new Browser();
-            BrowserPreferences preferences = browser.getPreferences();
-            preferences.setPluginsEnabled(true);
-            preferences.setJavaScriptEnabled(true);
-            browser.setPreferences(preferences);
-            BrowserView view = new BrowserView(browser);
-            
-
         JFrame frameBrowser = new JFrame("Streaming");
         frameBrowser.add(view, BorderLayout.CENTER);
         frameBrowser.setSize(800, 500);
         frameBrowser.setLocationRelativeTo(null);
         frameBrowser.setVisible(true);
-
+        
         browser.loadURL("http://34.227.142.101:8080/streaming");
     }
     
     @FXML
-    public void action1(ActionEvent event) throws IOException, URISyntaxException {
-
+    public void action1(ActionEvent event) throws IOException, URISyntaxException 
+    {
     }
     
     @FXML
-    public void action2(ActionEvent event) throws IOException, NoSuchAlgorithmException, AWTException {
-
+    public void action2(ActionEvent event) throws IOException, NoSuchAlgorithmException, AWTException 
+    {
     }
 }
 

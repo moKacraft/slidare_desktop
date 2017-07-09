@@ -11,10 +11,10 @@ package model;
  */
 public interface iGroup
 {
-	public static enum GroupStatus {
+    public static enum GroupStatus {
         NEW, OPENED, FIXED, CLOSED
     }
-	public String getId();
-	public GroupStatus getStatus();
-	public String getName(); 
+    public String getId();
+    public GroupStatus getStatus();
+    public String getName(); 
 }

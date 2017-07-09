@@ -13,10 +13,10 @@ import javafx.beans.value.ObservableValue;
  */
 public interface ObservableContact extends iContact
 {
-	public ObservableValue<String> IdProperty();
-	public ObservableValue<ContactStatus> StatusProperty();
-	public ObservableValue<String> GroupProperty(); 
-	public ObservableValue<String> FirstnameProperty();
-	public ObservableValue<String> LastnameProperty();
-	public ObservableValue<String> CommentProperty();
+    public ObservableValue<String> IdProperty();
+    public ObservableValue<ContactStatus> StatusProperty();
+    public ObservableValue<String> GroupProperty();
+    public ObservableValue<String> FirstnameProperty();
+    public ObservableValue<String> LastnameProperty();
+    public ObservableValue<String> CommentProperty();
 }

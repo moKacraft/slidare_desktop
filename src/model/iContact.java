@@ -11,13 +11,13 @@ package model;
  */
 public interface iContact
 {
-	public static enum ContactStatus {
+    public static enum ContactStatus {
         NEW, OPENED, FIXED, CLOSED
     }
-	public String getId();
-	public ContactStatus getStatus();
-	public String getGroup(); 
-	public String getFirstname();
-	public String getLastname();
-	public String getComment();
+    public String getId();
+    public ContactStatus getStatus();
+    public String getGroup(); 
+    public String getFirstname();
+    public String getLastname();
+    public String getComment();
 }
