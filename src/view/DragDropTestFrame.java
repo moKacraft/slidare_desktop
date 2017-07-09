@@ -68,7 +68,7 @@ public void setNumberOfContact(int nb)
     numberOfFrame = nb;
 }
 
-public void setPopUpType(Boolean state)
+public void setPopUpType(Boolean state, int width)
 {
     if (state == true)
     {
@@ -81,7 +81,7 @@ public void setPopUpType(Boolean state)
     else
     {
         this.setSize(120, 120 );
-        this.setLocation(300 ,150 * numberOfFrame);
+        this.setLocation(150 * width ,150 * (numberOfFrame % 5));
       
         this.toFront();
       this.setUndecorated(true);
