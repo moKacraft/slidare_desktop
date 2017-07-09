@@ -17,6 +17,7 @@ import view.DragDropTestFrame;
 //import model.KeyHandleWindows;
 import model.MouseListener;
 import org.jnativehook.NativeHookException;
+import utils.streaming.Settings;
 
 /**
  *
@@ -33,6 +34,8 @@ public class DragDropTracking
     private boolean showPopup = false;
     private int numberOfContact = 0;
     private boolean createdContacts = false;
+    
+    private Settings settings = Settings.getTimSettingInstance("tim.properties");
        
     
     public DragDropTracking() throws NativeHookException
@@ -40,10 +43,8 @@ public class DragDropTracking
         dragDropFrame = new DragDropTestFrame();
         dragDropFrame.setPopUpType(true, 1);
         listFrame = new ArrayList<DragDropTestFrame>();
-        dragDropTracking = this;  
+        dragDropTracking = this;
         
-          
-           
         GlobalScreen.registerNativeHook();
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
@@ -61,6 +62,8 @@ public class DragDropTracking
         GlobalScreen.addNativeMouseMotionListener(mouseListener);
       
         //System.out.println("azea");
+        
+        TrackingInfo.keyName = settings.getProperty("key");
         
     }
     

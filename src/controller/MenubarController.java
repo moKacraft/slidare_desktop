@@ -128,30 +128,26 @@ public class MenubarController implements Initializable
                                         utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
                                         frame.setCanvasSize(screenWidth/2, screenHeight/2);
                                         frame.setController(controller);
-                                        //controller.startRtmpRecorder();
                                         new Thread(new Runnable() {
-                               @Override
-                               public void run() {
-                                   try {
-                                       while (frame.isVisible()) {
-                                           try {
-                                               System.out.println("dans le while");
-                                               grabbedFrame = grabber.grab();
-                                               //frame.showImage(grabbedFrame);
-                                               controller.recorder(grabbedFrame);
-                                           } catch (FrameGrabber.Exception ex) {
-                                               Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                                           } catch (FrameRecorder.Exception ex) {
-                                               Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                                           }
-                                       }
-                                       frame.dispose();
-                                       controller.clean();
-                                       grabber.stop();
-                                   } catch (FrameGrabber.Exception ex) {
-                                       Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                                   }
-                               }}).start();
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                while (frame.isVisible()) {
+                                                    System.out.println("dans le while");
+                                                    grabbedFrame = grabber.grab();
+                                                    //frame.showImage(grabbedFrame);
+                                                    controller.recorder(grabbedFrame);
+                                                }
+                                                frame.dispose();
+                                                controller.clean();
+                                                grabber.stop();
+                                                } catch (FrameGrabber.Exception ex) {
+                                                    Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                                                } catch (FrameRecorder.Exception ex) {
+                                                    Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                                                }
+                                            }
+                                        }).start();
 					break;
 				default:
 					System.err.println("Switch inconnu");
