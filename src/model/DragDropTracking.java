@@ -92,7 +92,6 @@ public class DragDropTracking
     this.packageManager.setJSONObject(this.APIManager.getLastResponse());
     JSONObject contacts = this.packageManager.getJSONOBject();
     JSONArray arr = (JSONArray) contacts.get("contacts");
-    arr.get(0);
     System.out.println(contacts);
     System.out.println(arr.size());
 

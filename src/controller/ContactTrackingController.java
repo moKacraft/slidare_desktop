@@ -154,40 +154,8 @@ public class ContactTrackingController extends Controller implements Initializab
 
 		ct3.setFirstname("titi5");
 		ct3.setLastname("titi6");
-		
-//		Map<String, Contact> ContactListList = new ArrayList<>();
-//		ContactListList.add(ct1);
-//		ContactListList.add(ct2);
-//		ContactListList.add(ct3);
-		
-		contactsList.setConverter(new ContactConverter());
-//		contactsList.getItems().addAll();
-		
-		
-		
-//		 contactsList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Contact>() 
-//		 {
-//			@Override public void changed(ObservableValue<? extends Contact> selected, Contact oldFruit, Contact newFruit) 
-//			{
-//				System.out.println(".changed() COMBO");
-//				System.out.println(".changed() ");
-////        if (oldFruit != null) {
-////          switch(oldFruit) {
-////            case "Apple":  appleImage.setVisible(false);  break;
-////            case "Orange": orangeImage.setVisible(false); break;
-////            case "Pear":   pearImage.setVisible(false);   break;
-////          }
-////        }
-////        if (newFruit != null) {
-////          switch(newFruit) {
-////            case "Apple":  appleImage.setVisible(true);   break;
-////            case "Orange": orangeImage.setVisible(true);  break; 
-////            case "Pear":   pearImage.setVisible(true);    break;
-////          }
-////        }  
-//			}
-//		});
-		
+
+                contactsList.setConverter(new ContactConverter());
 		
 		System.out.println(this.getClass().getSimpleName() + ".initialize");
 		

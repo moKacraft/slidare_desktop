@@ -47,10 +47,6 @@ public class MyDragDropListener implements DropTargetListener{
     
      @Override
     public void drop(DropTargetDropEvent event) {
-
-      // if (MainPopUp = false)
-        //   return;
-        // Accept copy drops
         event.acceptDrop(DnDConstants.ACTION_COPY);
 
         // Get the transfer which can provide the dropped item data
@@ -82,7 +78,7 @@ public class MyDragDropListener implements DropTargetListener{
                                 System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
-                                users[0]= "sophie@slidare.com";
+                                users[0] = "sophie@slidare.com";
                                 
                                 try {
                                     encryption _crypt = new  encryption();
