@@ -11,10 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jnativehook.GlobalScreen;
 import view.DragDropTestFrame;
-//import org.jnativehook.keyboard.NativeKeyEvent;
-//import org.jnativehook.keyboard.NativeKeyListener;
-//import model.IKeyHandle;
-//import model.KeyHandleWindows;
 import model.MouseListener;
 import org.jnativehook.NativeHookException;
 import utils.streaming.Settings;
@@ -85,14 +81,14 @@ public class DragDropTracking
      dragDropFrame.setTextFrame(text);
     }
     
-     public void showBubble()   
-   {     
-     dragDropFrame.setVisible(true);
-      if (createdContacts  == true)
-          return;
-     APIManager manager = (APIManager) ServiceFactory.getAPIManager();
+    public void showBubble()   
+    {     
+        dragDropFrame.setVisible(true);
+        if (createdContacts  == true)
+            return;
+    APIManager manager = (APIManager) ServiceFactory.getAPIManager();
 //     System.out.println(this.cfg.getConfig().getToken());
-     manager.userContacts(this.cfg.getConfig().getToken());
+    manager.userContacts(this.cfg.getConfig().getToken());
 
     this.packageManager.setJSONObject(this.APIManager.getLastResponse());
     JSONObject contacts = this.packageManager.getJSONOBject();
@@ -100,25 +96,23 @@ public class DragDropTracking
     if (arr == null)
         return;
 
-     if (createdContacts  == false)
-     {
-       for (int i = 0;i < arr.size() ; i++)
-        {
+    if (createdContacts  == false) {
+        for (int i = 0;i < arr.size() ; i++) {
       ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
-             listContacts.add(((JSONObject) arr.get(i)));
+            listContacts.add(((JSONObject) arr.get(i)));
             CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
         }
-       createdContacts = true;
-     }
-   }
+        createdContacts = true;
+        }
+    }
    
     public void hideBubble()   
-   {
-     dragDropFrame.setVisible(false);
-   }
+    {
+        dragDropFrame.setVisible(false);
+    }
   
-   public void CreatContactPopup(String name, int width)
-   {
+    public void CreatContactPopup(String name, int width)
+    {
         DragDropTestFrame tmp;
         listFrame.add(tmp = new DragDropTestFrame());
         tmp.setPopUpType(false, width);
@@ -126,50 +120,33 @@ public class DragDropTracking
         tmp.setVisible(false);
         ++numberOfContact; 
         tmp.setNumberOfContact(numberOfContact);
-        PopupEntered = true;
-        
-   }
+        PopupEntered = true;   
+    }
     
     public void ShowMiniPopUp()
     {
-        if (PopupEntered == true)
-        {
-         int cnt = 0;
-          while (cnt < numberOfContact)
-          {
-            listFrame.get(cnt).visible(true);
-            showPopup = false;
-            ++cnt;
-          }
-             PopupEntered = false;
-   
+        if (PopupEntered == true) {
+            int cnt = 0;
+            while (cnt < numberOfContact) {
+                listFrame.get(cnt).visible(true);
+                showPopup = false;
+                ++cnt;
+            }
+            PopupEntered = false;
         }
     }
     
     
     public void HideMiniPopUp()
-    { 
-       
-        
-        if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false)
-        {
-          PopupEntered = true;
-          int cnt = 0;
-          while (cnt < numberOfContact)
-          {
-            listFrame.get(cnt).visible(false);
-            showPopup = false;
-            ++cnt;
-          }
-         //(listFrame.get(0)).dispose();
-         
-         //(listFrame.get(1)).dispose();
-         //(listFrame.get(2)).dispose();
-         //listFrame.clear();
-         //listFrame.removeAll(listFrame);
-   
+    {
+        if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false) {
+            PopupEntered = true;
+            int cnt = 0;
+            while (cnt < numberOfContact) {
+                listFrame.get(cnt).visible(false);
+                showPopup = false;
+                ++cnt;
+            }
         }
-    }
-    
-    
+    } 
 }

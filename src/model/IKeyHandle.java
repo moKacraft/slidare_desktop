@@ -14,7 +14,5 @@ public interface IKeyHandle
 {
    public void ActivateKeyListener(); 
    public void setKeyName(String keyName);
-   public String getKeyName();
-   
-    
+   public String getKeyName(); 
 }

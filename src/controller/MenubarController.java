@@ -56,8 +56,7 @@ public class MenubarController implements Initializable
 		fileManager.initFileChooserConfig(Main.parentWindow);
 		String filepath = fileManager.getFilePath();
 
-		if (!filepath.equals(""))
-		{
+		if (!filepath.equals("")) {
 			ConfigManager configManager = (ConfigManager) ServiceFactory.getConfigManager();
 			configManager.load(filepath);
 			configManager.configStage(Main.parentWindow);
@@ -87,8 +86,7 @@ public class MenubarController implements Initializable
 	{
 		MenuItem menu = (MenuItem) event.getSource();
 		String menuId = menu.getId();
-		if (null != menuId)
-		{
+		if (null != menuId) {
 			switch (menuId)
 			{
 				case "manageaccount":
@@ -135,6 +133,7 @@ public class MenubarController implements Initializable
                                                 while (frame.isVisible()) {
                                                     System.out.println("dans le while");
                                                     grabbedFrame = grabber.grab();
+                                                    //Display frame in streamer window
                                                     //frame.showImage(grabbedFrame);
                                                     controller.recorder(grabbedFrame);
                                                 }
@@ -158,29 +157,24 @@ public class MenubarController implements Initializable
 
 	public void aboutUs(ActionEvent event)
 	{
+            ResourceBundle bundle = ServiceFactory.getResourceBundle(false);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(bundle.getString("AboutUs_title"));
+            alert.setHeaderText(null);
+            alert.setContentText(bundle.getString("AboutUs_content"));
 
-		ResourceBundle bundle = ServiceFactory.getResourceBundle(false);
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle(bundle.getString("AboutUs_title"));
-		alert.setHeaderText(null);
-		alert.setContentText(bundle.getString("AboutUs_content"));
+            ButtonType buttonTypeOne = new ButtonType(bundle.getString("AboutUs_website_btn"));
+            ButtonType buttonTypeCancel = new ButtonType(bundle.getString("AboutUs_close"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
-		ButtonType buttonTypeOne = new ButtonType(bundle.getString("AboutUs_website_btn"));
-		ButtonType buttonTypeCancel = new ButtonType(bundle.getString("AboutUs_close"), ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-		alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeOne)
-		{
-			try
-			{
-				Desktop.getDesktop().browse(new URL(bundle.getString("AboutUs_URL")).toURI());
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		} 
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == buttonTypeOne) {
+                try {
+                    Desktop.getDesktop().browse(new URL(bundle.getString("AboutUs_URL")).toURI());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } 
 	}
 }

@@ -21,36 +21,40 @@ public class Controller {
     private static int isStreaming = 0;
     private static int isRecording = 0;
 
-    public int getStreamingState() {
-		return isStreaming;
-	}
+    public int getStreamingState() 
+    {
+        return isStreaming;
+    }
 
-    public int getRecordingState() {
-		return isRecording;
-	}
+    public int getRecordingState() 
+    {
+        return isRecording;
+    }
 
     public Settings getSettings()
     {
     	return settings;
     }
 
-    public void recorder(Frame frame) throws org.bytedeco.javacv.FrameRecorder.Exception {
-		if (isStreaming == 1){
-			rtmpRecorder.record(frame);
-		}
-		if (isRecording == 1){
-			fileRecorder.record(frame);
-		}
+    public void recorder(Frame frame) throws org.bytedeco.javacv.FrameRecorder.Exception 
+    {
+        if (isStreaming == 1){
+            rtmpRecorder.record(frame);
 	}
+	if (isRecording == 1){
+            fileRecorder.record(frame);
+	}
+    }
 
-    public void startFileRecorder() {
+    public void startFileRecorder() 
+    {
     	String outputFile = settings.getProperty("outputFile");
     	double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
     	int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
         int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
         if (outputFile != null)
         {
-        	Date now = new Date();
+            Date now = new Date();
             SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMdd-HHmmss");
             if (!outputFile.endsWith("/")){
             	outputFile = outputFile + "/";
@@ -68,71 +72,74 @@ public class Controller {
 		}
             }
         }
-	}
+    }
 
-    public void stopFileRecorder() {
+    public void stopFileRecorder() 
+    {
     	isRecording = 0;
-		if (fileRecorder != null){
-			try {
-				fileRecorder.stop();
-			} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			fileRecorder = null;
-		}
+	if (fileRecorder != null){
+            try {
+                fileRecorder.stop();
+                fileRecorder = null;
+            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+                // TODO Auto-generated catch block
+		e.printStackTrace();
+            }
 	}
+    }
 
-    public void startRtmpRecorder() {
+    public void startRtmpRecorder() 
+    {
     	String url = settings.getProperty("url");
     	double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
     	int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
         int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
-        if (url != null)
-        {
-        	rtmpRecorder = Recorder.getRecorder(url, frameRate, outWidth, outHeight);
+        if (url != null) {
+            rtmpRecorder = Recorder.getRecorder(url, frameRate, outWidth, outHeight);
         }
 
-        if (rtmpRecorder != null){
-        	try {
-				rtmpRecorder.start();
-				isStreaming = 1;
-			} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        if (rtmpRecorder != null) {
+            try {
+                rtmpRecorder.start();
+		isStreaming = 1;
+            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+                // TODO Auto-generated catch block
+		e.printStackTrace();
+            }
         }
-	}
+    }
 
-    public void stopRtmpRecorder() {
+    public void stopRtmpRecorder() 
+    {
     	isStreaming = 0;
-		if (rtmpRecorder != null){
-			try {
-				rtmpRecorder.stop();
-			} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			rtmpRecorder = null;
-		}
+        if (rtmpRecorder != null){
+            try {
+                rtmpRecorder.stop();
+                rtmpRecorder = null;
+            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+            }
 	}
+    }
 
-    public void clean() {
-    	if (rtmpRecorder != null){
-        	try {
-				rtmpRecorder.stop();
-			} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+    public void clean() 
+    {
+    	if (rtmpRecorder != null) {
+            try {
+                rtmpRecorder.stop();
+            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+                // TODO Auto-generated catch block
+		e.printStackTrace();
+            }
         }
-        if (fileRecorder != null){
-        	try {
-				fileRecorder.stop();
-			} catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        if (fileRecorder != null) {
+            try {
+                fileRecorder.stop();
+            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+                // TODO Auto-generated catch block
+		e.printStackTrace();
+            }
         }
     }
 }

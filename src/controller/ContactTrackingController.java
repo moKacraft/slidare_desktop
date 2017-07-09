@@ -168,13 +168,11 @@ public class ContactTrackingController extends Controller implements Initializab
 		//Connexion au service de traitement
 		connectToService();
 
-		if (list != null)
-		{
-			list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-			list.getSelectionModel().selectedItemProperty().addListener(projectItemSelected);
-			displayedProjectNames.addListener(projectNamesListener);
+		if (list != null) {
+                    list.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                    list.getSelectionModel().selectedItemProperty().addListener(projectItemSelected);
+                    displayedProjectNames.addListener(projectNamesListener);
 		}
-
 	}
 
 	/**
@@ -185,18 +183,18 @@ public class ContactTrackingController extends Controller implements Initializab
 	@FXML
 	public void searchContactFired(ActionEvent event)
 	{
-//		System.out.println("controller.ContactTrackingController.searchContactFired()" + searchContactField.getText());
-		String searchfield = nonNull(searchContactField.getText());
+//          System.out.println("controller.ContactTrackingController.searchContactFired()" + searchContactField.getText());
+            String searchfield = nonNull(searchContactField.getText());
 		
-		List<Contact> tmp = this.contactBusiness.findByLastname(searchfield);
+            List<Contact> tmp = this.contactBusiness.findByLastname(searchfield);
 		
-		System.out.println("controller.ContactTrackingController.searchContactFired()" + tmp);
-		
-		contactsList.getItems().removeAll();
+            System.out.println("controller.ContactTrackingController.searchContactFired()" + tmp);
+	
+            contactsList.getItems().removeAll();
 //		System.out.println("===>" + contactsList.getItems());
 
-		contactsList.getItems().addAll(tmp);
-		addContact.setDisable(false);
+            contactsList.getItems().addAll(tmp);
+            addContact.setDisable(false);
 	}
 
 	/**
@@ -207,33 +205,19 @@ public class ContactTrackingController extends Controller implements Initializab
 	@FXML
 	public void addContactFired(ActionEvent event)
 	{
-		System.out.println("addContactFired()");
-		Contact tmp = contactsList.getSelectionModel().getSelectedItem();
-		final String selectedProject = getSelectedProject();
-		if (model != null && selectedProject != null)
-		{
-			ObservableContact issue = model.addContactFor(selectedProject, tmp);
-			if (table != null)
-			{
-				System.out.println("addContactFired() 2"+issue);
-				// Select the newly created contact.
-				table.getSelectionModel().clearSelection();
-				table.getSelectionModel().select(issue);
-				saveIssue.setDisable(false);
-			}
+            System.out.println("addContactFired()");
+            Contact tmp = contactsList.getSelectionModel().getSelectedItem();
+            final String selectedProject = getSelectedProject();
+            if (model != null && selectedProject != null) {
+            	ObservableContact issue = model.addContactFor(selectedProject, tmp);
+		if (table != null) {
+                    System.out.println("addContactFired() 2"+issue);
+                    // Select the newly created contact.
+                    table.getSelectionModel().clearSelection();
+                    table.getSelectionModel().select(issue);
+                    saveIssue.setDisable(false);
 		}
-			
-//		final String selectedProject = getSelectedProject();
-//		if (model != null && selectedProject != null)
-//		{
-//			ObservableContact issue = model.createContactFor(selectedProject);
-//			if (table != null)
-//			{
-//				// Select the newly created contact.
-//				table.getSelectionModel().clearSelection();
-//				table.getSelectionModel().select(issue);
-//			}
-//		}
+            }
 	}
 	
 	/**
@@ -244,17 +228,15 @@ public class ContactTrackingController extends Controller implements Initializab
 	@FXML
 	public void newContactFired(ActionEvent event)
 	{
-		final String selectedProject = getSelectedProject();
-		if (model != null && selectedProject != null)
-		{
-			ObservableContact issue = model.createContactFor(selectedProject);
-			if (table != null)
-			{
-				// Select the newly created contact.
-				table.getSelectionModel().clearSelection();
-				table.getSelectionModel().select(issue);
-			}
+            final String selectedProject = getSelectedProject();
+            if (model != null && selectedProject != null) {
+                ObservableContact issue = model.createContactFor(selectedProject);
+		if (table != null) {
+                // Select the newly created contact.
+                    table.getSelectionModel().clearSelection();
+                    table.getSelectionModel().select(issue);
 		}
+            }
 	}
 
 	/**

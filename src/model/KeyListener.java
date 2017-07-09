@@ -10,37 +10,26 @@ package model;
  * @author Timothy
  */
 import model.IKeyHandle;
-//import model.KeyHandleWindows;
- import org.jnativehook.GlobalScreen;
-//import Source.View.MainView;
-import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 public class KeyListener implements NativeKeyListener {
-     public IKeyHandle keyHandle = null;
-     public boolean keyPressed = false;
+    public IKeyHandle keyHandle = null;
+    public boolean keyPressed = false;
      
-     public KeyListener()
-     {
-           // keyHandle = new KeyHandleWindows();
-        //((KeyHandleWindows)keyHandle).addObserver(this);
-     }
-     @Override
+    public KeyListener()
+    {
+    }
+    
+    @Override
     public void nativeKeyPressed(NativeKeyEvent e) 
     {
         String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
  
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true)
-        {
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
             key1 = "Ctrl";
         }
-        
-        //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-        //System.out.println("Key Pressed 2: " + TrackingInfo.keyName);
-     
-        if ((TrackingInfo.keyName != null) &&  key1.matches(TrackingInfo.keyName) == true)
-        {
+        if ((TrackingInfo.keyName != null) &&  key1.matches(TrackingInfo.keyName) == true) {
             DragDropTracking.dragDropTracking.showBubble();
         }
     }
@@ -49,32 +38,24 @@ public class KeyListener implements NativeKeyListener {
     {
         String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
  
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true)
-        {
+        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
             key1 = "Ctrl";
         }
-         if ((TrackingInfo.keyName != null) && key1.matches(TrackingInfo.keyName) == true)
-        {
-           
+        if ((TrackingInfo.keyName != null) && key1.matches(TrackingInfo.keyName) == true) {
             DragDropTracking.dragDropTracking.hideBubble();
             DragDropTracking.dragDropTracking.HideMiniPopUp();
-            
         }
      
     }
 
-    public void nativeKeyTyped(NativeKeyEvent e) {
-        
-        System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
-         //System.out.println("Key Typed 2: " + keyHandle.getKeyName());
-    
-    }
-     public void notifyViewToChangeKeyHandleText(String text)
+    public void nativeKeyTyped(NativeKeyEvent e)
     {
-       //  this.setChanged();
-         //MainView.mainView.changeActivationName(text);
-         //notifyObservers(text);
+        System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
     }
+    
+//    public void notifyViewToChangeKeyHandleText(String text) {
+//         
+//    }
     
 /*@Override
     public void update(Observable o, Object arg) 
@@ -87,6 +68,4 @@ public class KeyListener implements NativeKeyListener {
         }
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }*/
-    
-   
 }
