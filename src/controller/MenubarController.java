@@ -121,6 +121,7 @@ public class MenubarController implements Initializable
                     utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
                     frame.setCanvasSize(screenWidth/2, screenHeight/2);
                     frame.setController(controller);
+                    System.out.println("CA VA PLANTEEEER!");
                     new Thread(new Runnable() {
                     @Override
                     public void run() {

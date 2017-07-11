@@ -85,6 +85,13 @@ public class MyDragDropListener implements DropTargetListener
                                 String[] users = new String[1];
                                 users[0] =  (String)(DragDropTracking.listContacts.get(concernedDragDrop - 1).get("email"));
                                 
+                                System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
+                                
+                                if (users[0].equals("soso@gmail.com")) {
+                                    Main.socket.emit("request file transfer", f.getName(), file, users, file.toString(), f.getName(),"", "","", "", f.length());
+                                    return;
+                                }
+                                
                                 try {
                                     encryption _crypt = new  encryption();
                                     

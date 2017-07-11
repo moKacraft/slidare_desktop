@@ -25,7 +25,7 @@ public class AccountBusiness
     
     private FileManager fileManager;
     
-    private ConfigManager configManager;
+    ConfigManager configManager;
     
     private PackageManager packageManager;
     
