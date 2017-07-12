@@ -110,8 +110,9 @@ public class MenubarController implements Initializable
                     Dimension screenSize = kit.getScreenSize();
                     int screenWidth = screenSize.width;
                     int screenHeight = screenSize.height;
-
-                    double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+                    System.out.println("CA VA PLANTEEEER!");
+                    //double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+                    double frameRate = 30;
                     FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
                     grabber.setFormat("gdigrab");
                     grabber.setFrameRate(frameRate);
@@ -129,8 +130,6 @@ public class MenubarController implements Initializable
                             while (frame.isVisible()) {
                                 System.out.println("dans le while");
                                 grabbedFrame = grabber.grab();
-                                                    //Display frame in streamer window
-                                                    //frame.showImage(grabbedFrame);
                                 controller.recorder(grabbedFrame);
                             }
                             frame.dispose();
