@@ -5,6 +5,10 @@
  */
 package controller;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserPreferences;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -23,6 +27,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
+import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber;
@@ -112,7 +118,7 @@ public class MenubarController implements Initializable
                     int screenHeight = screenSize.height;
                     System.out.println("CA VA PLANTEEEER!");
                     //double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-                    double frameRate = 30;
+                    double frameRate = 10;
                     FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
                     grabber.setFormat("gdigrab");
                     grabber.setFrameRate(frameRate);
@@ -141,6 +147,23 @@ public class MenubarController implements Initializable
                             Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }}).start();
+                    break;
+                case "stream":
+                    JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+        final Browser browser = new Browser();
+        BrowserPreferences preferences = browser.getPreferences();
+        preferences.setPluginsEnabled(true);
+        preferences.setJavaScriptEnabled(true);
+        browser.setPreferences(preferences);
+        BrowserView view = new BrowserView(browser);
+        
+        JFrame frameBrowser = new JFrame("Streaming");
+        frameBrowser.add(view, BorderLayout.CENTER);
+        frameBrowser.setSize(800, 500);
+        frameBrowser.setLocationRelativeTo(null);
+        frameBrowser.setVisible(true);
+        
+        browser.loadURL("http://34.227.142.101:8080/streaming");
                     break;
 		default:
                     System.err.println("Switch inconnu");
