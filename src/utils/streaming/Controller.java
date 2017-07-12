@@ -89,10 +89,15 @@ public class Controller {
     
     public void startRtmpRecorder()
     {
-        String url = settings.getProperty("url");
-        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-        int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
-        int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
+//        String url = settings.getProperty("url");
+//        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+//        int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
+//        int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
+        
+        String url = "rtmp://34.227.142.101:1935/myapp/test";
+        double frameRate = 30;
+        int outWidth = 1280;
+        int outHeight = 720;
         if (url != null) {
             rtmpRecorder = Recorder.getRecorder(url, frameRate, outWidth, outHeight);
         }

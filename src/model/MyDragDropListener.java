@@ -87,7 +87,7 @@ public class MyDragDropListener implements DropTargetListener
                                 
                                 System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
                                 
-                                if (users[0].equals("soso@gmail.com")) {
+                                if (users[0].equals("juju@gmail.com") || users[0].equals("testbeta@gmail.com") || users[0].equals("testssss@gmail.com")) {
                                     Main.socket.emit("request file transfer", f.getName(), file, users, file.toString(), f.getName(),"", "","", "", f.length());
                                     return;
                                 }

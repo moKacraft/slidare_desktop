@@ -224,11 +224,14 @@ public class CanvasFrame extends JFrame {
             
             JLabel urLabel = new JLabel("URL");
             pan.add(urLabel, new GBC(0, 1));
-            JTextField urlText = new JTextField(settings.getProperty("url"), 20);
+            
+            JTextField urlText = new JTextField("rtmp://34.227.142.101/myapp/test2", 20);
+            //JTextField urlText = new JTextField(settings.getProperty("url"), 20);
             pan.add(urlText, new GBC(1, 1));
             JLabel outputFileLabel = new JLabel("Output path");
             pan.add(outputFileLabel, new GBC(0, 2));
-            JTextField outputFileText = new JTextField(settings.getProperty("outputFile"), 20);
+            JTextField outputFileText = new JTextField("tt", 20);
+            //JTextField outputFileText = new JTextField(settings.getProperty("outputFile"), 20);
             pan.add(outputFileText, new GBC(1, 2));
             
             JDialog outer = this;
@@ -253,9 +256,9 @@ public class CanvasFrame extends JFrame {
             JButton ok = new JButton("OK");
             ok.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                    settings.setProperty("url", urlText.getText());
-                    settings.setProperty("outputFile", outputFileText.getText());
-                    settings.saveSettings();
+                    //settings.setProperty("url", urlText.getText());
+                    //settings.setProperty("outputFile", outputFileText.getText());
+                    //settings.saveSettings();
                     setVisible(false);
                 }});
             
