@@ -111,7 +111,7 @@ public class MenubarController implements Initializable
                     break;
 		case "eventlog":
                     utils.streaming.Controller controller = new utils.streaming.Controller();
-                    Settings settings = controller.getSettings();
+                    //Settings settings = controller.getSettings();
                     Toolkit kit = Toolkit.getDefaultToolkit();
                     Dimension screenSize = kit.getScreenSize();
                     int screenWidth = screenSize.width;
