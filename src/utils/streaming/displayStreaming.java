@@ -79,7 +79,7 @@ public class displayStreaming extends JPanel {
                 // Set up the embedded browser:
                 browser = new WebView();
                 webEngine = browser.getEngine();
-                webEngine.load("http://34.227.142.101:8080/streaming");
+                webEngine.load("http://34.238.153.180:8080/streaming");
                 
                 ObservableList<Node> children = root.getChildren();
                 children.add(browser);
