@@ -16,7 +16,10 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class KeyListener implements NativeKeyListener {
     public IKeyHandle keyHandle = null;
     public boolean keyPressed = false;
-     
+    private String key1 = "";
+    private String key2 = "";
+    
+    
     public KeyListener()
     {
     }
@@ -24,28 +27,49 @@ public class KeyListener implements NativeKeyListener {
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) 
     {
-        String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
- 
+        if (key1 == "")
+            key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+        else if (key2 == "")
+            key2 = NativeKeyEvent.getKeyText(e.getKeyCode());
+            
+        
         if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
-            key1 = "Ctrl";
+            if (key2 == "")
+                key1 = "Ctrl";
+            else
+                key2 = "Ctrl";
+                
         }
-        if ((TrackingInfo.keyName != null) &&  key1.matches(TrackingInfo.keyName) == true) {
+        //System.out.println("e:"  + NativeKeyEvent.getKeyText(e.getKeyCode()));
+        //System.out.println("e 2:"  + key1);  
+        //System.out.println("key1:"  + key1);
+        //System.out.println("key2:" + key2);
+     if ((TrackingInfo.firstKeyName != null) &&  key1.matches(TrackingInfo.firstKeyName) == true &&
+            (TrackingInfo.secondKeyName != null) &&  key2.matches(TrackingInfo.secondKeyName) == true  ||
+                key1.matches(TrackingInfo.secondKeyName) == true &&  key2.matches(TrackingInfo.firstKeyName) == true) 
+        {
             DragDropTracking.dragDropTracking.showBubble();
+            
         }
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) 
     {
-        String key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+        //key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+        //key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
  
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
+        /*if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
             key1 = "Ctrl";
-        }
-        if ((TrackingInfo.keyName != null) && key1.matches(TrackingInfo.keyName) == true) {
+        }*/
+        if ((TrackingInfo.firstKeyName != null) &&  key1.matches(TrackingInfo.firstKeyName) == true &&
+            (TrackingInfo.secondKeyName != null) &&  key2.matches(TrackingInfo.secondKeyName) == true  ||
+                key1.matches(TrackingInfo.secondKeyName) == true &&  key2.matches(TrackingInfo.firstKeyName) == true) 
+        {
             DragDropTracking.dragDropTracking.hideBubble();
             DragDropTracking.dragDropTracking.HideMiniPopUp();
         }
-     
+        key1 = "";
+        key2 = "";
     }
 
     public void nativeKeyTyped(NativeKeyEvent e)

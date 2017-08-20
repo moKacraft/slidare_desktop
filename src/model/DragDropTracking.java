@@ -72,7 +72,9 @@ public class DragDropTracking
       
         //System.out.println("azea");
         
-        TrackingInfo.keyName = settings.getProperty("key");
+        TrackingInfo.firstKeyName = settings.getProperty("key");
+        TrackingInfo.secondKeyName = settings.getProperty("key2");
+       
         
     }
     
