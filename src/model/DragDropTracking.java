@@ -49,7 +49,7 @@ public class DragDropTracking
     {
         dragDropFrame = new DragDropTestFrame();
         dragDropFrame.setPopUpType(true, 1);
-        dragDropTracking = this;  
+        dragDropTracking = this;
         this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
         this.APIManager = (APIManager) ServiceFactory.getAPIManager();
         this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
@@ -58,18 +58,18 @@ public class DragDropTracking
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
         
-        keyListener = new KeyListener();   
+        keyListener = new KeyListener();
         GlobalScreen.addNativeKeyListener(keyListener);
-             
-             
-             
+        
+        
+        
         // Construct the example object.
-       mouseListener = new MouseListener();
-
+        mouseListener = new MouseListener();
+        
         // Add the appropriate listeners.
         GlobalScreen.addNativeMouseListener(mouseListener);
         GlobalScreen.addNativeMouseMotionListener(mouseListener);
-      
+        
         //System.out.println("azea");
         
         TrackingInfo.firstKeyName = settings.getProperty("key");
@@ -80,39 +80,41 @@ public class DragDropTracking
     
     public void showPathText(String text)
     {
-     dragDropFrame.setTextFrame(text);
+        dragDropFrame.setTextFrame(text);
     }
     
-    public void showBubble()   
-    {     
+    public void showBubble()
+    {
         dragDropFrame.setVisible(true);
-        if (createdContacts  == true)
+        if (createdContacts  == true) {
             return;
-    APIManager manager = (APIManager) ServiceFactory.getAPIManager();
-//     System.out.println(this.cfg.getConfig().getToken());
-    manager.userContacts(this.cfg.getConfig().getToken());
-
-    this.packageManager.setJSONObject(this.APIManager.getLastResponse());
-    JSONObject contacts = this.packageManager.getJSONOBject();
-    JSONArray arr = (JSONArray) contacts.get("contacts");
-    if (arr == null)
-        return;
-
-    if (createdContacts  == false) {
-        for (int i = 0;i < arr.size() ; i++) {
-      ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
-            listContacts.add(((JSONObject) arr.get(i)));
-            CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
         }
-        createdContacts = true;
+        APIManager manager = (APIManager) ServiceFactory.getAPIManager();
+//     System.out.println(this.cfg.getConfig().getToken());
+        manager.userContacts(this.cfg.getConfig().getToken());
+
+        this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+        JSONObject contacts = this.packageManager.getJSONOBject();
+        JSONArray arr = (JSONArray) contacts.get("contacts");
+        if (arr == null) {
+            return;
+        }
+
+        if (createdContacts  == false) {
+            for (int i = 0;i < arr.size() ; i++) {
+                ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
+                listContacts.add(((JSONObject) arr.get(i)));
+                CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
+            }
+            createdContacts = true;
         }
     }
-   
-    public void hideBubble()   
+    
+    public void hideBubble()
     {
         dragDropFrame.setVisible(false);
     }
-  
+    
     public void CreatContactPopup(String name, int width)
     {
         DragDropTestFrame tmp;
@@ -120,9 +122,9 @@ public class DragDropTracking
         tmp.setPopUpType(false, width);
         tmp.setMessage(name);
         tmp.setVisible(false);
-        ++numberOfContact; 
+        ++numberOfContact;
         tmp.setNumberOfContact(numberOfContact);
-        PopupEntered = true;   
+        PopupEntered = true;
     }
     
     public void ShowMiniPopUp()

@@ -13,12 +13,12 @@ import javafx.beans.value.ObservableValue;
  */
 public interface ObservableAccount extends iAccount
 {
-	public ObservableValue<String> IdProperty();
-	public ObservableValue<String> FirstnameProperty();
-	public ObservableValue<String> LastnameProperty();
-	public ObservableValue<String> UniversityProperty();
-	public ObservableValue<String> JobProperty();
-	public ObservableValue<String> PhoneProperty();
-	public ObservableValue<String> CityProperty();
-	public ObservableValue<String> BirthProperty();
+    public ObservableValue<String> IdProperty();
+    public ObservableValue<String> FirstnameProperty();
+    public ObservableValue<String> LastnameProperty();
+    public ObservableValue<String> UniversityProperty();
+    public ObservableValue<String> JobProperty();
+    public ObservableValue<String> PhoneProperty();
+    public ObservableValue<String> CityProperty();
+    public ObservableValue<String> BirthProperty();
 }

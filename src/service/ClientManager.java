@@ -13,22 +13,21 @@ import service.client.HttpClientService;
  */
 public class ClientManager implements iService
 {
-	private HttpClientService hcs;
+    private HttpClientService hcs;
 
-	public ClientManager()
-	{
-		this.hcs = new HttpClientService();
-	}
-	
-	/**
-	 * Give the the HTTP Client needed for all the HTTP request
-	 * 
-	 * @return HttpClientService
-	 */
-	public HttpClientService getHttpClientService()
-	{
-		return (this.hcs);
-	}
+    public ClientManager()
+    {
+	this.hcs = new HttpClientService();
+    }
+    
+    /**
+     * Give the the HTTP Client needed for all the HTTP request
+     *
+     * @return HttpClientService
+     */
+    public HttpClientService getHttpClientService()
+    {
+        return (this.hcs);
+    }
 }
 
-	

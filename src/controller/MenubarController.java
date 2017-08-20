@@ -5,6 +5,10 @@
  */
 package controller;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserPreferences;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
+import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -23,6 +27,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
+import javax.swing.JFrame;
+import javax.swing.JPopupMenu;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameGrabber;
@@ -40,141 +46,152 @@ import utils.streaming.Settings;
 public class MenubarController implements Initializable
 {
 
-	@FXML
-	private HBox MenuBarHB;
+    @FXML
+    private HBox MenuBarHB;
         
-        private static Frame grabbedFrame;
+    private static Frame grabbedFrame;
 	
-	@Override
-	public void initialize(URL location, ResourceBundle resources)
-	{
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+    }
+
+    public void loadConfig(ActionEvent event) throws IOException
+    {
+        FileManager fileManager = (FileManager) ServiceFactory.getFileManager();
+	fileManager.initFileChooserConfig(Main.parentWindow);
+	String filepath = fileManager.getFilePath();
+
+	if (!filepath.equals("")) {
+            ConfigManager configManager = (ConfigManager) ServiceFactory.getConfigManager();
+            configManager.load(filepath);
+            configManager.configStage(Main.parentWindow);
+            Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
 	}
+    }
 
-	public void loadConfig(ActionEvent event) throws IOException
-	{
-		FileManager fileManager = (FileManager) ServiceFactory.getFileManager();
-		fileManager.initFileChooserConfig(Main.parentWindow);
-		String filepath = fileManager.getFilePath();
-
-		if (!filepath.equals("")) {
-			ConfigManager configManager = (ConfigManager) ServiceFactory.getConfigManager();
-			configManager.load(filepath);
-			configManager.configStage(Main.parentWindow);
-			Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
-		}
-	}
-
-	public void logout(ActionEvent event) throws IOException
-	{
-		ConfigManager cfg = (ConfigManager) ServiceFactory.getConfigManager();
-		cfg.getConfig().setUsername("");
-		cfg.getConfig().setPassword("");
-		cfg.getConfig().setAutoConnect(false);
-		cfg.save();
+    public void logout(ActionEvent event) throws IOException
+    {
+        ConfigManager cfg = (ConfigManager) ServiceFactory.getConfigManager();
+	cfg.getConfig().setUsername("");
+	cfg.getConfig().setPassword("");
+	cfg.getConfig().setAutoConnect(false);
+	cfg.save();
 		
-		//Chargement de la page de connection
-		Main.loadScene("/view/connect.fxml", "Connect_title");
-	}
+	//Chargement de la page de connection
+	Main.loadScene("/view/connect.fxml", "Connect_title");
+    }
 	
-	public void quitFired(ActionEvent event)
-	{
-		Platform.exit();
-		System.exit(0);
-	}
+    public void quitFired(ActionEvent event)
+    {
+        Platform.exit();
+	System.exit(0);
+    }
 
-	public void switchScene(ActionEvent event) throws IOException
-	{
-		MenuItem menu = (MenuItem) event.getSource();
-		String menuId = menu.getId();
-		if (null != menuId) {
-			switch (menuId)
-			{
-				case "manageaccount":
-					Main.loadScene("/view/AccountTracking.fxml", "Account_title");
-					break;
-				case "managegroups":
-					Main.loadScene("/view/GroupTracking.fxml", "Group_title");
-					break;
-				case "managecontacts":
-					Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
-					break;
-				case "setting":
-					Main.loadScene("/view/ConfigTracking.fxml", "Contact_title");
-					break;
-                                case "managedragdrop":
-					Main.loadScene("/view/DragDropTracking.fxml", "DragDrop_title");
-					break;
-				case "eventlog":
-//					DialogSys ds = new DialogSys();
-//					ds.showPopup(MenuBarHB, "/view/eventlog.fxml", "Eventlog");
-                                        utils.streaming.Controller controller = new utils.streaming.Controller();
-                                        Settings settings = controller.getSettings();
+    public void switchScene(ActionEvent event) throws IOException
+    {
+        MenuItem menu = (MenuItem) event.getSource();
+	String menuId = menu.getId();
+	if (null != menuId) {
+            switch (menuId) {
+		case "manageaccount":
+                    Main.loadScene("/view/AccountTracking.fxml", "Account_title");
+                    break;
+		case "managegroups":
+                    Main.loadScene("/view/GroupTracking.fxml", "Group_title");
+                    break;
+		case "managecontacts":
+                    Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
+                    break;
+                case "setting":
+                    Main.loadScene("/view/ConfigTracking.fxml", "Contact_title");
+                    break;
+                case "managedragdrop":
+                    Main.loadScene("/view/DragDropTracking.fxml", "DragDrop_title");
+                    break;
+		case "eventlog":
+                    utils.streaming.Controller controller = new utils.streaming.Controller();
+                    //Settings settings = controller.getSettings();
+                    Toolkit kit = Toolkit.getDefaultToolkit();
+                    Dimension screenSize = kit.getScreenSize();
+                    int screenWidth = screenSize.width;
+                    int screenHeight = screenSize.height;
+                    System.out.println("CA VA PLANTEEEER!");
+                    //double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+                    double frameRate = 10;
+                    FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
+                    grabber.setFormat("gdigrab");
+                    grabber.setFrameRate(frameRate);
+                    grabber.setImageWidth(screenWidth);
+                    grabber.setImageHeight(screenHeight);
+                    grabber.start();
+                    utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
+                    frame.setCanvasSize(screenWidth/2, screenHeight/2);
+                    frame.setController(controller);
+                    System.out.println("CA VA PLANTEEEER!");
+                    new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            while (frame.isVisible()) {
+                                System.out.println("dans le while");
+                                grabbedFrame = grabber.grab();
+                                controller.recorder(grabbedFrame);
+                            }
+                            frame.dispose();
+                            controller.clean();
+                            grabber.stop();
+                        } catch (FrameGrabber.Exception ex) {
+                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (FrameRecorder.Exception ex) {
+                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }}).start();
+                    break;
+                case "stream":
+                    JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+        final Browser browser = new Browser();
+        BrowserPreferences preferences = browser.getPreferences();
+        preferences.setPluginsEnabled(true);
+        preferences.setJavaScriptEnabled(true);
+        browser.setPreferences(preferences);
+        BrowserView view = new BrowserView(browser);
+        
+        JFrame frameBrowser = new JFrame("Streaming");
+        frameBrowser.add(view, BorderLayout.CENTER);
+        frameBrowser.setSize(800, 500);
+        frameBrowser.setLocationRelativeTo(null);
+        frameBrowser.setVisible(true);
+        
+        browser.loadURL("http://34.227.142.101:8080/streaming");
+                    break;
+		default:
+                    System.err.println("Switch inconnu");
+                    break;
+            }
+        }
+    }
 
+    public void aboutUs(ActionEvent event)
+    {
+        ResourceBundle bundle = ServiceFactory.getResourceBundle(false);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(bundle.getString("AboutUs_title"));
+        alert.setHeaderText(null);
+        alert.setContentText(bundle.getString("AboutUs_content"));
 
-                                        Toolkit kit = Toolkit.getDefaultToolkit();
-                                        Dimension screenSize = kit.getScreenSize();
-                                        int screenWidth = screenSize.width;
-                                        int screenHeight = screenSize.height;
+        ButtonType buttonTypeOne = new ButtonType(bundle.getString("AboutUs_website_btn"));
+        ButtonType buttonTypeCancel = new ButtonType(bundle.getString("AboutUs_close"), ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                                        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-                                        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
-                                        grabber.setFormat("gdigrab");
-                                        grabber.setFrameRate(frameRate);
-                                        grabber.setImageWidth(screenWidth);
-                                        grabber.setImageHeight(screenHeight);
-                                        grabber.start();
-                                        utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
-                                        frame.setCanvasSize(screenWidth/2, screenHeight/2);
-                                        frame.setController(controller);
-                                        new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            try {
-                                                while (frame.isVisible()) {
-                                                    System.out.println("dans le while");
-                                                    grabbedFrame = grabber.grab();
-                                                    //Display frame in streamer window
-                                                    //frame.showImage(grabbedFrame);
-                                                    controller.recorder(grabbedFrame);
-                                                }
-                                                frame.dispose();
-                                                controller.clean();
-                                                grabber.stop();
-                                                } catch (FrameGrabber.Exception ex) {
-                                                    Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                                                } catch (FrameRecorder.Exception ex) {
-                                                    Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                                                }
-                                            }
-                                        }).start();
-					break;
-				default:
-					System.err.println("Switch inconnu");
-					break;
-			}
-		}
-	}
+        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
 
-	public void aboutUs(ActionEvent event)
-	{
-            ResourceBundle bundle = ServiceFactory.getResourceBundle(false);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle(bundle.getString("AboutUs_title"));
-            alert.setHeaderText(null);
-            alert.setContentText(bundle.getString("AboutUs_content"));
-
-            ButtonType buttonTypeOne = new ButtonType(bundle.getString("AboutUs_website_btn"));
-            ButtonType buttonTypeCancel = new ButtonType(bundle.getString("AboutUs_close"), ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == buttonTypeOne) {
-                try {
-                    Desktop.getDesktop().browse(new URL(bundle.getString("AboutUs_URL")).toURI());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } 
-	}
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            try {
+                Desktop.getDesktop().browse(new URL(bundle.getString("AboutUs_URL")).toURI());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } 
+    }
 }

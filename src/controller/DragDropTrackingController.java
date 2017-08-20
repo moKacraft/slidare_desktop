@@ -22,13 +22,15 @@ import utils.streaming.Settings;
  *
  * @author Timothy
  */
-public class DragDropTrackingController extends Controller implements Initializable {
+public class DragDropTrackingController extends Controller implements Initializable 
+{
     
     
    private boolean stateActivationApp = true;
    private DragDropTestFrame dragDropFrame;
    private String keyName = "CTRL";
    private Alert alert;
+   private int cnt = 0;
    private Settings settings = Settings.getTimSettingInstance("tim.properties");
     
     @FXML
@@ -39,56 +41,63 @@ public class DragDropTrackingController extends Controller implements Initializa
     
     private boolean changeActivationButtonKey = false;
     @Override
-	public void initialize(URL url, ResourceBundle rsrcs)
-	{
-             //TrackingServiceStub
-            activationButton.setText(settings.getProperty("key"));
-            TrackingInfo.keyName = settings.getProperty("key");
+    public void initialize(URL url, ResourceBundle rsrcs)
+    {
+        //TrackingServiceStub
+        activationButton.setText(settings.getProperty("key") + " " +settings.getProperty("key2"));
+        TrackingInfo.firstKeyName = settings.getProperty("key");
+        TrackingInfo.secondKeyName = settings.getProperty("key2");
+   
+    }
+    
+    @FXML
+    public void changeActivationKey(ActionEvent event)
+    {
+        changeActivationButtonKey = true;
+    }
+    
+    
+    
+    @FXML
+    public void  changeActivationButton(ActionEvent event)
+    {
+        if (stateActivationApp == true) {
+            activationApp.setText("Off");
+            stateActivationApp = false;
+        } else {
+            activationApp.setText("On");
+            stateActivationApp = true;
         }
-        
-        @FXML
-	public void changeActivationKey(ActionEvent event)
-	{
-            changeActivationButtonKey = true;
-           
-                
-        }	
-        
-        
-        
-          @FXML
-	public void  changeActivationButton(ActionEvent event)
-        {
-            if (stateActivationApp == true)
-            {
-                activationApp.setText("Off");
-                stateActivationApp = false;
-            }
-            else
-            {
-                activationApp.setText("On");
-                stateActivationApp = true; 
-            }      
-        }
-        
-        public String getKeyName()
-        {
-            return keyName;
-        }
-        
-         @FXML
-	public void  changeKeyPressedActivationButton(KeyEvent event)
-	{
-            if (changeActivationButtonKey == true)
+    }
+    
+    public String getKeyName()
+    {
+        return keyName;
+    }
+    
+    @FXML
+    public void  changeKeyPressedActivationButton(KeyEvent event)
+    {
+        if (changeActivationButtonKey == true) {
+            
+                ++cnt;
+            if (cnt % 2 == 1)
             {
                 activationButton.setText(event.getCode().getName());
-                TrackingInfo.keyName = event.getCode().getName();
-                
+                TrackingInfo.firstKeyName = event.getCode().getName();
                 settings.setProperty("key", event.getCode().getName());
                 settings.saveSettings();
                 
+            }
+            if (cnt % 2 == 0)
+            {
+                activationButton.setText(activationButton.getText() + " " + event.getCode().getName());
+                TrackingInfo.secondKeyName = event.getCode().getName();
+                settings.setProperty("key2", event.getCode().getName());
+                settings.saveSettings();                 
                 changeActivationButtonKey = false;
             }
         }
-       
+    }
+    
 }

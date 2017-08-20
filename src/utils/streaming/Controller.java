@@ -1,8 +1,8 @@
 /*
- * Projet Slidare
- * Sharing anywhere, anytime
- * 
- */
+* Projet Slidare
+* Sharing anywhere, anytime
+*
+*/
 package utils.streaming;
 
 import java.text.SimpleDateFormat;
@@ -20,117 +20,121 @@ public class Controller {
     private static FFmpegFrameRecorder fileRecorder = null;
     private static int isStreaming = 0;
     private static int isRecording = 0;
-
-    public int getStreamingState() 
+    
+    public int getStreamingState()
     {
         return isStreaming;
     }
-
-    public int getRecordingState() 
+    
+    public int getRecordingState()
     {
         return isRecording;
     }
-
+    
     public Settings getSettings()
     {
-    	return settings;
+        return settings;
     }
-
-    public void recorder(Frame frame) throws org.bytedeco.javacv.FrameRecorder.Exception 
+    
+    public void recorder(Frame frame) throws org.bytedeco.javacv.FrameRecorder.Exception
     {
-        if (isStreaming == 1){
+        if (isStreaming == 1) {
             rtmpRecorder.record(frame);
-	}
-	if (isRecording == 1){
+        }
+        if (isRecording == 1) {
             fileRecorder.record(frame);
-	}
+        }
     }
-
-    public void startFileRecorder() 
+    
+    public void startFileRecorder()
     {
-    	String outputFile = settings.getProperty("outputFile");
-    	double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-    	int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
+        String outputFile = settings.getProperty("outputFile");
+        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+        int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
         int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
-        if (outputFile != null)
-        {
+        if (outputFile != null) {
             Date now = new Date();
             SimpleDateFormat ft = new SimpleDateFormat ("yyyyMMdd-HHmmss");
-            if (!outputFile.endsWith("/")){
-            	outputFile = outputFile + "/";
+            if (!outputFile.endsWith("/")) {
+                outputFile = outputFile + "/";
             }
-        	String outputFileName = outputFile + ft.format(now) + ".flv";
-        	System.out.println(outputFileName);
-        	fileRecorder = Recorder.getRecorder(outputFileName, frameRate, outWidth, outHeight);
-        	if (fileRecorder != null){
-            	try {
+            String outputFileName = outputFile + ft.format(now) + ".flv";
+            System.out.println(outputFileName);
+            fileRecorder = Recorder.getRecorder(outputFileName, frameRate, outWidth, outHeight);
+            if (fileRecorder != null) {
+                try {
                     fileRecorder.start();
                     isRecording = 1;
                 } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-		}
+                }
             }
         }
     }
-
-    public void stopFileRecorder() 
+    
+    public void stopFileRecorder()
     {
-    	isRecording = 0;
-	if (fileRecorder != null){
+        isRecording = 0;
+        if (fileRecorder != null) {
             try {
                 fileRecorder.stop();
                 fileRecorder = null;
             } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
                 // TODO Auto-generated catch block
-		e.printStackTrace();
+                e.printStackTrace();
             }
-	}
+        }
     }
-
-    public void startRtmpRecorder() 
+    
+    public void startRtmpRecorder()
     {
-    	String url = settings.getProperty("url");
-    	double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-    	int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
-        int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
+//        String url = settings.getProperty("url");
+//        double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
+//        int outWidth = Integer.parseInt(settings.getProperty("outputWidth"));
+//        int outHeight = Integer.parseInt(settings.getProperty("outputHeight"));
+        
+        String url = "rtmp://34.227.142.101:1935/myapp/test2";
+        double frameRate = 15;
+        int outWidth = 800;
+        int outHeight = 500;
         if (url != null) {
             rtmpRecorder = Recorder.getRecorder(url, frameRate, outWidth, outHeight);
         }
-
+        
         if (rtmpRecorder != null) {
             try {
                 rtmpRecorder.start();
-		isStreaming = 1;
+                isStreaming = 1;
             } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
                 // TODO Auto-generated catch block
-		e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }
-
-    public void stopRtmpRecorder() 
+    
+    public void stopRtmpRecorder()
     {
-    	isStreaming = 0;
-        if (rtmpRecorder != null){
+        isStreaming = 0;
+        if (rtmpRecorder != null) {
             try {
                 rtmpRecorder.stop();
                 rtmpRecorder = null;
             } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-	}
+        }
     }
-
-    public void clean() 
+    
+    public void clean()
     {
-    	if (rtmpRecorder != null) {
+        if (rtmpRecorder != null) {
             try {
                 rtmpRecorder.stop();
             } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
                 // TODO Auto-generated catch block
-		e.printStackTrace();
+                e.printStackTrace();
             }
         }
         if (fileRecorder != null) {
@@ -138,7 +142,7 @@ public class Controller {
                 fileRecorder.stop();
             } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
                 // TODO Auto-generated catch block
-		e.printStackTrace();
+                e.printStackTrace();
             }
         }
     }

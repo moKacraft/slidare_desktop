@@ -13,7 +13,8 @@ import model.IKeyHandle;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-public class KeyListener implements NativeKeyListener {
+public class KeyListener implements NativeKeyListener 
+{
     public IKeyHandle keyHandle = null;
     public boolean keyPressed = false;
     private String key1 = "";

@@ -32,56 +32,65 @@ import utils.security.encryption;
  *
  * @author Timothy
  */
-public class MyDragDropListener implements DropTargetListener{
+public class MyDragDropListener implements DropTargetListener
+{
  
-     public Boolean MainPopUp = false;
-     public static Boolean ActivatePopUps = false;
-     public static int valueDragDrop = 0;
-     public int concernedDragDrop;
+    public Boolean MainPopUp = false;
+    public static Boolean ActivatePopUps = false;
+    public static int valueDragDrop = 0;
+    public int concernedDragDrop;
     // public List<JSONObject> listContacts = new ArrayList<JSONObject>();
-
+    
     public MyDragDropListener(Boolean state)
     {
         MainPopUp = state;
         concernedDragDrop = valueDragDrop;
-        ++valueDragDrop; 
+        ++valueDragDrop;
     }
     
     
-     @Override
-    public void drop(DropTargetDropEvent event) {
+    @Override
+    public void drop(DropTargetDropEvent event) 
+    {
         event.acceptDrop(DnDConstants.ACTION_COPY);
-
+        
         // Get the transfer which can provide the dropped item data
         Transferable transferable = event.getTransferable();
-
+        
         // Get the data formats of the dropped item
         DataFlavor[] flavors = transferable.getTransferDataFlavors();
-
+        
         // Loop through the flavors
         for (DataFlavor flavor : flavors) {
-
+            
             try {
-
+                
                 // If the drop items are files
                 if (flavor.isFlavorJavaFileListType()) {
-
+                    
                     // Get all of the dropped files
                     List files = (List) transferable.getTransferData(flavor);
-
+                    
                     // Loop them through
                     for (Object file : files) {
-
+                        
                         // Print out the file path
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 File f = new File(file.toString());
-
+                                
                                 System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
                                 users[0] =  (String)(DragDropTracking.listContacts.get(concernedDragDrop - 1).get("email"));
+                                
+                                System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
+                                
+                                if (users[0].equals("juju@gmail.com") || users[0].equals("testbeta@gmail.com") || users[0].equals("testssss@gmail.com")) {
+                                    Main.socket.emit("request file transfer", f.getName(), file, users, file.toString(), f.getName(),"", "","", "", f.length());
+                                    return;
+                                }
                                 
                                 try {
                                     encryption _crypt = new  encryption();
@@ -90,12 +99,15 @@ public class MyDragDropListener implements DropTargetListener{
                                     Main.dialogSend.setVisible(true);
                                     Main.labelSend.setText("Encrypting file...");
                                     _crypt.encryptFile(file.toString(), "encrypted", key);
-//                                    _crypt.decryptFile("./encrypted", "./decrypted", _crypt.get_fileSHA1(), _crypt.get_fileSalt(), _crypt.get_fileIV(), _crypt.get_fileKey());
-                                    
-                                    
-                                    System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length + "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
-                                    
-                                    Main.socket.emit("request file transfer", f.getName(), file, users, _crypt.get_fileEncryptedName(), f.getName(), _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()), Base64.encodeBase64String(_crypt.get_fileIV()), _crypt.get_fileKey(), f.length());
+
+                                    System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length +
+                                            "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
+
+                                    Main.labelSend.setText("Sending file...");
+                                    Main.socket.emit("request file transfer", f.getName(),
+                                    file, users, _crypt.get_fileEncryptedName(), f.getName(),
+                                    _crypt.get_fileSHA1(), Base64.encodeBase64String(_crypt.get_fileSalt()),
+                                    Base64.encodeBase64String(_crypt.get_fileIV()), _crypt.get_fileKey(), f.length());
                                 } catch (NoSuchAlgorithmException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (NoSuchPaddingException ex) {
@@ -114,61 +126,52 @@ public class MyDragDropListener implements DropTargetListener{
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
                                 } catch (IllegalBlockSizeException ex) {
                                     Logger.getLogger(MyDragDropListener.class.getName()).log(Level.SEVERE, null, ex);
-                                }                                
-                                
+                                }
                             }
                         }).start();
                         System.out.println("File path is '" + file + "'.");
-                         DragDropTracking.dragDropTracking.showPathText(file.toString());
+                        DragDropTracking.dragDropTracking.showPathText(file.toString());
                     }
-
                 }
-
             } catch (Exception e) {
-
                 // Print out the error stack
                 e.printStackTrace();
-
             }
         }
-
         // Inform that the drop is complete
         event.dropComplete(true);
-
+        
     }
-
+    
     @Override
-    public void dragEnter(DropTargetDragEvent event) 
+    public void dragEnter(DropTargetDragEvent event)
     {
         System.out.println("wwwwwwwwwwwwwww");
-            
-        if (concernedDragDrop == 0 && ActivatePopUps == false)
-        {
+        
+        if (concernedDragDrop == 0 && ActivatePopUps == false) {
             System.out.println("ooooooooooooo");
-             ActivatePopUps = true;
-             
-             DragDropTracking.dragDropTracking.ShowMiniPopUp();
-             //MainView.mainView.ShowMiniPopUp();
+            ActivatePopUps = true;
+            DragDropTracking.dragDropTracking.ShowMiniPopUp();
+            //MainView.mainView.ShowMiniPopUp();
         }
     }
-
+    
     @Override
-    public void dragExit(DropTargetEvent event) 
+    public void dragExit(DropTargetEvent event)
     {
-        if (concernedDragDrop == 0)
-        {
+        if (concernedDragDrop == 0) {
             ActivatePopUps = false;
-           
         }
     }
-
+    
     @Override
-    public void dragOver(DropTargetDragEvent event) {
+    public void dragOver(DropTargetDragEvent event) 
+    {
     }
-
+    
     @Override
-    public void dropActionChanged(DropTargetDragEvent event) {
+    public void dropActionChanged(DropTargetDragEvent event) 
+    {
     }
-
 }
 

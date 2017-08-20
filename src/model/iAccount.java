@@ -11,12 +11,12 @@ package model;
  */
 public interface iAccount
 {
-	public String getId();
-	public String getFirstname();
-	public String getLastname();
-	public String getUniversity();
-	public String getJob();
-	public String getPhone();
-	public String getCity();
-	public String getBirth();
+    public String getId();
+    public String getFirstname();
+    public String getLastname();
+    public String getUniversity();
+    public String getJob();
+    public String getPhone();
+    public String getCity();
+    public String getBirth();
 }
