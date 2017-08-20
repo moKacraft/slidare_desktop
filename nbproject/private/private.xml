@@ -3,58 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/Account.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ConnectController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/Group.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/ServiceFactory.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/ContactConverter.java</file>
             <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/MyDragDropListener.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/test/service/ConfigManagerTest.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/ObservableGroup.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/ObservableContact.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/MenubarController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/AccountTrackingController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/test/controller/AccountBusinessTest.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ContactsBusiness.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/client/HttpClientService.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/iContact.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/TrackingService.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/Config.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/AccountBusiness.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/PackageManager.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/streaming/Recorder.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Main.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/iAccount.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/APIManager.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/GroupTrackingController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/streaming/GBC.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/ObservableAccount.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/iService.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/iGroup.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/ClientManager.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/DragDropTracking.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/Contact.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/TrackingServiceStub.java</file>
             <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/security/encryption.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Controller.java</file>
             <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/DragDropTrackingController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/streaming/CanvasFrame.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/streaming/Controller.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/MouseListener.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ConfigTrackingController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/test/controller/ConnectControllerTest.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/GroupBusiness.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/test/controller/ContactsBusinessTest.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ContactTrackingController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/TrackingInfo.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/FileManager.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/streaming/Settings.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/KeyListener.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/iConfig.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/DialogSys.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/EventlogController.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/service/ConfigManager.java</file>
-            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/IKeyHandle.java</file>
         </group>
     </open-files>
 </project-private>

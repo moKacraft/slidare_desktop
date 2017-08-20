@@ -27,7 +27,7 @@ public class DragDropTrackingController extends Controller implements Initializa
     
     
    private boolean stateActivationApp = true;
-   private DragDropTestFrame dragDropFrame;
+//   private DragDropTestFrame dragDropFrame;
    private String keyName = "CTRL";
    private Alert alert;
    private Settings settings = Settings.getTimSettingInstance("tim.properties");
