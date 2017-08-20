@@ -11,5 +11,7 @@ package model;
  */
 public class TrackingInfo 
 {
-    public static String keyName;    
+    public static String firstKeyName;
+    public static String secondKeyName;
+    
 }

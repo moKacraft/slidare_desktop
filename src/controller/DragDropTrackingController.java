@@ -30,6 +30,7 @@ public class DragDropTrackingController extends Controller implements Initializa
 //   private DragDropTestFrame dragDropFrame;
    private String keyName = "CTRL";
    private Alert alert;
+   private int cnt = 0;
    private Settings settings = Settings.getTimSettingInstance("tim.properties");
     
     @FXML
@@ -43,8 +44,10 @@ public class DragDropTrackingController extends Controller implements Initializa
     public void initialize(URL url, ResourceBundle rsrcs)
     {
         //TrackingServiceStub
-        activationButton.setText(settings.getProperty("key"));
-        TrackingInfo.keyName = settings.getProperty("key");
+        activationButton.setText(settings.getProperty("key") + " " +settings.getProperty("key2"));
+        TrackingInfo.firstKeyName = settings.getProperty("key");
+        TrackingInfo.secondKeyName = settings.getProperty("key2");
+   
     }
     
     @FXML
@@ -76,13 +79,24 @@ public class DragDropTrackingController extends Controller implements Initializa
     public void  changeKeyPressedActivationButton(KeyEvent event)
     {
         if (changeActivationButtonKey == true) {
-            activationButton.setText(event.getCode().getName());
-            TrackingInfo.keyName = event.getCode().getName();
             
-            settings.setProperty("key", event.getCode().getName());
-            settings.saveSettings();
-            
-            changeActivationButtonKey = false;
+                ++cnt;
+            if (cnt % 2 == 1)
+            {
+                activationButton.setText(event.getCode().getName());
+                TrackingInfo.firstKeyName = event.getCode().getName();
+                settings.setProperty("key", event.getCode().getName());
+                settings.saveSettings();
+                
+            }
+            if (cnt % 2 == 0)
+            {
+                activationButton.setText(activationButton.getText() + " " + event.getCode().getName());
+                TrackingInfo.secondKeyName = event.getCode().getName();
+                settings.setProperty("key2", event.getCode().getName());
+                settings.saveSettings();                 
+                changeActivationButtonKey = false;
+            }
         }
     }
     
