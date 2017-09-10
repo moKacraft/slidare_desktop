@@ -225,6 +225,7 @@ public class encryption {
             InvalidKeyException,
             BadPaddingException,
             IllegalBlockSizeException {
+//        System.out.println("cest ici quon regarde: " + " salt: " + Arrays.toString(fileSalt) + " " + " iv: " + Arrays.toString(fileIV) + " key: " + _encryptionKey);
         FileOutputStream fos;
         // Decrypted file
         try (FileInputStream fis = new FileInputStream(toDecryptFileName)) {
