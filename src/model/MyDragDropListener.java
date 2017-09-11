@@ -100,7 +100,8 @@ public class MyDragDropListener implements DropTargetListener
 
                                     Main.dialogSend.setVisible(true);
                                     Main.labelSend.setText("Encrypting file...");
-                                    _crypt.encryptFile(file.toString(), "encrypted", key);
+                                    
+                                    _crypt.encryptFile(file.toString(), _crypt.generateRandomString(), key);
 
                                     System.out.println("Salt: " + _crypt.get_fileSalt() + " length: " + _crypt.get_fileSalt().length +
                                             "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
