@@ -66,6 +66,7 @@ public class APIManager implements iService
      */
     public boolean loginUser(String obj)
     {
+		this.error = false;
         try
         {
             this.client.getHttpClientService()
