@@ -360,8 +360,8 @@ public class ConnectController extends Controller implements Initializable
                             System.out.println(controller.url);
                             Toolkit kit = Toolkit.getDefaultToolkit();
                             Dimension screenSize = kit.getScreenSize();
-                            int screenWidth = screenSize.width / 4;
-                            int screenHeight = screenSize.height / 4;
+                            int screenWidth = screenSize.width;
+                            int screenHeight = screenSize.height;
                             double frameRate = 10;
                             FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("1:");
                             grabber.setFormat("avfoundation");
