@@ -20,6 +20,7 @@ public class Controller {
     private static FFmpegFrameRecorder fileRecorder = null;
     private static int isStreaming = 0;
     private static int isRecording = 0;
+    public static String url = "rtmp://34.227.142.101:1935/myapp/test2";
     
     public int getStreamingState()
     {

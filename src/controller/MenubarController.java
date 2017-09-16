@@ -48,9 +48,7 @@ public class MenubarController implements Initializable
 
     @FXML
     private HBox MenuBarHB;
-        
-    private static Frame grabbedFrame;
-	
+        	
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -110,64 +108,13 @@ public class MenubarController implements Initializable
                     Main.loadScene("/view/DragDropTracking.fxml", "DragDrop_title");
                     break;
 		case "eventlog":
-                    utils.streaming.Controller controller = new utils.streaming.Controller();
-                    //Settings settings = controller.getSettings();
-                    Toolkit kit = Toolkit.getDefaultToolkit();
-                    Dimension screenSize = kit.getScreenSize();
-                    int screenWidth = screenSize.width;
-                    int screenHeight = screenSize.height;
-                    System.out.println("CA VA PLANTEEEER!");
-                    //double frameRate = Double.parseDouble(settings.getProperty("frameRate"));
-                    double frameRate = 10;
-                    FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
-                    grabber.setFormat("gdigrab");
-                    grabber.setFrameRate(frameRate);
-                    grabber.setImageWidth(screenWidth);
-                    grabber.setImageHeight(screenHeight);
-                    grabber.start();
-                    utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
-                    frame.setCanvasSize(screenWidth/2, screenHeight/2);
-                    frame.setController(controller);
-                    System.out.println("CA VA PLANTEEEER!");
-                    new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            while (frame.isVisible()) {
-                                System.out.println("dans le while");
-                                grabbedFrame = grabber.grab();
-                                controller.recorder(grabbedFrame);
-                            }
-                            frame.dispose();
-                            controller.clean();
-                            grabber.stop();
-                        } catch (FrameGrabber.Exception ex) {
-                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (FrameRecorder.Exception ex) {
-                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }}).start();
                     break;
                 case "stream":
-                    JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-        final Browser browser = new Browser();
-        BrowserPreferences preferences = browser.getPreferences();
-        preferences.setPluginsEnabled(true);
-        preferences.setJavaScriptEnabled(true);
-        browser.setPreferences(preferences);
-        BrowserView view = new BrowserView(browser);
-        
-        JFrame frameBrowser = new JFrame("Streaming");
-        frameBrowser.add(view, BorderLayout.CENTER);
-        frameBrowser.setSize(800, 500);
-        frameBrowser.setLocationRelativeTo(null);
-        frameBrowser.setVisible(true);
-        
-        browser.loadURL("http://34.227.142.101:8080/streaming");
+                    Main.socket.emit("init streaming", "soso@gmail.com");
                     break;
-		default:
-                    System.err.println("Switch inconnu");
-                    break;
+            default:
+                System.err.println("Switch inconnu");
+                break;
             }
         }
     }
