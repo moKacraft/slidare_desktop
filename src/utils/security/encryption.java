@@ -11,6 +11,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import java.io.*;
+import java.math.BigInteger;
 
 import java.nio.file.*;
 import java.security.*;
@@ -225,6 +226,7 @@ public class encryption {
             InvalidKeyException,
             BadPaddingException,
             IllegalBlockSizeException {
+//        System.out.println("cest ici quon regarde: " + " salt: " + Arrays.toString(fileSalt) + " " + " iv: " + Arrays.toString(fileIV) + " key: " + _encryptionKey);
         FileOutputStream fos;
         // Decrypted file
         try (FileInputStream fis = new FileInputStream(toDecryptFileName)) {
@@ -553,15 +555,15 @@ public class encryption {
         }
     }
     
-//    /**
-//     * Generate random 32 bits string.
-//     *
-//     * @return  Return rand generated string.
-//     */
-//    public static String generateRandomString() {
-//        SecureRandom random = new SecureRandom();
-//
-//        return new BigInteger(160, random).toString(32);
-//    }
+    /**
+     * Generate random 32 bits string.
+     *
+     * @return  Return rand generated string.
+     */
+    public static String generateRandomString() {
+        SecureRandom random = new SecureRandom();
+
+        return new BigInteger(160, random).toString(32);
+    }
 }
 

@@ -3,35 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/MenubarController.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/ServiceFactory.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/ContactTrackingController.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/Group.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/Contact.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/MyDragDropListener.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/FileManager.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/TrackingInfo.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/view/DragDropTestFrame.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/view/DragDropTracking.fxml</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/iService.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/DragDropTracking.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/utils/streaming/Settings.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/ConnectController.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/APIManager.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/IKeyHandle.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/ClientManager.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/snake.html</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/utils/DialogSys.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/DragDropTrackingController.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/client/HttpClientService.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/EventlogController.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/service/PackageManager.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/Main.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/MouseListener.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/TrackingServiceStub.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/ContactConverter.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/model/KeyListener.java</file>
-            <file>file:/C:/Users/Timothy/Documents/NetBeansProjects/slidare_desktop2/src/controller/Controller.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/MyDragDropListener.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/TrackingInfo.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/utils/security/encryption.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Controller.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/DragDropTrackingController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/ConnectController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/KeyListener.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/EventlogController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/Main.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/controller/MenubarController.java</file>
+            <file>file:/C:/Users/Madeline/Documents/GitHub/slidare_desktop/src/model/DragDropTracking.java</file>
         </group>
     </open-files>
 </project-private>

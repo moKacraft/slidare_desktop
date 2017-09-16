@@ -66,6 +66,7 @@ public class APIManager implements iService
      */
     public boolean loginUser(String obj)
     {
+		this.error = false;
         try
         {
             this.client.getHttpClientService()
@@ -205,8 +206,27 @@ public class APIManager implements iService
      */
     public boolean loadContacts()
     {
-        this.error = true;
-        return (false);
+//        try
+//        {
+//            this.client.getHttpClientService()
+//                    .init()
+//                    .setUrl("http://34.227.142.101:50000/userContact")
+//                    .setBody()
+//                    .buildAndExecutePost();
+//            this.code = this.client.getHttpClientService().getReponseCode();
+//            this.response = this.client.getHttpClientService().getResponseBody();
+//            if (code != 200)
+//            {
+//                this.error = true;
+//            }
+//            return (!this.error);
+//        }
+//        catch (Exception e)
+//        {
+//            return (false);
+//        }
+            this.error = true;
+            return (!this.error);
     }
     
     /**

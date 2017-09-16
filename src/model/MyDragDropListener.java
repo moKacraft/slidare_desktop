@@ -87,21 +87,27 @@ public class MyDragDropListener implements DropTargetListener
                                 
                                 System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
                                 
-                                if (users[0].equals("juju@gmail.com") || users[0].equals("testbeta@gmail.com") || users[0].equals("testssss@gmail.com")) {
-                                    Main.socket.emit("request file transfer", f.getName(), file, users, file.toString(), f.getName(),"", "","", "", f.length());
-                                    return;
-                                }
+//                                if (users[0].equals("juju@gmail.com") || users[0].equals("testbeta@gmail.com") || users[0].equals("testssss@gmail.com")) {
+//                                   Main.socket.emit("request file transfer", f.getName(), file, users, file.toString(), f.getName(),"", "","", "", f.length());
+//                                    return;
+//                                }
                                 
                                 try {
                                     encryption _crypt = new  encryption();
                                     
                                     String key =  encryption.SHA256("my secret key", 32);
+//                                    String key =  new String("12341234123412341234123412341234");
+
                                     Main.dialogSend.setVisible(true);
                                     Main.labelSend.setText("Encrypting file...");
-                                    _crypt.encryptFile(file.toString(), "encrypted", key);
+                                    
+                                    _crypt.encryptFile(file.toString(), _crypt.generateRandomString(), key);
 
-                                    System.out.println("Salt: " + _crypt.get_fileSalt() + " length" + _crypt.get_fileSalt().length +
+                                    System.out.println("Salt: " + _crypt.get_fileSalt() + " length: " + _crypt.get_fileSalt().length +
                                             "\nIV: " + _crypt.get_fileIV() + " length: " + _crypt.get_fileIV().length);
+                                    
+                                    byte[] salt = _crypt.get_fileSalt();
+                                    System.out.println(salt[0] + " " + salt[1] + " " + salt[2] + " " + salt[3] + " " + salt[4] + " " + salt[5] + " " + salt[6] + " " + salt[7]);
 
                                     Main.labelSend.setText("Sending file...");
                                     Main.socket.emit("request file transfer", f.getName(),
