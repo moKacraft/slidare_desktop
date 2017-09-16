@@ -1,8 +1,8 @@
 /*
- * Projet Slidare
- * Sharing anywhere, anytime
- * 
- */
+* Projet Slidare
+* Sharing anywhere, anytime
+*
+*/
 package controller;
 
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -39,66 +39,68 @@ import service.ServiceFactory;
 import utils.DialogSys;
 import utils.streaming.Settings;
 
+
+import javax.swing.JFrame;
+import utils.streaming.displayStreaming;
+
 /**
  *
  * @author Flavien Maillot "flavien.maillot@epitech.eu"
  */
 public class MenubarController implements Initializable
 {
-
+    
     @FXML
     private HBox MenuBarHB;
-        	
-    @Override
     public void initialize(URL location, ResourceBundle resources)
     {
     }
-
+    
     public void loadConfig(ActionEvent event) throws IOException
     {
         FileManager fileManager = (FileManager) ServiceFactory.getFileManager();
-	fileManager.initFileChooserConfig(Main.parentWindow);
-	String filepath = fileManager.getFilePath();
-
-	if (!filepath.equals("")) {
+        fileManager.initFileChooserConfig(Main.parentWindow);
+        String filepath = fileManager.getFilePath();
+        
+        if (!filepath.equals("")) {
             ConfigManager configManager = (ConfigManager) ServiceFactory.getConfigManager();
             configManager.load(filepath);
             configManager.configStage(Main.parentWindow);
             Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
-	}
+        }
     }
-
+    
     public void logout(ActionEvent event) throws IOException
     {
         ConfigManager cfg = (ConfigManager) ServiceFactory.getConfigManager();
-	cfg.getConfig().setUsername("");
-	cfg.getConfig().setPassword("");
-	cfg.getConfig().setAutoConnect(false);
-	cfg.save();
-		
-	//Chargement de la page de connection
-	Main.loadScene("/view/connect.fxml", "Connect_title");
+        cfg.getConfig().setUsername("");
+        cfg.getConfig().setPassword("");
+        cfg.getConfig().setAutoConnect(false);
+        cfg.save();
+        
+        //Chargement de la page de connection
+        Main.loadScene("/view/connect.fxml", "Connect_title");
     }
-	
+    
     public void quitFired(ActionEvent event)
     {
         Platform.exit();
-	System.exit(0);
+        System.exit(0);
     }
-
+    
     public void switchScene(ActionEvent event) throws IOException
     {
         MenuItem menu = (MenuItem) event.getSource();
-	String menuId = menu.getId();
-	if (null != menuId) {
+        String menuId = menu.getId();
+        if (null != menuId) {
             switch (menuId) {
-		case "manageaccount":
+                case "manageaccount":
                     Main.loadScene("/view/AccountTracking.fxml", "Account_title");
                     break;
-		case "managegroups":
+                case "managegroups":
                     Main.loadScene("/view/GroupTracking.fxml", "Group_title");
                     break;
-		case "managecontacts":
+                case "managecontacts":
                     Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
                     break;
                 case "setting":
@@ -118,7 +120,7 @@ public class MenubarController implements Initializable
             }
         }
     }
-
+    
     public void aboutUs(ActionEvent event)
     {
         ResourceBundle bundle = ServiceFactory.getResourceBundle(false);
@@ -126,12 +128,12 @@ public class MenubarController implements Initializable
         alert.setTitle(bundle.getString("AboutUs_title"));
         alert.setHeaderText(null);
         alert.setContentText(bundle.getString("AboutUs_content"));
-
+        
         ButtonType buttonTypeOne = new ButtonType(bundle.getString("AboutUs_website_btn"));
         ButtonType buttonTypeCancel = new ButtonType(bundle.getString("AboutUs_close"), ButtonBar.ButtonData.CANCEL_CLOSE);
-
+        
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeCancel);
-
+        
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == buttonTypeOne) {
             try {
@@ -139,6 +141,6 @@ public class MenubarController implements Initializable
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } 
+        }
     }
 }

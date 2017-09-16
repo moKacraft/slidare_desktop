@@ -77,6 +77,7 @@ public class Settings {
     public String getProperty(String name) 
     {
         String rt = settings.getProperty(name);
+     
         return rt;
     }
     
@@ -84,6 +85,12 @@ public class Settings {
     {
         settings.setProperty(name, value);
     }
+    
+    public void removeProperty(String name,String value) 
+    {
+        settings.remove(name, value);
+    }
+    
     
     public void saveSettings() 
     {
