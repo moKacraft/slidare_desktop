@@ -23,6 +23,8 @@ public class PackageManager implements iService
     private JSONObject obj;
     
     private JSONArray arr;
+	
+	private PackageManager child;
     
     private final JSONParser parser = new JSONParser();
     
@@ -34,6 +36,7 @@ public class PackageManager implements iService
     public PackageManager init()
     {
         this.obj = new JSONObject();
+        this.child = null;
         return (this);
     }
     
@@ -167,6 +170,21 @@ public class PackageManager implements iService
         this.arr = jsonArray;
         return (this);
     }
+	
+	/**
+	 * Return child empty or fill
+	 * Have to use set befor use child
+	 * 
+	 * @return Child node
+	 */
+	public PackageManager getChild()
+	{
+		if (this.child == null)
+		{
+			this.child = new PackageManager();
+		}
+		return (this.child);
+	}
     
     /**
      * Get the value associate to the key or return the default value on fail
@@ -212,4 +230,32 @@ public class PackageManager implements iService
         else
             return (dflt);
     }
+	
+	/**
+	 * Get the value associate to the key or return the default value JSONArray empty on fail
+	 * 
+	 * @param key key expected
+	 * @return 
+	 */
+	public JSONArray getJSONArrayDefault(String key)
+	{
+		if (this.obj.containsKey(key) && this.obj.get(key) instanceof JSONArray)
+            return ((JSONArray) this.obj.get(key));
+        else
+            return (new JSONArray());
+	}
+	
+	/**
+	 * Get the value associate to the key or return the default value JSONObject empty on fail
+	 * 
+	 * @param key key expected
+	 * @return 
+	 */
+	public JSONObject getJSONObjectDefault(String key)
+	{
+		if (this.obj.containsKey(key) && this.obj.get(key) instanceof JSONObject)
+            return ((JSONObject) this.obj.get(key));
+        else
+            return (new JSONObject());
+	}
 }

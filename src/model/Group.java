@@ -16,16 +16,22 @@ import javafx.beans.value.ObservableValue;
 public class Group implements ObservableGroup
 {
     private final SimpleStringProperty id;
-    
+	
+    private final SimpleStringProperty idapi;
+	
     private final SimpleStringProperty name;
-    
+
+	private String users;
+	
     private final SimpleObjectProperty<iGroup.GroupStatus> status
             = new SimpleObjectProperty<iGroup.GroupStatus>(iGroup.GroupStatus.NEW);
     
     public Group()
     {
         this.id = new SimpleStringProperty("");
+        this.idapi = new SimpleStringProperty("");
         this.name = new SimpleStringProperty("");
+        this.users = "";
     }
     
     public void setId(String _id)
@@ -44,6 +50,23 @@ public class Group implements ObservableGroup
     {
         return (this.id);
     }
+	
+	public void setIdAPI(String _idapi)
+    {
+        this.idapi.set(_idapi);
+    }
+    
+//    @Override
+    public String getIdAPI()
+    {
+        return (this.idapi.get());
+    }
+    
+    @Override
+    public ObservableValue<String> IdAPIProperty()
+    {
+        return (this.idapi);
+    }
     
     public void setName(String _name)
     {
@@ -61,7 +84,17 @@ public class Group implements ObservableGroup
     {
         return (this.name.get());
     }
+	
+	public void setUsers(String _name)
+    {
+        this.users = _name;
+    }
     
+    public String getUsers()
+	{
+		return (this.users);
+	}
+	
     public void setStatus(iGroup.GroupStatus issueStatus)
     {
         this.status.set(issueStatus);

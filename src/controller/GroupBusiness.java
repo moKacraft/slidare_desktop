@@ -36,6 +36,7 @@ public class GroupBusiness
     
     public GroupBusiness()
     {
+		System.out.println("Group Business");
         this.fileManager = (FileManager) ServiceFactory.getFileManager();
         this.configManager = (ConfigManager) ServiceFactory.getConfigManager();
         this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
@@ -78,27 +79,60 @@ public class GroupBusiness
         this.groups.clear();
         JSONArray jsonArray;
         
+		this.APIManager.fetchGroups(this.configManager.getConfig().getToken());
+		
         //Send request to serveur
-        if (this.APIManager.loadGroups() != false) {
+//        if (this.APIManager.loadGroups() != false) {
+        if (this.APIManager.fetchGroups(this.configManager.getConfig().getToken()) != false) 
+		{
             String response = this.APIManager.getLastResponse();
+			System.out.println(response);
             jsonArray = this.packageManager
                     .setJSONObject(response)
-                    .getJSONArray();
-        } else {
+                    .getJSONArrayDefault("groups");
+			PackageManager child = this.packageManager.getChild();
+			int length = jsonArray.size();
+			for (int i = 0; i < length; i++) 
+			{
+				child.setJSONObject((JSONObject) jsonArray.get(i));
+				Group group = new Group();
+				int gpid = i + 1;
+				String id = String.valueOf(gpid);
+				String idAPI = child.getStringDefault("id", "-1");
+				String name = child.getStringDefault("name", "Inconnu");
+				String users = child.getJSONArrayDefault("users").toJSONString();
+				
+				group.setId(id);
+				group.setIdAPI(idAPI);
+				group.setName(name);
+				group.setUsers(users);
+				this.groups.put(group.getId(), group);
+			}
+			Group group = new Group();
+			group.setId("0");
+			group.setIdAPI("0");
+			group.setName("Non classé");
+			group.setUsers("[]");
+			this.groups.put(group.getId(), group);
+        }
+		else 
+		{
             Object obj = this.fileManager.readJson(this.configManager.getPathFor("groups"));
             jsonArray = (JSONArray) obj;
+			
+			int length = jsonArray.size();
+			for (int i = 0; i < length; i++) 
+			{
+				JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+				Group group = new Group();
+
+	            String id = Long.toString((long) jsonObject.get("id"));
+				group.setId(id);
+				group.setName((String) jsonObject.get("name"));
+				this.groups.put(group.getId(), group);
+			}
         }
-        
-        int length = jsonArray.size();
-        for (int i = 0; i < length; i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-            Group group = new Group();
-            
-            String id = Long.toString((long) jsonObject.get("id"));
-            group.setId(id);
-            group.setName((String) jsonObject.get("name"));
-            this.groups.put(group.getId(), group);
-        }
+//		System.out.println("controller.GroupBusiness.loadGroups()");
     }
     
     /**
@@ -109,6 +143,7 @@ public class GroupBusiness
     public Map<String, Group> getGroups()
     {
         if (this.groups.isEmpty()) {
+			System.out.println("controller.GroupBusiness.getGroups()");
             loadGroups();
         }
         return (this.groups);

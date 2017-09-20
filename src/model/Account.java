@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 public class Account implements ObservableAccount
 {
     private final SimpleStringProperty id;
+    private String idapi;
     private final SimpleStringProperty firstname;
     private final SimpleStringProperty lastname;
     private final SimpleStringProperty university;
@@ -30,6 +31,7 @@ public class Account implements ObservableAccount
     public Account()
     {
         this.id = new SimpleStringProperty("");
+        this.idapi = "";
         this.firstname = new SimpleStringProperty("");
         this.lastname = new SimpleStringProperty("");
         this.university = new SimpleStringProperty("");
@@ -56,6 +58,24 @@ public class Account implements ObservableAccount
     public String getId()
     {
         return (this.id.get());
+    }
+    
+    /**
+     *
+     * @param _id id to set
+     */
+    public void setIdapi(String _id)
+    {
+        this.idapi = _id;
+    }
+    
+    /**
+     *
+     * @return id
+     */
+    public String getIdapi()
+    {
+        return (this.idapi);
     }
     
     /**

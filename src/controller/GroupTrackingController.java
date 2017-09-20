@@ -372,6 +372,15 @@ public class GroupTrackingController extends Controller implements Initializable
             return displayedBugId;
         }
         
+//		@Override
+//        public String getIdAPI()
+//        {
+//            if (displayedBugId == null) {
+//                return null;
+//            }
+//            return null;
+//        }
+        
         @Override
         public iGroup.GroupStatus getStatus()
         {
