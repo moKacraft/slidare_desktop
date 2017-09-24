@@ -218,6 +218,35 @@ public class APIManager implements iService
             return (false);
         }
     }
+	
+	/**
+	 * Mise en place d'une methode aussi stupide pour correspondre à L'API
+	 * 
+	 */
+	public boolean saveStupidAccount(String link, String obj, String token)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/"+link)
+					.setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
     
     /**
      * Save the entity account on the server

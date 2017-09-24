@@ -47,26 +47,54 @@ public class AccountBusiness
 	 */
 	public void saveAccount(Account account)
 	{
-		JSONObject obj = new JSONObject();
-		obj.put("id", Long.parseLong(account.getId()));
-		obj.put("firstname", account.getFirstname());
-		obj.put("lastname", account.getLastname());
-		obj.put("university", account.getUniversity());
-		obj.put("job", account.getJob());
-		obj.put("phone", account.getPhone());
-		obj.put("city", account.getCity());
-		obj.put("birth", account.getBirth());
-
+//		JSONObject obj = new JSONObject();
+//		obj.put("id", Long.parseLong(account.getId()));
+//		obj.put("firstname", account.getFirstname());
+//		obj.put("lastname", account.getLastname());
+//		obj.put("university", account.getUniversity());
+//		obj.put("job", account.getJob());
+//		obj.put("phone", account.getPhone());
+//		obj.put("city", account.getCity());
+//		obj.put("birth", account.getBirth());
+//
+//		//Prepare request to server
+//		String request = this.packageManager
+//				.setJSONObject(obj)
+//				.getJSONString();
+//
+//		//Send request to serveur
+//		if (this.APIManager.saveAccount(request) == false)
+//		{
+//			this.fileManager.writeJson(this.configManager.getPathFor("account"), obj);
+//		}
+		
+		//MISE EN PLACE DE L'API QUI PREND EN CHARGE LA MOITIER DES FONCTIONNALITE
 		//Prepare request to server
 		String request = this.packageManager
-				.setJSONObject(obj)
+				.init()
+				.addParam("username", account.getUsername())
 				.getJSONString();
-
-		//Send request to serveur
-		if (this.APIManager.saveAccount(request) == false)
-		{
-			this.fileManager.writeJson(this.configManager.getPathFor("account"), obj);
-		}
+		this.APIManager.saveStupidAccount("updateUserName", request, this.configManager.getConfig().getToken());
+		System.out.println(this.APIManager.getLastCode() + this.APIManager.getLastResponse());
+		//Prepare request to server
+		request = this.packageManager
+				.init()
+				.addParam("email", account.getEmail())
+				.getJSONString();
+		this.APIManager.saveStupidAccount("updateUserEmail", request, this.configManager.getConfig().getToken());
+		
+		System.out.println(this.APIManager.getLastCode() + this.APIManager.getLastResponse());
+		
+		//Prepare request to server
+		request = this.packageManager
+				.init()
+				.addParam("old_password", this.account.getOldpassword())
+				.addParam("new_password", account.getPassword())
+				.getJSONString();
+		this.APIManager.saveStupidAccount("updateUserPassword", request, this.configManager.getConfig().getToken());
+		System.out.println(this.APIManager.getLastCode() + this.APIManager.getLastResponse());
+		account.setOldpassword(account.getPassword());
+		this.account.setOldpassword(account.getPassword());
 	}
 
 	/**
@@ -81,6 +109,7 @@ public class AccountBusiness
 		if (this.APIManager.fetchUser(this.configManager.getConfig().getToken()) != false)
 		{
 			String response = this.APIManager.getLastResponse();
+			System.out.println("controller.AccountBusiness.loadAccount()" + response);
 			this.packageManager.setJSONObject(response);
 
 			String id = "0";
@@ -93,6 +122,10 @@ public class AccountBusiness
 			account.setPhone(this.packageManager.getStringDefault("phone", "Inconnu"));
 			account.setCity(this.packageManager.getStringDefault("city", "Inconnu"));
 			account.setBirth(this.packageManager.getStringDefault("birth", "Inconnu"));
+			account.setEmail(this.packageManager.getStringDefault("email", "Inconnu"));
+			account.setPassword(this.packageManager.getStringDefault("password", "Inconnu"));
+			account.setOldpassword(this.packageManager.getStringDefault("password", "Inconnu"));
+			account.setUsername(this.packageManager.getStringDefault("username", "Inconnu"));
 		} else
 		{
 			Object obj = this.fileManager.readJson(this.configManager.getPathFor("account"));
@@ -107,6 +140,10 @@ public class AccountBusiness
 			account.setPhone((String) jsonObject.get("phone"));
 			account.setCity((String) jsonObject.get("city"));
 			account.setBirth((String) jsonObject.get("birth"));
+			account.setEmail((String) jsonObject.get("email"));
+			account.setPassword((String) jsonObject.get("password"));
+			account.setOldpassword((String) jsonObject.get("password"));
+			account.setUsername((String) jsonObject.get("username"));
 		}
 
 		System.out.println("controller.AccountBusiness.loadAccount()");

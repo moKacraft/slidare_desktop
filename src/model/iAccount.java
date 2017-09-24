@@ -19,4 +19,7 @@ public interface iAccount
     public String getPhone();
     public String getCity();
     public String getBirth();
+    public String getEmail();
+    public String getPassword();
+    public String getUsername();
 }

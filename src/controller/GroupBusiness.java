@@ -100,6 +100,7 @@ public class GroupBusiness extends Controller
 			}
 			else //Update group
 			{
+				
 //				groupListToSave.add(obj);
 			}
 		}

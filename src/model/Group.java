@@ -20,6 +20,8 @@ public class Group implements ObservableGroup
     private final SimpleStringProperty idapi;
 	
     private final SimpleStringProperty name;
+	
+    private String oldname;
 
 	private String users;
 	
@@ -83,6 +85,16 @@ public class Group implements ObservableGroup
     public String getName()
     {
         return (this.name.get());
+    }
+	
+	public void setOldname(String _name)
+    {
+        this.oldname = _name;
+    }
+	
+	public String getOldname()
+    {
+        return (this.oldname);
     }
 	
 	public void setUsers(String _name)
