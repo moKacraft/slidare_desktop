@@ -21,4 +21,7 @@ public interface ObservableAccount extends iAccount
     public ObservableValue<String> PhoneProperty();
     public ObservableValue<String> CityProperty();
     public ObservableValue<String> BirthProperty();
+    public ObservableValue<String> EmailProperty();
+    public ObservableValue<String> PasswordProperty();
+    public ObservableValue<String> UsernameProperty();
 }

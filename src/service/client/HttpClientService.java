@@ -132,6 +132,17 @@ public class HttpClientService
         this.response = this.client.newCall(this.request).execute();
     }
     
+	/**
+     * Build the request and execute a delete
+     *
+     * @throws IOException catch execution fail
+     */
+    public void buildAndExecuteDelete() throws IOException
+    {
+        this.request = this.builder.delete().build();
+        this.response = this.client.newCall(this.request).execute();
+    }
+	
     /**
      * HTTP code receive by the server
      *

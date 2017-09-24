@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 public class Account implements ObservableAccount
 {
     private final SimpleStringProperty id;
+    private String idapi;
     private final SimpleStringProperty firstname;
     private final SimpleStringProperty lastname;
     private final SimpleStringProperty university;
@@ -23,6 +24,10 @@ public class Account implements ObservableAccount
     private final SimpleStringProperty phone;
     private final SimpleStringProperty city;
     private final SimpleStringProperty birth;
+    private final SimpleStringProperty email;
+    private String oldpassword;
+    private final SimpleStringProperty password;
+    private final SimpleStringProperty username;
     
     /**
      *
@@ -30,6 +35,7 @@ public class Account implements ObservableAccount
     public Account()
     {
         this.id = new SimpleStringProperty("");
+        this.idapi = "";
         this.firstname = new SimpleStringProperty("");
         this.lastname = new SimpleStringProperty("");
         this.university = new SimpleStringProperty("");
@@ -37,6 +43,10 @@ public class Account implements ObservableAccount
         this.phone = new SimpleStringProperty("");
         this.city = new SimpleStringProperty("");
         this.birth = new SimpleStringProperty("");
+        this.email = new SimpleStringProperty("");
+        this.oldpassword = "";
+        this.password = new SimpleStringProperty("");
+        this.username = new SimpleStringProperty("");
     }
     
     /**
@@ -56,6 +66,24 @@ public class Account implements ObservableAccount
     public String getId()
     {
         return (this.id.get());
+    }
+    
+    /**
+     *
+     * @param _id id to set
+     */
+    public void setIdapi(String _id)
+    {
+        this.idapi = _id;
+    }
+    
+    /**
+     *
+     * @return id
+     */
+    public String getIdapi()
+    {
+        return (this.idapi);
     }
     
     /**
@@ -190,6 +218,80 @@ public class Account implements ObservableAccount
     {
         return (this.birth.get());
     }
+    /**
+     *
+     * @param _email email
+     */
+    public void setEmail(String _email)
+    {
+        this.email.set(_email);
+    }
+    
+    /**
+     *
+     * @return email
+     */
+    @Override
+    public String getEmail()
+    {
+        return (this.email.get());
+    }
+	
+    /**
+     *
+     * @param _password password
+     */
+    public void setOldpassword(String _password)
+    {
+        this.oldpassword = _password;
+    }
+    
+    /**
+     *
+     * @return birth
+     */
+    public String getOldpassword()
+    {
+        return (this.oldpassword);
+    }
+	
+    /**
+     *
+     * @param _password password
+     */
+    public void setPassword(String _password)
+    {
+        this.password.set(_password);
+    }
+    
+    /**
+     *
+     * @return birth
+     */
+    @Override
+    public String getPassword()
+    {
+        return (this.password.get());
+    }
+    
+    /**
+     *
+     * @param _username username
+     */
+    public void setUsername(String _username)
+    {
+        this.username.set(_username);
+    }
+    
+    /**
+     *
+     * @return username
+     */
+    @Override
+    public String getUsername()
+    {
+        return (this.username.get());
+    }
     
     /**
      *
@@ -270,6 +372,34 @@ public class Account implements ObservableAccount
     {
         return (this.birth);
     }
+    /**
+     *
+     * @return email
+     */
+    @Override
+    public ObservableValue<String> EmailProperty()
+    {
+        return (this.email);
+    }
+    /**
+     *
+     * @return password
+     */
+    @Override
+    public ObservableValue<String> PasswordProperty()
+    {
+        return (this.password);
+    }
+   
+	/**
+     *
+     * @return username
+     */
+    @Override
+    public ObservableValue<String> UsernameProperty()
+    {
+        return (this.username);
+    }
     
     /**
      *
@@ -286,7 +416,10 @@ public class Account implements ObservableAccount
                 ((Account)obj).getJob().equals(this.getJob()) &&
                 ((Account)obj).getPhone().equals(this.getPhone()) &&
                 ((Account)obj).getCity().equals(this.getCity()) &&
-                ((Account)obj).getBirth().equals(this.getBirth())
+                ((Account)obj).getBirth().equals(this.getBirth()) &&
+                ((Account)obj).getEmail().equals(this.getEmail()) &&
+                ((Account)obj).getPassword().equals(this.getPassword()) &&
+                ((Account)obj).getUsername().equals(this.getUsername())
                 ;
     }
 }

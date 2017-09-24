@@ -98,6 +98,7 @@ public class ConfigManager implements iService
      */
     public void save()
     {
+		System.out.println("service.ConfigManager.save()");
         this.packageManager
                 .addParam("lang", this.config.getLang())
                 .addParam("maximized", this.config.getMaximized())
@@ -105,7 +106,7 @@ public class ConfigManager implements iService
                 .addParam("height", this.config.getHeight())
                 .addParam("username", this.config.getUsername())
                 .addParam("password", this.config.getPassword())
-                .addParam("autoConnect", this.config.getAutoConnect());
+                .addParam("autoconnect", this.config.getAutoConnect());
         this.fileManager.writeJson(this.getPathFor("config"), this.packageManager.getJSONOBject());
     }
     

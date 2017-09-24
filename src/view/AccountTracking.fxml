@@ -51,24 +51,42 @@
 										<TextField id="textField1" fx:id="lastnameField" prefHeight="26.0" prefWidth="352.0" text="LASTNAME" HBox.hgrow="ALWAYS" />
 									</children>
 								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="184.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="289.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+									<children>
+										<Label id="label4" fx:id="emailLabel" minWidth="-Infinity" prefWidth="85.0" text="E-mail" />
+										<TextField id="textField1" fx:id="emailField" prefHeight="26.0" prefWidth="352.0" text="EMAIL" HBox.hgrow="ALWAYS" />
+									</children>
+								</HBox>
 								<HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="77.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="395.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
 									<children>
 										<Label id="label4" fx:id="phonelabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Téléphone" />
 										<TextField id="textField1" fx:id="phoneField" prefHeight="26.0" prefWidth="352.0" text="07000000" HBox.hgrow="ALWAYS" />
 									</children>
 								</HBox>
-                        <HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="123.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                           <children>
-                              <Label id="label4" fx:id="phonelabel1" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Ville" />
-                              <TextField id="textField1" fx:id="cityField" prefHeight="26.0" prefWidth="352.0" text="CITY" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="163.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="325.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                           <children>
-                              <Label id="label4" fx:id="phonelabel11" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Naissance" />
-                              <TextField id="textField1" fx:id="birthField" prefHeight="26.0" prefWidth="352.0" text="jj/mm/aaaa" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="14.0" layoutY="123.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="360.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+								   <children>
+									  <Label id="label4" fx:id="phonelabel1" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Ville" />
+									  <TextField id="textField1" fx:id="cityField" prefHeight="26.0" prefWidth="352.0" text="CITY" HBox.hgrow="ALWAYS" />
+								   </children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="163.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="325.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+								   <children>
+									  <Label id="label4" fx:id="phonelabel11" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Naissance" />
+									  <TextField id="textField1" fx:id="birthField" prefHeight="26.0" prefWidth="352.0" text="jj/mm/aaaa" HBox.hgrow="ALWAYS" />
+								   </children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="224.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="249.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+								   <children>
+									  <Label id="label4" fx:id="passwordLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Password" />
+									  <TextField id="textField1" fx:id="passwordField" prefHeight="26.0" prefWidth="352.0" text="*****" HBox.hgrow="ALWAYS" />
+								   </children>
+								</HBox>
+								<HBox id="HBox" alignment="CENTER" layoutX="20.0" layoutY="262.0" prefHeight="22.0" prefWidth="558.0" spacing="5.0" AnchorPane.bottomAnchor="211.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+								   <children>
+									  <Label id="label4" fx:id="usernameLabel" minWidth="-Infinity" prefHeight="17.0" prefWidth="85.0" text="Username" />
+									  <TextField id="textField1" fx:id="usernameField" prefHeight="26.0" prefWidth="352.0" text="USERNAME" HBox.hgrow="ALWAYS" />
+								   </children>
+								</HBox>
 							</children>
 						</AnchorPane>
 					</children>

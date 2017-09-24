@@ -90,6 +90,7 @@ public class APIManager implements iService
     
     public boolean userContacts(String token)
     {
+		this.error = false;
         try
         {
             this.client.getHttpClientService()
@@ -110,9 +111,62 @@ public class APIManager implements iService
             return (false);
         }
     }
-    
+	
+	public boolean addContact(String token, String obj)
+    {
+		this.error = false;
+        try
+        {
+            
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/addContact")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+    }
+	 
+	public boolean removeContact(String token, String obj)
+    {
+		this.error = false;
+        try
+        {
+            
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/removeContactByEmail/" + obj)
+                    .setHeader("Authorization", "Bearer " + token)
+//                    .setBody(obj)
+                    .buildAndExecuteDelete();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+    }
+        
     public boolean userContact(String token, String id)
     {
+		this.error = false;
         try
         {
             
@@ -143,6 +197,7 @@ public class APIManager implements iService
      */
     public boolean createUser(String obj)
     {
+		this.error = false;
         try
         {
             this.client.getHttpClientService()
@@ -163,6 +218,35 @@ public class APIManager implements iService
             return (false);
         }
     }
+	
+	/**
+	 * Mise en place d'une methode aussi stupide pour correspondre à L'API
+	 * 
+	 */
+	public boolean saveStupidAccount(String link, String obj, String token)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/"+link)
+					.setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
     
     /**
      * Save the entity account on the server
@@ -231,7 +315,8 @@ public class APIManager implements iService
     
     /**
      * Search some contacts on the server by firstname, lastname, email or other. Get a list of contacts.
-     *
+     * PAS GERE PAR L'API
+	 * 
      * @param obj JSON to use in request
      * @return boolean
      */
@@ -241,8 +326,60 @@ public class APIManager implements iService
         return (false);
     }
     
+	public boolean createGroup(String token, String obj)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/createGroup")
+					.setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
+	
+	public boolean removeGroup(String token, String obj)
+    {
+		this.error = false;
+        try
+        {
+            
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/removeGroup/" + obj)
+                    .setHeader("Authorization", "Bearer " + token)
+//                    .setBody(obj)
+                    .buildAndExecuteDelete();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+    }
+	
     /**
      * Save the group list on the server
+	 * PAS GERE PAR L'API
      *
      * @param obj JSON to use in request
      * @return boolean
@@ -253,14 +390,90 @@ public class APIManager implements iService
         return (false);
     }
     
+	/**
+	 * 
+	 * @param token
+	 * @return 
+	 */
+	public boolean fetchGroups(String token)
+	{
+		this.error = true;
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/fetchGroups")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .buildAndExecuteGet();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
+	
+	public boolean fetchUser(String token)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/fetchUser")
+                    .setHeader("Authorization", "Bearer " + token)
+                    .buildAndExecuteGet();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
+	
     /**
      * Load the group list on the server
      *
+//	 * @param token
      * @return boolean
      */
     public boolean loadGroups()
     {
-        this.error = true;
+		
+//        this.error = true;
+//		this.error = false;
+//        try
+//        {
+//            this.client.getHttpClientService()
+//                    .init()
+//                    .setUrl("http://34.227.142.101:50000/fetchGroups")
+//                    .setHeader("Authorization", "Bearer " + token)
+//                    .buildAndExecuteGet();
+//            this.code = this.client.getHttpClientService().getReponseCode();
+//            this.response = this.client.getHttpClientService().getResponseBody();
+//            if (code != 200)
+//            {
+//                this.error = true;
+//            }
+//            return (!this.error);
+//        }
+//        catch (Exception e)
+//        {
+//            return (false);
+//        }
         return (false);
     }
 }

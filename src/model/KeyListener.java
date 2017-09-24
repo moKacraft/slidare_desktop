@@ -94,7 +94,7 @@ public class KeyListener implements NativeKeyListener
 
     public void nativeKeyTyped(NativeKeyEvent e)
     {
-        System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
+//        System.out.println("Key Typed: " + e.getKeyText(e.getKeyCode()));
     }
     
 //    public void notifyViewToChangeKeyHandleText(String text) {
