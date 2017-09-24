@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import model.DragDropTracking;
+import model.TrackingInfo;
 import org.jnativehook.NativeHookException;
 import service.ConfigManager;
 import service.ServiceFactory;
@@ -72,19 +73,21 @@ public class Main extends Application
 			
             if (configManager.getConfig().getAutoConnect()== true && connectctrl.checkIdentification(configManager.getConfig().getUsername(), configManager.getConfig().getPassword()))
             {
+                TrackingInfo.connect = true;
                 page = (AnchorPane) FXMLLoader.load(Main.class.getResource("/view/ContactTracking.fxml"), bundle);
                 try {
-                    DragDropTracking dragDropTracking = new DragDropTracking();
+                    
+                  DragDropTracking dragDropTracking = new DragDropTracking();
                 } catch (NativeHookException ex) {
                     Logger.getLogger(ConnectController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
                 page = (AnchorPane) FXMLLoader.load(Main.class.getResource("/view/connect.fxml"), bundle);
-                try {
+/*                try {
                     DragDropTracking dragDropTracking = new DragDropTracking();
                 } catch (NativeHookException ex) {
                     Logger.getLogger(ConnectController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
             }
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);

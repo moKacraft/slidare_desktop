@@ -69,11 +69,29 @@ public class DragDropTracking
         // Add the appropriate listeners.
         GlobalScreen.addNativeMouseListener(mouseListener);
         GlobalScreen.addNativeMouseMotionListener(mouseListener);
-        
-        //System.out.println("azea");
-        
-        TrackingInfo.firstKeyName = settings.getProperty("key");
-        TrackingInfo.secondKeyName = settings.getProperty("key2");
+        int cnt = 0;
+        TrackingInfo.listKeyName = new ArrayList<String>();
+        int countValid = 0;
+        String tmp = "aze";
+        Boolean state = false;
+      while (state == false && tmp != "")
+        {
+            String strKeyName = "key" + String.valueOf(cnt);
+            tmp = settings.getProperty(strKeyName);
+            //if (tmp == null)
+              //  break;
+            System.out.println(tmp);
+            if (tmp != null)
+            {
+                System.out.println("tmp=" + tmp);
+                TrackingInfo.listKeyName.add(tmp);
+                cnt++;
+             }
+            countValid++;
+            if (countValid > 10)
+                break;
+           /// TrackingInfo.secondKeyName = settings.getProperty("key2");
+        }
        
         
     }
@@ -85,10 +103,12 @@ public class DragDropTracking
     
     public void showBubble()
     {
+        //System.out.println("124");
         dragDropFrame.setVisible(true);
         if (createdContacts  == true) {
             return;
         }
+        //System.out.println("987");
         APIManager manager = (APIManager) ServiceFactory.getAPIManager();
 //     System.out.println(this.cfg.getConfig().getToken());
         manager.userContacts(this.cfg.getConfig().getToken());

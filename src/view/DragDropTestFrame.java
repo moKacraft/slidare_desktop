@@ -10,40 +10,50 @@ import javax.swing.*;
 import model.MyDragDropListener;
 import java.awt.dnd.DropTarget;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.geom.Ellipse2D;
+import java.awt.color.*;
+
+import javafx.scene.shape.Circle;
+import model.TrackingInfo;
+import service.ConfigManager;
+import service.ServiceFactory;
 /**
  *
  * @author Timothy
  */
 public class DragDropTestFrame extends javax.swing.JFrame {
 private static final long serialVersionUID = 1L;
-private JLabel myLabel;
+private JLabel myJLabel;
 private Boolean isMain = false;
 public static int numberOfFrame = 0;
 public  int numberOfContact = 0;
 public MyDragDropListener  myDragDropListener;
+//private Object cfg;
 
 public DragDropTestFrame() 
 {
-    
+ /*Circle circle = new Circle();
+circle.setCenterX(100.0f);
+circle.setCenterY(100.0f);
+circle.setRadius(50.0f); */  
     // Set the frame title
     super("Drag and drop test");
     // Set the size
 
 
     // Create the label
-    myLabel = new JLabel("Drag something here!", SwingConstants.CENTER);
-    
-    
+    myJLabel = new JLabel("Drag something here!", (int) CENTER_ALIGNMENT);
 
+   // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
-     myDragDropListener = new MyDragDropListener(true);
+    myDragDropListener = new MyDragDropListener(true);
 
     // Connect the label with a drag and drop listener
-    new DropTarget(myLabel, myDragDropListener);
+    new DropTarget(myJLabel, myDragDropListener);
 
-    // Add the label to the content
-    this.getContentPane().add(BorderLayout.CENTER, myLabel);
-
+   // // Add the label to the content
+    this.getContentPane().add(BorderLayout.CENTER, myJLabel);
+    this.getContentPane().setBackground(new Color(78, 198,233));
     // Show the frame
     this.setVisible(false);
     
@@ -58,7 +68,7 @@ public void visible(Boolean state)
 
 public void setMessage(String text)
 {
-    myLabel.setText(text);
+    myJLabel.setText(text);
 }
 
 public void setNumberOfContact(int nb)
@@ -70,22 +80,37 @@ public void setNumberOfContact(int nb)
 
 public void setPopUpType(Boolean state, int width)
 {
+    if (TrackingInfo.connect == false)
+    {
+    System.out.println("RETUNED");
+        
+        return;
+    }
+    System.out.println("PAssed");
     if (state == true)
     {
-      
-        this.setSize(250, 250);
+        System.out.println("pop");
+        this.setLocation(15,15);
+        this.setBackground(new Color(78, 198,233));
+        this.setSize(185, 185);
         this.toFront();
+        this.setUndecorated(true);
+        this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
         this.setAlwaysOnTop(true);
-        myLabel.setLocation(0,0);
+        
     }
     else
     {
-        this.setSize(120, 120 );
-        this.setLocation(150 * width ,150 * (numberOfFrame % 5));
-      
-        this.toFront();
+      this.setSize(120, 120 );
+      this.setLocation(150 * width ,150 * (numberOfFrame % 5));
+      this.setBackground(new Color(78, 198,233));
+      this.toFront();
       this.setUndecorated(true);
-        this.setShape(new RoundRectangle2D.Double(10, 10, 100, 100, 50, 50));
+     // this.setShape(new RoundRectangle2D.Double(10, 10, 100, 100, 50, 50));
+   
+    this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
+   // this.set
+     
            this.setVisible(true);
         this.setAlwaysOnTop(true);
    // this.setSize(300, 200);
@@ -99,7 +124,7 @@ public void setPopUpType(Boolean state, int width)
 
 public void setTextFrame (String text)
 {
-    myLabel.setText(text);
+    myJLabel.setText(text);
 }
 
 

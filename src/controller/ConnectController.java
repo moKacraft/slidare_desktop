@@ -47,7 +47,10 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import model.DragDropTracking;
+import model.TrackingInfo;
 import org.apache.commons.codec.binary.Base64;
+import org.jnativehook.NativeHookException;
 import service.APIManager;
 import service.ConfigManager;
 import service.PackageManager;
@@ -169,6 +172,13 @@ public class ConnectController extends Controller implements Initializable
                 this.cfg.save();
             }
             Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
+            TrackingInfo.connect = true;
+            try {
+                    
+                  DragDropTracking dragDropTracking = new DragDropTracking();
+                } catch (NativeHookException ex) {
+                    Logger.getLogger(ConnectController.class.getName()).log(Level.SEVERE, null, ex);
+                }
         } else {
             actiontarget.setText("Mauvais nom d'utilisateur ou mot de passe");
         }
