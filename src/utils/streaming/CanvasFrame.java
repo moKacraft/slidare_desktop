@@ -196,6 +196,8 @@ public class CanvasFrame extends JFrame {
             setVisible(true);
             //setVisible(false);
             
+            System.out.println("BEFOR INITCANVAS");
+            
             initCanvas(fullScreen, displayMode, gamma);
             
             initButtons();
