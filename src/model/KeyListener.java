@@ -9,6 +9,8 @@ package model;
  *
  * @author Timothy
  */
+import java.util.ArrayList;
+import java.util.List;
 import model.IKeyHandle;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -17,60 +19,77 @@ public class KeyListener implements NativeKeyListener
 {
     public IKeyHandle keyHandle = null;
     public boolean keyPressed = false;
+    private  List<String> ActiveKeys;
+    private int cnt = 0;
     private String key1 = "";
     private String key2 = "";
     
     
     public KeyListener()
     {
+        this.ActiveKeys = new ArrayList<String>();
     }
     
     @Override
     public void nativeKeyPressed(NativeKeyEvent e) 
     {
-        if (key1 == "")
-            key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
-        else if (key2 == "")
-            key2 = NativeKeyEvent.getKeyText(e.getKeyCode());
-            
+         String KeyEventString = NativeKeyEvent.getKeyText(e.getKeyCode());
+     
         
-        if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
-            if (key2 == "")
-                key1 = "Ctrl";
-            else
-                key2 = "Ctrl";
+            
+        if (KeyEventString.matches( "Left Control") == true) {
+                KeyEventString = "Ctrl";
                 
         }
-        //System.out.println("e:"  + NativeKeyEvent.getKeyText(e.getKeyCode()));
+        if (TrackingInfo.listKeyName == null)
+            return;
+        System.out.println("e:"  + KeyEventString);
         //System.out.println("e 2:"  + key1);  
         //System.out.println("key1:"  + key1);
         //System.out.println("key2:" + key2);
-     if ((TrackingInfo.firstKeyName != null) &&  key1.matches(TrackingInfo.firstKeyName) == true &&
-            (TrackingInfo.secondKeyName != null) &&  key2.matches(TrackingInfo.secondKeyName) == true  ||
-                key1.matches(TrackingInfo.secondKeyName) == true &&  key2.matches(TrackingInfo.firstKeyName) == true) 
+        
+        for (int i = 0; i < TrackingInfo.listKeyName.size() ; i++)
         {
-            DragDropTracking.dragDropTracking.showBubble();
-            
+             System.out.println("key*:"  + TrackingInfo.listKeyName.get(i));
+            if (TrackingInfo.listKeyName.get(i).matches(KeyEventString) &&
+                  ActiveKeys.contains(KeyEventString) == false)
+            {
+                System.out.println("Key" + KeyEventString);
+                ActiveKeys.add(KeyEventString);
+            }
+        }
+        System.out.println("KeySize " + ActiveKeys.size() + " " + TrackingInfo.listKeyName.size());
+        if (ActiveKeys.size() == TrackingInfo.listKeyName.size())
+        {
+            System.out.println("YOLO");
+            DragDropTracking.dragDropTracking.showBubble();         
         }
     }
 
     public void nativeKeyReleased(NativeKeyEvent e) 
     {
-        //key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
+        String KeyEventString = NativeKeyEvent.getKeyText(e.getKeyCode());
         //key1 = NativeKeyEvent.getKeyText(e.getKeyCode());
  
+        if (TrackingInfo.listKeyName == null)
+            return;
+        
         /*if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
             key1 = "Ctrl";
         }*/
-        if ((TrackingInfo.firstKeyName != null) &&  key1.matches(TrackingInfo.firstKeyName) == true &&
-            (TrackingInfo.secondKeyName != null) &&  key2.matches(TrackingInfo.secondKeyName) == true  ||
-                key1.matches(TrackingInfo.secondKeyName) == true &&  key2.matches(TrackingInfo.firstKeyName) == true) 
+         for (int i = 0; i < TrackingInfo.listKeyName.size() ; i++)
+        {
+            if (TrackingInfo.listKeyName.get(i).matches(KeyEventString) &&
+                  ActiveKeys.contains(KeyEventString) == true)
+            {
+                ActiveKeys.remove(KeyEventString);
+            }
+        }
+        if (ActiveKeys.size() != TrackingInfo.listKeyName.size())
         {
             DragDropTracking.dragDropTracking.hideBubble();
             DragDropTracking.dragDropTracking.HideMiniPopUp();
         }
-        key1 = "";
-        key2 = "";
     }
 
     public void nativeKeyTyped(NativeKeyEvent e)

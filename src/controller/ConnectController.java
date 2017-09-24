@@ -5,12 +5,17 @@
  */
 package controller;
 
+import com.teamdev.jxbrowser.chromium.Browser;
+import com.teamdev.jxbrowser.chromium.BrowserPreferences;
+import com.teamdev.jxbrowser.chromium.swing.BrowserView;
 import static controller.Main.dialogSend;
 import static controller.Main.labelSend;
 import static controller.Main.socket;
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -46,8 +51,14 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import org.apache.commons.codec.binary.Base64;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.Frame;
+import org.bytedeco.javacv.FrameGrabber;
+import org.bytedeco.javacv.FrameRecorder;
 import service.APIManager;
 import service.ConfigManager;
 import service.PackageManager;
@@ -68,6 +79,8 @@ public class ConnectController extends Controller implements Initializable
 
 	private ConfigManager cfg;
 
+	private static Frame grabbedFrame;
+	
 	@FXML
 	private Text actiontarget;
 	@FXML
@@ -185,7 +198,7 @@ public class ConnectController extends Controller implements Initializable
 			actiontarget.setText("Mauvais nom d'utilisateur ou mot de passe");
 		}
 	}
-
+	
 	@FXML
 	public void doCreateAccount(ActionEvent event) throws IOException
 	{
@@ -198,161 +211,206 @@ public class ConnectController extends Controller implements Initializable
 			actiontarget.setText(this.APIManager.getLastResponse());
 		}
 	}
-
+	
 	public void setupConnections()
 	{
-		try
-		{
-			socket = IO.socket("http://34.227.142.101:8090");
-			System.out.println("socket init");
-			socket.on("server ready", new Emitter.Listener()
-			{
-				@Override
-				public void call(Object... args)
-				{
+        try {
+            socket = IO.socket("http://34.227.142.101:8090");
+            System.out.println("socket init");
+            socket.on("server ready", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    
+                    dialogSend.setVisible(true);
+                    System.out.println("Server ready");
+                    
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                java.net.Socket sock;
+                                sock = new java.net.Socket("34.227.142.101", (int)args[0]);
+                                OutputStream is = sock.getOutputStream();
+                                FileInputStream fis = new FileInputStream((String)args[1]);
+                                BufferedInputStream bis = new BufferedInputStream(fis);
+                                byte[] buffer = new byte[4096];
+                                int ret;
+                                while ((ret = fis.read(buffer)) > 0) {
+                                    is.write(buffer, 0, ret);
+                                }
+                                fis.close();
+                                bis.close();
+                                is.close();
+                                sock.close();
+                            } catch (IOException ex) {
+                                Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }).start();
+                }
+            }).on(username.getText(), new Emitter.Listener() {
+                @Override
+                public void call(Object... args)
+                {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Info");
+                            alert.setHeaderText("File Received");
+                            alert.setContentText("");
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+                            
+                            if (result.isPresent() && result.get() != ButtonType.OK) {
+                                return;
+                            }
+                            
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JDialog dialog = new JDialog();
+                                    JLabel label = new JLabel("Please wait...");
+                                    dialog.setLocationRelativeTo(null);
+                                    dialog.setTitle("Please Wait...");
+                                    dialog.add(label);
+                                    dialog.setPreferredSize(new Dimension(300, 100));
+                                    dialog.setAlwaysOnTop(true);
+                                    dialog.pack();
+                                    
+                                    System.out.println("Receving File");
+                                    String transferId = (String) args[2];
+                                    try {
+                                        FileOutputStream fos = new FileOutputStream((String) args[3]);
+                                        java.net.Socket sock = new java.net.Socket("34.227.142.101", (int)args[1]);
+                                        InputStream is = sock.getInputStream();
+                                        byte[] buffer = new byte[4096];
+                                        int ret;        
+                                        double sumCount = 0.0;
+                                        
+                                        dialog.setVisible(true);
+                                        
+                                        while ((ret = is.read(buffer)) > 0) {
+                                            fos.write(buffer, 0, ret);
+                                            
+                                            sumCount += ret;
+                                            System.out.println("Percentace: " + (int)((sumCount / (int) args[9] * 100.0)) + "%");
+                                            //Thread.sleep(1000);
+                                            label.setText("Percentace: " + (int)((sumCount / (int) args[9] * 100.0)) + "%");
+                                        }
+                                        dialog.setVisible(false);
+                                        System.out.println("Transfer Finished");
+                                        fos.close();
+                                        is.close();
+                                        sock.close();
+                                        socket.emit("transfer finished", transferId);
+                                        
+                                        encryption _crypt = new  encryption();
+                                        byte[] salt = Base64.decodeBase64((String) args[6]);
+                                        byte[] iv = Base64.decodeBase64((String) args[7]);
+                                        System.out.println(salt);
+                                        System.out.println(iv);
+                                        System.out.println(salt.length);
+                                        System.out.println(iv.length);
+                                        _crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], salt, iv, (String) args[8]);
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (NoSuchAlgorithmException
+                                            | NoSuchPaddingException
+                                            | InvalidKeySpecException
+                                            | InvalidAlgorithmParameterException
+                                            | InvalidKeyException
+                                            | BadPaddingException
+                                            | IllegalBlockSizeException ex) {
+                                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }).start();
+                        }
+                    });
+                }
+            }).on("receiving data", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("args[0] " + (String)args[0] + "args[1] " + args[1]);
+                    labelSend.setText((String) args[0]);
+                    if ((boolean) args[1] == true) {
+                        dialogSend.setVisible(false);
+                    }
+                }
+            }).on(username.getText() + "streaming", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    System.out.println("HELLO");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+                            final Browser browser = new Browser();
+                            BrowserPreferences preferences = browser.getPreferences();
+                            preferences.setPluginsEnabled(true);
+                            preferences.setJavaScriptEnabled(true);
+                            browser.setPreferences(preferences);
+                            BrowserView view = new BrowserView(browser);
 
-					dialogSend.setVisible(true);
-					System.out.println("Server ready");
+                            System.out.println("RTOTOTOOTOT");
+                            JFrame frameBrowser = new JFrame("Streaming");
+                            frameBrowser.add(view, BorderLayout.CENTER);
+                            frameBrowser.setSize(800, 500);
+                            frameBrowser.setLocationRelativeTo(null);
+                            frameBrowser.setVisible(true);
 
-					new Thread(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							try
-							{
-								java.net.Socket sock;
-								sock = new java.net.Socket("34.227.142.101", (int) args[0]);
-								OutputStream is = sock.getOutputStream();
-								FileInputStream fis = new FileInputStream((String) args[1]);
-								BufferedInputStream bis = new BufferedInputStream(fis);
-								byte[] buffer = new byte[4096];
-								int ret;
-								while ((ret = fis.read(buffer)) > 0)
-								{
-									is.write(buffer, 0, ret);
-								}
-								fis.close();
-								bis.close();
-								is.close();
-								sock.close();
-							}
-							catch (IOException ex)
-							{
-								Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-							}
-						}
-					}).start();
-				}
-			}).on(username.getText(), new Emitter.Listener()
-			{
-				@Override
-				public void call(Object... args)
-				{
-					Platform.runLater(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-							alert.setTitle("Info");
-							alert.setHeaderText("File Received");
-							alert.setContentText("");
-							Optional<ButtonType> result = alert.showAndWait();
-							System.out.println(result);
-
-							if (result.isPresent() && result.get() != ButtonType.OK)
-							{
-								return;
-							}
-
-							new Thread(new Runnable()
-							{
-								@Override
-								public void run()
-								{
-									JDialog dialog = new JDialog();
-									JLabel label = new JLabel("Please wait...");
-									dialog.setLocationRelativeTo(null);
-									dialog.setTitle("Please Wait...");
-									dialog.add(label);
-									dialog.setPreferredSize(new Dimension(300, 100));
-									dialog.setAlwaysOnTop(true);
-									dialog.pack();
-
-									System.out.println("Receving File");
-									String transferId = (String) args[2];
-									try
-									{
-										FileOutputStream fos = new FileOutputStream((String) args[3]);
-										java.net.Socket sock = new java.net.Socket("34.227.142.101", (int) args[1]);
-										InputStream is = sock.getInputStream();
-										byte[] buffer = new byte[4096];
-										int ret;
-										double sumCount = 0.0;
-
-										dialog.setVisible(true);
-
-										while ((ret = is.read(buffer)) > 0)
-										{
-											fos.write(buffer, 0, ret);
-
-											sumCount += ret;
-											System.out.println("Percentace: " + (int) ((sumCount / (int) args[9] * 100.0)) + "%");
-											//Thread.sleep(1000);
-											label.setText("Percentace: " + (int) ((sumCount / (int) args[9] * 100.0)) + "%");
-										}
-										dialog.setVisible(false);
-										System.out.println("Transfer Finished");
-										fos.close();
-										is.close();
-										sock.close();
-										socket.emit("transfer finished", transferId);
-
-										encryption _crypt = new encryption();
-										byte[] salt = Base64.decodeBase64((String) args[6]);
-										byte[] iv = Base64.decodeBase64((String) args[7]);
-										System.out.println(salt);
-										System.out.println(iv);
-										System.out.println(salt.length);
-										System.out.println(iv.length);
-										_crypt.decryptFile((String) args[3], (String) args[4], (String) args[5], salt, iv, (String) args[8]);
-									}
-									catch (IOException ex)
-									{
-										Logger.getLogger(EventlogController.class.getName()).log(Level.SEVERE, null, ex);
-									}
-									catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeySpecException | InvalidAlgorithmParameterException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException ex)
-									{
-										Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-									}
-								}
-							}).start();
-						}
-					});
-				}
-			}).on("receiving data", new Emitter.Listener()
-			{
-				@Override
-				public void call(Object... args)
-				{
-					System.out.println("args[0] " + (String) args[0] + "args[1] " + args[1]);
-					labelSend.setText((String) args[0]);
-					if ((boolean) args[1] == true)
-					{
-						dialogSend.setVisible(false);
-					}
-				}
-			});
-			socket.connect();
-
-		}
-		catch (URISyntaxException ex)
-		{
-			System.out.println(ex.getMessage());
-			System.out.println(ex.getReason());
-		}
-
-	}
-
+                            browser.loadURL((String)args[0]);
+                            System.out.println("HERERERRE");
+                        }
+                       }).start();
+                }
+            }).on("start streaming", new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+                    new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            utils.streaming.Controller controller = new utils.streaming.Controller();
+                            controller.url = (String)args[0];
+                            System.out.println(controller.url);
+                            Toolkit kit = Toolkit.getDefaultToolkit();
+                            Dimension screenSize = kit.getScreenSize();
+                            int screenWidth = screenSize.width;
+                            int screenHeight = screenSize.height;
+                            double frameRate = 10;
+                            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("1:");
+                            grabber.setFormat("avfoundation");
+                            grabber.setFrameRate(frameRate);
+                            grabber.setImageWidth(screenWidth);
+                            grabber.setImageHeight(screenHeight);
+                            grabber.start();
+                            utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
+                            frame.setCanvasSize(screenWidth/2, screenHeight/2);
+                            frame.setController(controller);
+                            controller.startRtmpRecorder();
+                            while (frame.isVisible()) {
+                                grabbedFrame = grabber.grab();
+                                controller.recorder(grabbedFrame);
+                            }
+                            frame.dispose();
+                            controller.clean();
+                            grabber.stop();
+                        } catch (FrameGrabber.Exception ex) {
+                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (FrameRecorder.Exception ex) {
+                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }}).start();
+                }
+            });
+            socket.connect();
+            
+        } catch (URISyntaxException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getReason());
+        }
+        
+    }
 }
