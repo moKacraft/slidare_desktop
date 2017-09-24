@@ -286,7 +286,8 @@ public class APIManager implements iService
     
     /**
      * Search some contacts on the server by firstname, lastname, email or other. Get a list of contacts.
-     *
+     * PAS GERE PAR L'API
+	 * 
      * @param obj JSON to use in request
      * @return boolean
      */
@@ -296,8 +297,60 @@ public class APIManager implements iService
         return (false);
     }
     
+	public boolean createGroup(String token, String obj)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/createGroup")
+					.setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
+	
+	public boolean removeGroup(String token, String obj)
+    {
+		this.error = false;
+        try
+        {
+            
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl("http://34.227.142.101:50000/removeGroup/" + obj)
+                    .setHeader("Authorization", "Bearer " + token)
+//                    .setBody(obj)
+                    .buildAndExecuteDelete();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+    }
+	
     /**
      * Save the group list on the server
+	 * PAS GERE PAR L'API
      *
      * @param obj JSON to use in request
      * @return boolean

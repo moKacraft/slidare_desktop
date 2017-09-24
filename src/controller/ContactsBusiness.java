@@ -75,35 +75,38 @@ public class ContactsBusiness
 
 	/**
 	 * Save the contact on the server or in a local file to sync later
+	 * PAS GERE PAR L'API
 	 *
 	 * @param contactList List of contact to save
 	 */
 	public void saveContacts(Map<String, Contact> contactList)
 	{
-		JSONArray contactListToSave = new JSONArray();
-		Contact contact;
-		for (Map.Entry<String, Contact> contactpair : contactList.entrySet())
-		{
-			JSONObject obj = new JSONObject();
-			contact = contactpair.getValue();
-			obj.put("id", Long.parseLong(contact.getId()));
-			obj.put("group", Long.parseLong(contact.getGroup()));
-			obj.put("firstname", contact.getFirstname());
-			obj.put("lastname", contact.getLastname());
-			obj.put("comment", contact.getComment());
-			contactListToSave.add(obj);
-		}
-
-		//Prepare request to server
-		String request = this.packageManager
-				.setJSONArray(contactListToSave)
-				.getJSONString();
-
-		//Send request to serveur
-		if (this.APIManager.saveContacts(request) == false)
-		{
-			this.fileManager.writeJson(this.configManager.getPathFor("contacts"), contactListToSave);
-		}
+		//Pas de sauvegarde possible sur un contact avec l'API Ju sauf erreur de ma part
+		
+//		JSONArray contactListToSave = new JSONArray();
+//		Contact contact;
+//		for (Map.Entry<String, Contact> contactpair : contactList.entrySet())
+//		{
+//			JSONObject obj = new JSONObject();
+//			contact = contactpair.getValue();
+//			obj.put("id", Long.parseLong(contact.getId()));
+//			obj.put("group", Long.parseLong(contact.getGroup()));
+//			obj.put("firstname", contact.getFirstname());
+//			obj.put("lastname", contact.getLastname());
+//			obj.put("comment", contact.getComment());
+//			contactListToSave.add(obj);
+//		}
+//
+//		//Prepare request to server
+//		String request = this.packageManager
+//				.setJSONArray(contactListToSave)
+//				.getJSONString();
+//
+//		//Send request to serveur
+//		if (this.APIManager.saveContacts(request) == false)
+//		{
+//			this.fileManager.writeJson(this.configManager.getPathFor("contacts"), contactListToSave);
+//		}
 	}
 	
 	public void deleteContact(String id)

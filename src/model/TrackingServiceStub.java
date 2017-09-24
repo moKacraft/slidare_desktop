@@ -357,7 +357,8 @@ public class TrackingServiceStub implements TrackingService
 	{
 		assert groupsMap.containsKey(groupId);
 		groupsMap.remove(groupId);
-		groupBusiness.saveGroups(groupsMap);
+		groupBusiness.deleteGroup(groupId);
+//		groupBusiness.saveGroups(groupsMap);
 	}
 
 	@Override
