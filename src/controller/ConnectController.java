@@ -183,10 +183,11 @@ public class ConnectController extends Controller implements Initializable
 	@FXML
 	public void doConnexion(ActionEvent event) throws IOException
 	{
+            System.out.println("doConnexion");
 		if (checkIdentification(username.getText(), password.getText()) == true)
 		{
 //                        String str = this.packageManager.getStringDefault("email", "inconnu");
-            setupConnections();
+            setupConnections(username.getText());
             System.out.println(username.getText());
             if (autoconnect.isSelected()) {
                 this.cfg.getConfig().setUsername(username.getText());
@@ -219,7 +220,7 @@ public class ConnectController extends Controller implements Initializable
     
    
 	
-	public void setupConnections()
+	public void setupConnections(String userName)
 	{
         try {
             socket = IO.socket("http://34.227.142.101:8090");
@@ -255,7 +256,8 @@ public class ConnectController extends Controller implements Initializable
                         }
                     }).start();
                 }
-            }).on(username.getText(), new Emitter.Listener() {
+//            }).on(username.getText(), new Emitter.Listener() {
+                }).on(userName, new Emitter.Listener() {
                 @Override
                 public void call(Object... args)
                 {
@@ -345,7 +347,8 @@ public class ConnectController extends Controller implements Initializable
                         dialogSend.setVisible(false);
                     }
                 }
-            }).on(username.getText() + "streaming", new Emitter.Listener() {
+//            }).on(username.getText() + "streaming", new Emitter.Listener() {
+                }).on(userName + "streaming", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     System.out.println("HELLO");
@@ -387,8 +390,8 @@ public class ConnectController extends Controller implements Initializable
                             int screenWidth = screenSize.width;
                             int screenHeight = screenSize.height;
                             double frameRate = 10;
-                            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("1:");
-                            grabber.setFormat("avfoundation");
+                            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
+                            grabber.setFormat("gdigrab");
                             grabber.setFrameRate(frameRate);
                             grabber.setImageWidth(screenWidth);
                             grabber.setImageHeight(screenHeight);
