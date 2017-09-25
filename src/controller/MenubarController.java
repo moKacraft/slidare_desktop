@@ -112,7 +112,7 @@ public class MenubarController implements Initializable
 		case "eventlog":
                     break;
                 case "stream":
-                    Main.socket.emit("init streaming", "soso@gmail.com");
+                    Main.socket.emit("init streaming");
                     break;
             default:
                 System.err.println("Switch inconnu");

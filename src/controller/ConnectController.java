@@ -384,6 +384,7 @@ public class ConnectController extends Controller implements Initializable
                         try {
                             utils.streaming.Controller controller = new utils.streaming.Controller();
                             controller.url = (String)args[0];
+                            controller.url2 = (String)args[1];
                             System.out.println(controller.url);
                             Toolkit kit = Toolkit.getDefaultToolkit();
                             Dimension screenSize = kit.getScreenSize();
@@ -397,9 +398,9 @@ public class ConnectController extends Controller implements Initializable
                             grabber.setImageHeight(screenHeight);
                             grabber.start();
                             utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
-                            frame.setCanvasSize(screenWidth/2, screenHeight/2);
+//                            frame.setCanvasSize(screenWidth/2, screenHeight/2);
                             frame.setController(controller);
-                            controller.startRtmpRecorder();
+                            //controller.startRtmpRecorder();
                             while (frame.isVisible()) {
                                 grabbedFrame = grabber.grab();
                                 controller.recorder(grabbedFrame);
