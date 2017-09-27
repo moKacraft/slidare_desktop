@@ -2,7 +2,7 @@
 * Projet Slidare
 * Sharing anywhere, anytime
 *
- */
+*/
 package controller;
 
 import com.teamdev.jxbrowser.chromium.Browser;
@@ -76,116 +76,116 @@ import utils.security.encryption;
  */
 public class ConnectController extends Controller implements Initializable
 {
-
-	private PackageManager packageManager;
-
-	private APIManager APIManager;
-
-	private ConfigManager cfg;
-
-	private static Frame grabbedFrame;
-	
-	@FXML
-	private Text actiontarget;
-	@FXML
-	private TextField username;
-	@FXML
-	private PasswordField password;
-	@FXML
-	private CheckBox autoconnect;
-
-	public ConnectController()
-	{
-		this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
-		this.APIManager = (APIManager) ServiceFactory.getAPIManager();
-		this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
-	}
-
-	/**
-	 * Initializes the controller class.
-	 *
-	 * @param url
-	 * @param rb
-	 */
-	@Override
-	public void initialize(URL url, ResourceBundle rb)
-	{
-	}
-
-	/**
-	 * Check the identification of the user with the server soso@gmail.com tests
-	 *
-	 * @param user username
-	 * @param pass password
-	 * @return identification is succeed or not
-	 */
-	public boolean checkIdentification(String user, String pass)
-	{
-		String request = this.packageManager
-				.init()
-				.addParam("email", user)
-				.addParam("password", pass)
-				.getJSONString();
-
-		this.APIManager.loginUser(request);
-		if (this.APIManager.inError() == false)
-		{
-			this.packageManager.setJSONObject(this.APIManager.getLastResponse());
-			this.cfg.getConfig().setToken(this.packageManager.getStringDefault("token", "inconnu"));
-			this.cfg.getConfig().setId(this.packageManager.getStringDefault("id", "inconnu"));
-
+    
+    private PackageManager packageManager;
+    
+    private APIManager APIManager;
+    
+    private ConfigManager cfg;
+    
+    private static Frame grabbedFrame;
+    
+    @FXML
+    private Text actiontarget;
+    @FXML
+    private TextField username;
+    @FXML
+    private PasswordField password;
+    @FXML
+    private CheckBox autoconnect;
+    
+    public ConnectController()
+    {
+        this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
+        this.APIManager = (APIManager) ServiceFactory.getAPIManager();
+        this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
+    }
+    
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb)
+    {
+    }
+    
+    /**
+     * Check the identification of the user with the server soso@gmail.com tests
+     *
+     * @param user username
+     * @param pass password
+     * @return identification is succeed or not
+     */
+    public boolean checkIdentification(String user, String pass)
+    {
+        String request = this.packageManager
+                .init()
+                .addParam("email", user)
+                .addParam("password", pass)
+                .getJSONString();
+        
+        this.APIManager.loginUser(request);
+        if (this.APIManager.inError() == false)
+        {
+            this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+            this.cfg.getConfig().setToken(this.packageManager.getStringDefault("token", "inconnu"));
+            this.cfg.getConfig().setId(this.packageManager.getStringDefault("id", "inconnu"));
+            
 //			this.APIManager.userContacts(this.cfg.getConfig().getToken());
 //			System.out.println("controller.ConnectController.checkIdentification()");
 //			System.out.println(this.APIManager.getLastCode());
 //			System.out.println(this.APIManager.getLastResponse());
 //
 //			System.exit(0);
-			return (true);
-		}
-		else
-		{
-			return (false);
-		}
-	}
-
-	/**
-	 * Create an account on the server
-	 *
-	 * @param user username
-	 * @param pass password
-	 * @return creation of account is succeed or not
-	 */
-	public boolean createAccount(String user, String pass)
-	{
-		String request = this.packageManager
-				.init()
-				.addParam("first_name", "Nouveau")
-				.addParam("last_name", "Nouveau")
-				.addParam("email", user)
-				.addParam("password", pass)
-				.getJSONString();
-
-		this.APIManager.createUser(request);
-		if (this.APIManager.inError() == false)
-		{
-			this.packageManager.setJSONObject(this.APIManager.getLastResponse());
-			this.cfg.getConfig().setToken(this.packageManager.getStringDefault("token", "inconnu"));
-			this.cfg.getConfig().setId(this.packageManager.getStringDefault("id", "inconnu"));
-
-			return (true);
-		}
-		else
-		{
-			return (false);
-		}
-	}
-
-	@FXML
-	public void doConnexion(ActionEvent event) throws IOException
-	{
-            System.out.println("doConnexion");
-		if (checkIdentification(username.getText(), password.getText()) == true)
-		{
+return (true);
+        }
+        else
+        {
+            return (false);
+        }
+    }
+    
+    /**
+     * Create an account on the server
+     *
+     * @param user username
+     * @param pass password
+     * @return creation of account is succeed or not
+     */
+    public boolean createAccount(String user, String pass)
+    {
+        String request = this.packageManager
+                .init()
+                .addParam("first_name", "Nouveau")
+                .addParam("last_name", "Nouveau")
+                .addParam("email", user)
+                .addParam("password", pass)
+                .getJSONString();
+        
+        this.APIManager.createUser(request);
+        if (this.APIManager.inError() == false)
+        {
+            this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+            this.cfg.getConfig().setToken(this.packageManager.getStringDefault("token", "inconnu"));
+            this.cfg.getConfig().setId(this.packageManager.getStringDefault("id", "inconnu"));
+            
+            return (true);
+        }
+        else
+        {
+            return (false);
+        }
+    }
+    
+    @FXML
+    public void doConnexion(ActionEvent event) throws IOException
+    {
+        System.out.println("doConnexion");
+        if (checkIdentification(username.getText(), password.getText()) == true)
+        {
 //                        String str = this.packageManager.getStringDefault("email", "inconnu");
             setupConnections(username.getText());
             System.out.println(username.getText());
@@ -198,11 +198,11 @@ public class ConnectController extends Controller implements Initializable
             Main.loadScene("/view/ContactTracking.fxml", "Contact_title");
             TrackingInfo.connect = true;
             try {
-                    
-                  DragDropTracking dragDropTracking = new DragDropTracking();
-                } catch (NativeHookException ex) {
-                    Logger.getLogger(ConnectController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
+                DragDropTracking dragDropTracking = new DragDropTracking();
+            } catch (NativeHookException ex) {
+                Logger.getLogger(ConnectController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else {
             actiontarget.setText("Mauvais nom d'utilisateur ou mot de passe");
         }
@@ -218,10 +218,10 @@ public class ConnectController extends Controller implements Initializable
         }
     }
     
-   
-	
-	public void setupConnections(String userName)
-	{
+    
+    
+    public void setupConnections(String userName)
+    {
         try {
             socket = IO.socket("http://34.227.142.101:8090");
             System.out.println("socket init");
@@ -257,7 +257,7 @@ public class ConnectController extends Controller implements Initializable
                     }).start();
                 }
 //            }).on(username.getText(), new Emitter.Listener() {
-                }).on(userName, new Emitter.Listener() {
+            }).on(userName, new Emitter.Listener() {
                 @Override
                 public void call(Object... args)
                 {
@@ -294,7 +294,7 @@ public class ConnectController extends Controller implements Initializable
                                         java.net.Socket sock = new java.net.Socket("34.227.142.101", (int)args[1]);
                                         InputStream is = sock.getInputStream();
                                         byte[] buffer = new byte[4096];
-                                        int ret;        
+                                        int ret;
                                         double sumCount = 0.0;
                                         
                                         dialog.setVisible(true);
@@ -348,72 +348,88 @@ public class ConnectController extends Controller implements Initializable
                     }
                 }
 //            }).on(username.getText() + "streaming", new Emitter.Listener() {
-                }).on(userName + "streaming", new Emitter.Listener() {
+            }).on(userName + "streaming", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     System.out.println("HELLO");
-                    new Thread(new Runnable() {
+                    
+                    Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-                            final Browser browser = new Browser();
-                            BrowserPreferences preferences = browser.getPreferences();
-                            preferences.setPluginsEnabled(true);
-                            preferences.setJavaScriptEnabled(true);
-                            browser.setPreferences(preferences);
-                            BrowserView view = new BrowserView(browser);
-
-                            System.out.println("RTOTOTOOTOT");
-                            JFrame frameBrowser = new JFrame("Streaming");
-                            frameBrowser.add(view, BorderLayout.CENTER);
-                            frameBrowser.setSize(800, 500);
-                            frameBrowser.setLocationRelativeTo(null);
-                            frameBrowser.setVisible(true);
-
-                            browser.loadURL((String)args[0]);
-                            System.out.println("HERERERRE");
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setTitle("Info");
+                            alert.setHeaderText("Stream started");
+                            alert.setContentText("");
+                            Optional<ButtonType> result = alert.showAndWait();
+                            System.out.println(result);
+                            
+                            if (result.isPresent() && result.get() != ButtonType.OK) {
+                                return;
+                            }
+                            
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    JPopupMenu.setDefaultLightWeightPopupEnabled(false);
+                                    final Browser browser = new Browser();
+                                    BrowserPreferences preferences = browser.getPreferences();
+                                    preferences.setPluginsEnabled(true);
+                                    preferences.setJavaScriptEnabled(true);
+                                    browser.setPreferences(preferences);
+                                    BrowserView view = new BrowserView(browser);
+                                    
+                                    System.out.println("RTOTOTOOTOT");
+                                    JFrame frameBrowser = new JFrame("Streaming");
+                                    frameBrowser.add(view, BorderLayout.CENTER);
+                                    frameBrowser.setSize(800, 500);
+                                    frameBrowser.setLocationRelativeTo(null);
+                                    frameBrowser.setVisible(true);
+                                    
+                                    browser.loadURL((String)args[0]);
+                                    System.out.println("HERERERRE");
+                                }
+                            }).start();
                         }
-                       }).start();
+                    });
                 }
             }).on("start streaming", new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
                     new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            utils.streaming.Controller controller = new utils.streaming.Controller();
-                            controller.url = (String)args[0];
-                            controller.url2 = (String)args[1];
-                            System.out.println(controller.url);
-                            Toolkit kit = Toolkit.getDefaultToolkit();
-                            Dimension screenSize = kit.getScreenSize();
-                            int screenWidth = screenSize.width;
-                            int screenHeight = screenSize.height;
-                            double frameRate = 10;
-                            FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
-                            grabber.setFormat("gdigrab");
-                            grabber.setFrameRate(frameRate);
-                            grabber.setImageWidth(screenWidth);
-                            grabber.setImageHeight(screenHeight);
-                            grabber.start();
-                            utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
-//                            frame.setCanvasSize(screenWidth/2, screenHeight/2);
-                            frame.setController(controller);
-                            //controller.startRtmpRecorder();
-                            while (frame.isVisible()) {
-                                grabbedFrame = grabber.grab();
-                                controller.recorder(grabbedFrame);
+                        @Override
+                        public void run() {
+                            try {
+                                utils.streaming.Controller controller = new utils.streaming.Controller();
+                                controller.url = (String)args[0];
+                                controller.url2 = (String)args[1];
+                                System.out.println(controller.url);
+                                Toolkit kit = Toolkit.getDefaultToolkit();
+                                Dimension screenSize = kit.getScreenSize();
+                                int screenWidth = screenSize.width;
+                                int screenHeight = screenSize.height;
+                                double frameRate = 10;
+                                FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("desktop");
+                                grabber.setFormat("gdigrab");
+                                grabber.setFrameRate(frameRate);
+                                grabber.setImageWidth(screenWidth);
+                                grabber.setImageHeight(screenHeight);
+                                grabber.start();
+                                utils.streaming.CanvasFrame frame = new utils.streaming.CanvasFrame("Screen Capture", utils.streaming.CanvasFrame.getDefaultGamma()/grabber.getGamma());
+                                
+                                frame.setController(controller);
+                                while (frame.isVisible()) {
+                                    grabbedFrame = grabber.grab();
+                                    controller.recorder(grabbedFrame);
+                                }
+                                frame.dispose();
+                                controller.clean();
+                                grabber.stop();
+                            } catch (FrameGrabber.Exception ex) {
+                                Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (FrameRecorder.Exception ex) {
+                                Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                            frame.dispose();
-                            controller.clean();
-                            grabber.stop();
-                        } catch (FrameGrabber.Exception ex) {
-                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (FrameRecorder.Exception ex) {
-                            Logger.getLogger(MenubarController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }}).start();
+                        }}).start();
                 }
             });
             socket.connect();
