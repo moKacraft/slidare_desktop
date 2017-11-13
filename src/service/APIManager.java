@@ -20,6 +20,10 @@ public class APIManager implements iService
     private	int code;
     
     private	String response;
+	
+	private String dns = "http://34.238.153.180";
+	
+	private String port = "50000";
     
     public APIManager()
     {
@@ -71,7 +75,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/loginUser")
+                    .setUrl(this.dns + ":" + this.port + "/loginUser")
                     .setBody(obj)
                     .buildAndExecutePost();
             this.code = this.client.getHttpClientService().getReponseCode();
@@ -95,7 +99,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/userContacts")
+                    .setUrl(this.dns + ":" + this.port + "/userContacts")
                     .setHeader("Authorization", "Bearer " + token)
                     .buildAndExecuteGet();
             this.code = this.client.getHttpClientService().getReponseCode();
@@ -120,7 +124,7 @@ public class APIManager implements iService
             
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/addContact")
+                    .setUrl(this.dns + ":" + this.port + "/addContact")
                     .setHeader("Authorization", "Bearer " + token)
                     .setBody(obj)
                     .buildAndExecutePost();
@@ -146,7 +150,7 @@ public class APIManager implements iService
             
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/removeContactByEmail/" + obj)
+                    .setUrl(this.dns + ":" + this.port + "/removeContactByEmail/" + obj)
                     .setHeader("Authorization", "Bearer " + token)
 //                    .setBody(obj)
                     .buildAndExecuteDelete();
@@ -172,7 +176,7 @@ public class APIManager implements iService
             
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/userContact/"+id)
+                    .setUrl(this.dns + ":" + this.port + "/userContact/"+id)
                     .setHeader("Authorization", "Bearer " + token)
                     .buildAndExecuteGet();
             this.code = this.client.getHttpClientService().getReponseCode();
@@ -202,7 +206,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/createUser")
+                    .setUrl(this.dns + ":" + this.port + "/createUser")
                     .setBody(obj)
                     .buildAndExecutePost();
             this.code = this.client.getHttpClientService().getReponseCode();
@@ -230,7 +234,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/"+link)
+                    .setUrl(this.dns + ":" + this.port + "/"+link)
 					.setHeader("Authorization", "Bearer " + token)
                     .setBody(obj)
                     .buildAndExecutePost();
@@ -333,7 +337,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/createGroup")
+                    .setUrl(this.dns + ":" + this.port + "/createGroup")
 					.setHeader("Authorization", "Bearer " + token)
                     .setBody(obj)
                     .buildAndExecutePost();
@@ -359,7 +363,7 @@ public class APIManager implements iService
             
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/removeGroup/" + obj)
+                    .setUrl(this.dns + ":" + this.port + "/removeGroup/" + obj)
                     .setHeader("Authorization", "Bearer " + token)
 //                    .setBody(obj)
                     .buildAndExecuteDelete();
@@ -403,7 +407,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/fetchGroups")
+                    .setUrl(this.dns + ":" + this.port + "/fetchGroups")
                     .setHeader("Authorization", "Bearer " + token)
                     .buildAndExecuteGet();
             this.code = this.client.getHttpClientService().getReponseCode();
@@ -427,7 +431,7 @@ public class APIManager implements iService
         {
             this.client.getHttpClientService()
                     .init()
-                    .setUrl("http://34.227.142.101:50000/fetchUser")
+                    .setUrl(this.dns + ":" + this.port + "/fetchUser")
                     .setHeader("Authorization", "Bearer " + token)
                     .buildAndExecuteGet();
             this.code = this.client.getHttpClientService().getReponseCode();
