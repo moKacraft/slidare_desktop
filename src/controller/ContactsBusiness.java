@@ -305,17 +305,10 @@ public class ContactsBusiness
 		{
 			throw new IllegalStateException("More than one result for find by email.");
 		}
-                else if (list.size() != 0)
-                {
-                    return (list.get(0));
-                }
+		else if (list.size() != 0)
+        		return (list.get(0));
                 else
-                {
                     return null;
-                }
-                    
-//		else if (list.size)
-		//return (list.get(0));
 	}
 
 	/**
