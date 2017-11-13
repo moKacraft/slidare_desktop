@@ -43,25 +43,25 @@ public class KeyListener implements NativeKeyListener
         }
         if (TrackingInfo.listKeyName == null)
             return;
-        System.out.println("e:"  + KeyEventString);
+        //System.out.println("e:"  + KeyEventString);
         //System.out.println("e 2:"  + key1);  
         //System.out.println("key1:"  + key1);
         //System.out.println("key2:" + key2);
         
         for (int i = 0; i < TrackingInfo.listKeyName.size() ; i++)
         {
-             System.out.println("key*:"  + TrackingInfo.listKeyName.get(i));
+            // System.out.println("key*:"  + TrackingInfo.listKeyName.get(i));
             if (TrackingInfo.listKeyName.get(i).matches(KeyEventString) &&
                   ActiveKeys.contains(KeyEventString) == false)
             {
-                System.out.println("Key" + KeyEventString);
+          //      System.out.println("Key" + KeyEventString);
                 ActiveKeys.add(KeyEventString);
             }
         }
-        System.out.println("KeySize " + ActiveKeys.size() + " " + TrackingInfo.listKeyName.size());
+        //System.out.println("KeySize " + ActiveKeys.size() + " " + TrackingInfo.listKeyName.size());
         if (ActiveKeys.size() == TrackingInfo.listKeyName.size())
         {
-            System.out.println("YOLO");
+            //System.out.println("YOLO");
             DragDropTracking.dragDropTracking.showBubble();         
         }
     }

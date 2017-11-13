@@ -5,6 +5,10 @@
  */
 package model;
 
+import com.oracle.deploy.update.Updater;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +24,7 @@ import service.APIManager;
 import service.ConfigManager;
 import service.PackageManager;
 import service.ServiceFactory;
+import view.PopUpRotation;
 
 /**
  *
@@ -43,6 +48,10 @@ public class DragDropTracking
     private PackageManager packageManager;
     private APIManager APIManager;
     private ConfigManager cfg;
+    private PopUpRotation up;
+    private PopUpRotation down;
+    
+    //private PopUpRotation up
        
     
     public DragDropTracking() throws NativeHookException
@@ -61,7 +70,10 @@ public class DragDropTracking
         keyListener = new KeyListener();
         GlobalScreen.addNativeKeyListener(keyListener);
         
-        
+        up = new PopUpRotation(240,-60,0);
+        up.popUpListener.ddt = this;
+        down = new PopUpRotation(-60,240,1);
+        down.popUpListener.ddt = this;
         
         // Construct the example object.
         mouseListener = new MouseListener();
@@ -96,6 +108,28 @@ public class DragDropTracking
         
     }
     
+    public void MouseInput(int x, int y, int type )
+    {
+        double rotationValue = 0.0;
+        if (type == 0)
+            rotationValue = (double)y;
+        if (type == 1)
+            rotationValue = (double)x;
+        System.out.println("x: " +  rotationValue);
+        rotationValue = (-rotationValue  + 120 );//Value Size;
+        //rotationValue = -rotationValue;
+        System.out.println("Rotation: " +  rotationValue);
+        rotationValue = rotationValue / 120;
+        if (type == 0)
+            rotationValue = -rotationValue;     
+       for (int i = 0; i < listFrame.size(); i++)
+       {
+           Point.Double p  = listFrame.get(i).rotation(new Point.Double(listFrame.get(i).position.x,listFrame.get(i).position.y),listFrame.get(i).currentAngle + rotationValue);
+           listFrame.get(i).setPosition(p);
+           listFrame.get(i).determineStateOfVisibility();
+       }
+    }
+    
     public void showPathText(String text)
     {
         dragDropFrame.setTextFrame(text);
@@ -105,7 +139,10 @@ public class DragDropTracking
     {
         //System.out.println("124");
         dragDropFrame.setVisible(true);
-        if (createdContacts  == true) {
+        up.setVisible(true);
+        down.setVisible(true);
+        if (createdContacts  == true) 
+        {
             return;
         }
         //System.out.println("987");
@@ -133,6 +170,10 @@ public class DragDropTracking
     public void hideBubble()
     {
         dragDropFrame.setVisible(false);
+        up.setVisible(false);
+     
+ 
+        down.setVisible(false);
     }
     
     public void CreatContactPopup(String name, int width)
@@ -153,6 +194,7 @@ public class DragDropTracking
             int cnt = 0;
             while (cnt < numberOfContact) {
                 listFrame.get(cnt).visible(true);
+                listFrame.get(cnt).determineStateOfVisibility();
                 showPopup = false;
                 ++cnt;
             }

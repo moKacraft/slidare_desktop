@@ -12,6 +12,7 @@ import java.awt.dnd.DropTarget;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.color.*;
+import java.awt.Point;
 
 import javafx.scene.shape.Circle;
 import model.TrackingInfo;
@@ -28,7 +29,11 @@ private Boolean isMain = false;
 public static int numberOfFrame = 0;
 public  int numberOfContact = 0;
 public MyDragDropListener  myDragDropListener;
+public double currentAngle = 0.0;
+public Point.Double position;
 //private Object cfg;
+
+
 
 public DragDropTestFrame() 
 {
@@ -78,6 +83,43 @@ public void setNumberOfContact(int nb)
     numberOfFrame = nb;
 }
 
+public  Point.Double rotation(Point.Double p, double theta) {
+    
+
+    currentAngle = Math.toDegrees(theta) % 360;
+   /* if (currentAngle < 0)
+        currentAngle = (currentAngle + 360) % 360; */
+
+    System.out.println("currentAngle:" + currentAngle);
+    Double x = position.x;
+    Double y = position.y;
+    Double cx = 15.0 + 75.0;
+    Double cy = 15.0 + 75.0;
+    Double xrot = Math.cos(theta) * (x-cx) - Math.sin(theta) * (y - cy) + cx;
+    Double yrot = Math.sin(theta) * (x-cx) + Math.cos(theta) * (y-cy) + cy;
+    p  = new Point.Double(xrot, yrot);
+    System.out.println("Point:" + p);
+    return (p);
+}
+
+public void setPosition(Point.Double p)
+{
+    this.setLocation((int)p.x,(int) p.y);
+}
+
+public void determineStateOfVisibility()
+{
+    
+    if (currentAngle >= 0 && currentAngle <= 105)
+    {
+        this.setVisible(true);
+    }
+    else
+    {
+        this.setVisible(false);     
+    }
+}
+
 public void setPopUpType(Boolean state, int width)
 {
     if (TrackingInfo.connect == false)
@@ -92,17 +134,23 @@ public void setPopUpType(Boolean state, int width)
         System.out.println("pop");
         this.setLocation(15,15);
         this.setBackground(new Color(78, 198,233));
-        this.setSize(185, 185);
+        this.setSize(190, 190);
         this.toFront();
         this.setUndecorated(true);
         this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
         this.setAlwaysOnTop(true);
-        
     }
     else
     {
       this.setSize(120, 120 );
-      this.setLocation(150 * width ,150 * (numberOfFrame % 5));
+      this.setLocation(150 * width,60 /** (numberOfFrame % 5)*/);
+      System.out.print("initial Location:" +this.getLocation());
+      position = new Point.Double(this.getLocation().x, this.getLocation().y);
+      Point.Double pd = this.rotation(new Point.Double(this.getLocation().x,this.getLocation().y), Math.toRadians(35 * (numberOfFrame)));
+      this.setLocation((int)(pd.x) - 60,(int)(pd.y) - 60);
+      position = new Point.Double(this.getLocation().x, this.getLocation().y);
+      //currentAngle = 35 * (numberOfFrame);
+      //this.rotat rotation
       this.setBackground(new Color(78, 198,233));
       this.toFront();
       this.setUndecorated(true);
