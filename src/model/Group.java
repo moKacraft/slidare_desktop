@@ -17,6 +17,8 @@ public class Group implements ObservableGroup
 {
     private final SimpleStringProperty id;
 	
+    private final SimpleStringProperty owner;
+	
     private final SimpleStringProperty idapi;
 	
     private final SimpleStringProperty name;
@@ -31,6 +33,7 @@ public class Group implements ObservableGroup
     public Group()
     {
         this.id = new SimpleStringProperty("");
+        this.owner = new SimpleStringProperty("");
         this.idapi = new SimpleStringProperty("");
         this.name = new SimpleStringProperty("");
         this.users = "";

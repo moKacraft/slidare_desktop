@@ -64,7 +64,7 @@ public class GroupBusiness extends Controller
 	 *
 	 * @param groupsList List of group to save
 	 */
-	public void saveGroups(Map<String, Group> groupsList)
+	public void createGroups(Map<String, Group> groupsList)
 	{
 //		JSONArray groupListToSave = new JSONArray();
 //		JSONArray groupListToCreate = new JSONArray();
@@ -119,6 +119,64 @@ public class GroupBusiness extends Controller
 	}
 
 	/**
+	 * Save the group on the server or in a local file to sync later
+	 *
+	 * @param group Group
+	 */
+	public void saveGroups(Group group)
+	{
+//		JSONArray groupListToSave = new JSONArray();
+//		JSONArray groupListToCreate = new JSONArray();
+
+//		Group group;
+//		for (Map.Entry<String, Group> grouppair : groupsList.entrySet())
+//		{
+//			group = grouppair.getValue();
+			//Never save the first group (generic)
+			if (group.getId().equals("0"))
+			{
+				return;
+			}
+
+//			JSONObject obj = new JSONObject();
+			//New group detected
+//			if (empty(group.getIdAPI()) || group.getIdAPI().equals("0"))
+//			{
+//				obj.put("name", group.getName());
+//				groupListToCreate.add(obj);
+				String request = this.packageManager
+				.init()
+				.addParam("name", group.getName())
+				.getJSONString();
+				this.APIManager.saveGroup(this.configManager.getConfig().getToken(), request);
+				if (this.APIManager.inError() == false)
+				{
+					String idAPI = this.packageManager.setJSONObject(this.APIManager.getLastResponse()).getStringDefault("group_id", "0");
+					group.setIdAPI(idAPI);
+					this.groups.put(group.getId(), group);
+				}
+//			}
+//			else //Update group
+//			{
+//				
+////				groupListToSave.add(obj);
+//			}
+//		}
+
+//		System.out.println("controller.GroupBusiness.saveGroups()");
+//		//Prepare request to server
+//		String request = this.packageManager
+//				.setJSONArray(groupListToSave)
+//				.getJSONString();
+
+		//Send request to serveur
+//		if (this.APIManager.saveGroups(request) == false)
+//		{
+//			this.fileManager.writeJson(this.configManager.getPathFor("groups"), groupListToSave);
+//		}
+	}
+	
+	/**
 	 * Load the groups from the server
 	 */
 	private void loadGroups()
@@ -148,12 +206,16 @@ public class GroupBusiness extends Controller
 				String idAPI = child.getStringDefault("id", "-1");
 				String name = child.getStringDefault("name", "Inconnu");
 				String users = child.getJSONArrayDefault("users").toJSONString();
+				String owner = child.getStringDefault("owner", "other");
 
 				group.setId(id);
 				group.setIdAPI(idAPI);
 				group.setName(name);
 				group.setUsers(users);
-				this.groups.put(group.getId(), group);
+				
+				//We don't laod useless group
+				if (owner.contains(this.configManager.getConfig().getId()))
+					this.groups.put(group.getId(), group);
 			}
 			Group group = new Group();
 			group.setId("0");
