@@ -434,7 +434,10 @@ public class ContactTrackingController extends Controller implements Initializab
 		}
 		if (contactBusiness == null)
 		{
-			contactBusiness = new ContactsBusiness();
+			if (model.getContactsBusiness() == null)
+				contactBusiness = new ContactsBusiness();
+			else
+				contactBusiness = model.getContactsBusiness();
 		}
 		projectsView.clear();
 		List<String> sortedProjects = new ArrayList<String>(displayedProjectNames);

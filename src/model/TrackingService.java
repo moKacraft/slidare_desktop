@@ -5,6 +5,7 @@
  */
 package model;
 
+import controller.ContactsBusiness;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
@@ -13,6 +14,7 @@ public interface TrackingService
     public ObservableList<String> getContactIds(String projectName);
     public ObservableList<String> getProjectNames();
     public ObservableList<String> getAccountMenu();
+    public ContactsBusiness getContactsBusiness();
     
     public Account getAccount();
     public void saveAccount(Account accountEdited);

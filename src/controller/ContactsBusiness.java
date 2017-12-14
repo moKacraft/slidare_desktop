@@ -283,6 +283,14 @@ public class ContactsBusiness
 			//Just because user didn't add yet only search email. FIX API
 			this.APIManager.removeContact(this.configManager.getConfig().getToken(), email);
 		}
+		else
+		{
+			//On check si le contact fait partie de la liste existante
+			Contact contact = this.findOneByEmail(email);
+			
+			if (contact != null)
+				System.out.println("controller.ContactsBusiness.findOneOnApiByEmail()");
+		}
 		
 		return (list);
 	}
@@ -306,9 +314,9 @@ public class ContactsBusiness
 			throw new IllegalStateException("More than one result for find by email.");
 		}
 		else if (list.size() != 0)
-        		return (list.get(0));
-                else
-                    return null;
+        	return (list.get(0));
+		else
+			return null;
 	}
 
 	/**
@@ -344,11 +352,14 @@ public class ContactsBusiness
 			{
 //				if ((String) jsonArray.get(i) == "")
 //					continue;
-				System.out.println("Connect : " + jsonArray.get(i));
+				System.out.println("Connect : " + jsonArray.get(i) + " to " + group.getName() + " =" + group.getId());
 				contact_tmp = this.findOneByEmail((String) jsonArray.get(i));
                                 if (contact_tmp == null)
                                     return;
 				contact_tmp.setGroup(group.getId());
+				contact_tmp.addGroups(group.getId());
+				if (group.getId() != "5")
+					contact_tmp.addGroups("5");
 				this.contacts.put(contact_tmp.getId(), contact_tmp);
 			}
 
