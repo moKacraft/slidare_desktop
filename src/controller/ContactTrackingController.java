@@ -189,8 +189,8 @@ public class ContactTrackingController extends Controller implements Initializab
 	@FXML
 	public void searchContactFired(ActionEvent event)
 	{
-//          System.out.println("controller.ContactTrackingController.searchContactFired()" + searchContactField.getText());
 		String searchfield = nonNull(searchContactField.getText());
+//		System.out.println("controller.ContactTrackingController.searchContactFired()" + searchContactField.getText());
 		List<Contact> tmp = this.contactBusiness.findOneOnApiByEmail(searchfield);
 		System.out.println("controller.ContactTrackingController.searchContactFired()" + tmp);
 
@@ -213,6 +213,7 @@ public class ContactTrackingController extends Controller implements Initializab
 		final String selectedProject = getSelectedProject();
 		if (model != null && selectedProject != null)
 		{
+			this.contactBusiness.addContactFor(selectedProject, tmp.getComment());
 			ObservableContact issue = model.addContactFor(selectedProject, tmp);
 			if (table != null)
 			{

@@ -31,6 +31,11 @@ public class TrackingServiceStub implements TrackingService
 
 	Account account;
 
+	public ContactsBusiness getContactsBusiness()
+	{
+		return (this.contactsctrl);
+	}
+	
 	/**
 	 * Group list associate with contactid<br /><br />
 	 * Array(GroupeName => array(ContactId))<br />
@@ -436,6 +441,39 @@ public class TrackingServiceStub implements TrackingService
 //		System.out.println("4apres---->"+getContact("2").getGroup());
 
 		contactsctrl.saveContacts(contactsMap);
-		groupBusiness.saveGroups(groupsMap);
+		groupBusiness.createGroups(groupsMap);
+	}
+	
+	@Override
+	public void modifyGroup(String issueId, iGroup groupEdited)
+	{
+//		Group group = getGroup(issueId);
+//		System.out.println("4avant---->"+getContact("2").getGroup());
+		Group group = this.getGroup(issueId);
+//		Group group = new Group();
+//		group.setId(issueId);
+//		group.setName(groupEdited.getName());
+//		group.setStatus(groupEdited.getStatus());
+//		projectsMap.add("sqsdqsDSsd", );
+//		groupsMap.replace(issueId, group);
+//		groupsMap.put("qsdqsfqsdf", group);
+//		if (groupsMap.containsKey(issueId))
+//		{
+//			System.out.println("Groupmap contain the key");
+////			groupsMap.remove(issueId);
+////			groupsMap.put(issueId, group);
+//		}
+//		groupsMap.replace(issueId, group);
+//		projectsMap.get(contact.getGroup()).add(contact.getId());
+//		projectsMap.put("sdfqsdfsdffdq", FXCollections.<String>observableArrayList());
+//		groupsMap.get(issueId).add(contact.getId());
+
+//		System.out.println("1---->" + projectNames);
+//		System.out.println("2---->" + projectsMap);
+//		System.out.println("3---->" + groupsMap);
+//		System.out.println("4apres---->"+getContact("2").getGroup());
+
+//		contactsctrl.saveContacts(contactsMap);
+		groupBusiness.saveGroups(group);
 	}
 }

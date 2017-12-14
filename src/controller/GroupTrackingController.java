@@ -531,7 +531,7 @@ public class GroupTrackingController extends Controller implements Initializable
         final iGroup edited = new DetailsData();
         SaveState saveState = computeSaveState(edited, ref);
         if (saveState == SaveState.UNSAVED) {
-            model.saveGroup(ref.getId(), edited);
+            model.modifyGroup(ref.getId(), edited);
         }
         
 //		int selectedRowIndex = table.getSelectionModel().getSelectedIndex();

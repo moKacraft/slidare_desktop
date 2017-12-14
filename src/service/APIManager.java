@@ -167,6 +167,72 @@ public class APIManager implements iService
             return (false);
         }
     }
+	
+	/**
+	 * Add contact to a group
+	 * 
+	 * @param token
+	 * @param obj
+	 * @param group_name
+	 * @return 
+	 */
+	public boolean addToGroup(String token, String obj, String group_name)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl(this.dns + ":" + this.port + "/addToGroup/" + group_name)
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePut();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
+	
+	/**
+	 * Add contact to a group
+	 * 
+	 * @param token
+	 * @param obj
+	 * @param group_name
+	 * @return 
+	 */
+	public boolean removeFromGroup(String token, String obj, String group_name)
+	{
+		this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl(this.dns + ":" + this.port + "/removeFromGroup/" + group_name)
+                    .setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePut();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+	}
         
     public boolean userContact(String token, String id)
     {
@@ -367,6 +433,39 @@ public class APIManager implements iService
                     .setHeader("Authorization", "Bearer " + token)
 //                    .setBody(obj)
                     .buildAndExecuteDelete();
+            this.code = this.client.getHttpClientService().getReponseCode();
+            this.response = this.client.getHttpClientService().getResponseBody();
+            if (code != 200)
+            {
+                this.error = true;
+            }
+            return (!this.error);
+        }
+        catch (Exception e)
+        {
+            return (false);
+        }
+    }
+	
+	/**
+     * Save the group list on the server
+	 * PAS GERE PAR L'API
+     *
+     * @param token JSON to use in request
+     * @param obj JSON to use in request
+     * @return boolean
+     */
+    public boolean saveGroup(String token, String obj)
+    {
+        this.error = false;
+        try
+        {
+            this.client.getHttpClientService()
+                    .init()
+                    .setUrl(this.dns + ":" + this.port + "/renameGroup")
+					.setHeader("Authorization", "Bearer " + token)
+                    .setBody(obj)
+                    .buildAndExecutePost();
             this.code = this.client.getHttpClientService().getReponseCode();
             this.response = this.client.getHttpClientService().getResponseBody();
             if (code != 200)

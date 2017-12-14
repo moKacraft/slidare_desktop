@@ -16,6 +16,8 @@ public interface TrackingService
     public ObservableList<String> getAccountMenu();
     public ContactsBusiness getContactsBusiness();
     
+	public ContactsBusiness getContactsBusiness();
+	
     public Account getAccount();
     public void saveAccount(Account accountEdited);
     
@@ -24,6 +26,7 @@ public interface TrackingService
     public Group createGroup(String groupName);
     public void deleteGroup(String groupId);
     public void saveGroup(String issueId, iGroup groupEdited);
+    public void modifyGroup(String issueId, iGroup groupEdited);
     
     public ObservableContact getContact(String tickectId);
     public ObservableMap<String, Contact> getContacts();

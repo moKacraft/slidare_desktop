@@ -252,7 +252,7 @@ public class ContactsBusiness
 	}
 	
 	public List<Contact> findOneOnApiByEmail(String email)
-	{
+	{		
 		JSONArray jsonArray;
 		JSONObject jsonObject;
 		List<Contact> list = new ArrayList<>();
@@ -260,7 +260,6 @@ public class ContactsBusiness
 				.init()
 				.addParam("email", email)
 				.getJSONString();
-		
 		
 		if (this.APIManager.addContact(this.configManager.getConfig().getToken(), request) != false)
 		{
@@ -292,8 +291,38 @@ public class ContactsBusiness
 				System.out.println("controller.ContactsBusiness.findOneOnApiByEmail()");
 		}
 		
+		//En cas d'echec faire une recherche interne
+		if (this.APIManager.getLastCode() == 400)
+		{
+			Contact contact = this.findOneByEmail(email);
+			if (contact != null)
+				list.add(contact);
+		}
 		return (list);
 	}
+	
+	public Boolean addContactFor(String project_name, String email)
+	{		
+		JSONArray jsonArray;
+		JSONObject jsonObject;
+		List<Contact> list = new ArrayList<>();
+		String request = this.packageManager
+				.init()
+				.addParam("contact_identifier", email)
+				.getJSONString();
+		
+		
+		if (this.APIManager.addToGroup(this.configManager.getConfig().getToken(), request, project_name) != false)
+		{
+		}
+		if (this.APIManager.getLastCode() == 400)
+			System.err.println(this.APIManager.getLastResponse());
+		System.out.println("controller.ContactsBusiness.addContactFor() " + email + " + " + project_name);
+		
+		return (true);
+	}
+	
+	
 	
 	/**
 	 * Search directly in the contacts list
