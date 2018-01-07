@@ -143,6 +143,19 @@ public class HttpClientService
         this.response = this.client.newCall(this.request).execute();
     }
 	
+	/**
+     * Build the request and execute a put
+     *
+     * @throws IOException catch execution fail
+     */
+    public void buildAndExecutePut() throws IOException
+    {
+        this.request = this.builder
+                .put(RequestBody.create(this.MEDIA_TYPE_MARKDOWN, this.body))
+                .build();
+        this.response = this.client.newCall(this.request).execute();
+    }
+	
     /**
      * HTTP code receive by the server
      *

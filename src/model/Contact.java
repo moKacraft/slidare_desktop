@@ -5,6 +5,10 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +22,8 @@ public class Contact implements ObservableContact
     private final SimpleStringProperty id;
     
     private final SimpleStringProperty group;
+	
+    private List groups = new ArrayList<>();
     
     private final SimpleStringProperty firstname;
     
@@ -32,6 +38,7 @@ public class Contact implements ObservableContact
     {
         this.id = new SimpleStringProperty("0");
         this.group = new SimpleStringProperty("0");
+        this.groups.add("0");
         this.firstname = new SimpleStringProperty("");
         this.lastname = new SimpleStringProperty("");
         this.comment = new SimpleStringProperty("");
@@ -72,6 +79,21 @@ public class Contact implements ObservableContact
     public String getGroup()
     {
         return (this.group.get());
+    }
+    
+	public void setGroups(List<String> _groups)
+    {
+        this.groups = _groups;
+    }
+	
+	public void addGroups(String _groupid)
+    {
+        this.groups.add(_groupid);
+    }
+    
+    public List<String> getGroups()
+    {
+        return (this.groups);
     }
     
     public void setFirstname(String _firstname)

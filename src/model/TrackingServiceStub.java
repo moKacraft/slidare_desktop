@@ -31,14 +31,17 @@ public class TrackingServiceStub implements TrackingService
 
 	Account account;
 
+	public ContactsBusiness getContactsBusiness()
+	{
+		return (this.contactsctrl);
+	}
+	
 	/**
 	 * Group list associate with contactid<br /><br />
 	 * Array(GroupeName => array(ContactId))<br />
 	 * Exemple : {Amis=[], Famille=[1, 2, 4], Non classé=[], Travail=[3]}
 	 */
 	final ObservableMap<String, ObservableList<String>> projectsMap;
-
-	
 	{
 		final Map<String, ObservableList<String>> map = new TreeMap<String, ObservableList<String>>();
 		projectsMap = FXCollections.observableMap(map);
@@ -118,8 +121,6 @@ public class TrackingServiceStub implements TrackingService
 	 * 2=issuetrackinglite.model.Group}
 	 */
 	final ObservableMap<String, Group> groupsMap;
-
-	
 	{
 		final Map<String, Group> map = new TreeMap<String, Group>();
 		groupsMap = FXCollections.observableMap(map);
@@ -163,8 +164,6 @@ public class TrackingServiceStub implements TrackingService
 	 * Exemple : [Amis, Famille, Non classé, Travail]
 	 */
 	final ObservableList<String> projectNames;
-
-	
 	{
 		projectNames = FXCollections.<String>observableArrayList();
 		projectNames.addAll(projectsMap.keySet());
@@ -190,8 +189,26 @@ public class TrackingServiceStub implements TrackingService
 
 				final Contact contact = change.getValueAdded();
 				contacts.add(contact);
+				//Pour le groupe du contact on récupère le nom du groupe qui servira a ajouter le contact dans la groupe physique
 				String groupName = getGroup(contact.getGroup()).getName();
-				projectsMap.get(groupName).add(contact.getId());
+				
+				List<String> groupsName = contact.getGroups();
+				
+				//On parcours la liste des groupes
+				if (!groupsName.isEmpty())
+				{
+					int size = groupsName.size();
+					for (String groupid : groupsName) 
+					{
+						if (size > 1 && groupid == "0")
+							continue;
+						groupName = getGroup(groupid).getName();
+						projectsMap.get(groupName).add(contact.getId());
+					}
+				}
+
+				//Ajoute le contact qu'a une seule liste
+//				projectsMap.get(groupName).add(contact.getId());
 			}
 			if (change.wasRemoved())
 			{
@@ -239,6 +256,12 @@ public class TrackingServiceStub implements TrackingService
 		this.account = accountBusiness.getAccount();
 	}
 
+	@Override
+	public ContactsBusiness getContactsBusiness()
+	{
+		return (this.contactsctrl);
+	}
+	
 //	private static <T> List<T> newList(T... items)
 //	{
 //		return Arrays.asList(items);
@@ -340,9 +363,9 @@ public class TrackingServiceStub implements TrackingService
 	}
 
 	@Override
-	public Group getGroup(String issueId)
+	public Group getGroup(String groupId)
 	{
-		return groupsMap.get(issueId);
+		return groupsMap.get(groupId);
 	}
 
 	@Override
@@ -418,6 +441,39 @@ public class TrackingServiceStub implements TrackingService
 //		System.out.println("4apres---->"+getContact("2").getGroup());
 
 		contactsctrl.saveContacts(contactsMap);
-		groupBusiness.saveGroups(groupsMap);
+		groupBusiness.createGroups(groupsMap);
+	}
+	
+	@Override
+	public void modifyGroup(String issueId, iGroup groupEdited)
+	{
+//		Group group = getGroup(issueId);
+//		System.out.println("4avant---->"+getContact("2").getGroup());
+		Group group = this.getGroup(issueId);
+//		Group group = new Group();
+//		group.setId(issueId);
+//		group.setName(groupEdited.getName());
+//		group.setStatus(groupEdited.getStatus());
+//		projectsMap.add("sqsdqsDSsd", );
+//		groupsMap.replace(issueId, group);
+//		groupsMap.put("qsdqsfqsdf", group);
+//		if (groupsMap.containsKey(issueId))
+//		{
+//			System.out.println("Groupmap contain the key");
+////			groupsMap.remove(issueId);
+////			groupsMap.put(issueId, group);
+//		}
+//		groupsMap.replace(issueId, group);
+//		projectsMap.get(contact.getGroup()).add(contact.getId());
+//		projectsMap.put("sdfqsdfsdffdq", FXCollections.<String>observableArrayList());
+//		groupsMap.get(issueId).add(contact.getId());
+
+//		System.out.println("1---->" + projectNames);
+//		System.out.println("2---->" + projectsMap);
+//		System.out.println("3---->" + groupsMap);
+//		System.out.println("4apres---->"+getContact("2").getGroup());
+
+//		contactsctrl.saveContacts(contactsMap);
+		groupBusiness.saveGroups(group);
 	}
 }
