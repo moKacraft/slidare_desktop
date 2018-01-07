@@ -1,8 +1,4 @@
-/*
- * Projet Slidare
- * Sharing anywhere, anytime
- * 
- */
+
 package model;
 
 import com.oracle.deploy.update.Updater;
@@ -13,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.KeyListener;
 import org.jnativehook.GlobalScreen;
 import view.DragDropTestFrame;
 import model.MouseListener;
@@ -56,8 +53,8 @@ public class DragDropTracking
     
     public DragDropTracking() throws NativeHookException
     {
-        dragDropFrame = new DragDropTestFrame();
-        dragDropFrame.setPopUpType(true, 1);
+        dragDropFrame = new DragDropTestFrame(0);
+        dragDropFrame.setPopUpType(0, 1);
         dragDropTracking = this;
         this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
         this.APIManager = (APIManager) ServiceFactory.getAPIManager();
@@ -118,13 +115,12 @@ public class DragDropTracking
         System.out.println("x: " +  rotationValue);
         rotationValue = (-rotationValue  + 120 );//Value Size;
         //rotationValue = -rotationValue;
-        System.out.println("Rotation: " +  rotationValue);
-        rotationValue = rotationValue / 120;
+        rotationValue = rotationValue / 120/100;
         if (type == 0)
             rotationValue = -rotationValue;     
        for (int i = 0; i < listFrame.size(); i++)
        {
-           Point.Double p  = listFrame.get(i).rotation(new Point.Double(listFrame.get(i).position.x,listFrame.get(i).position.y),listFrame.get(i).currentAngle + rotationValue);
+           Point.Double p  = listFrame.get(i).rotation(new Point.Double(listFrame.get(i).position.x,listFrame.get(i).position.y),/*listFrame.get(i).currentAngle + */rotationValue);
            listFrame.get(i).setPosition(p);
            listFrame.get(i).determineStateOfVisibility();
        }
@@ -161,7 +157,7 @@ public class DragDropTracking
             for (int i = 0;i < arr.size() ; i++) {
                 ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
                 listContacts.add(((JSONObject) arr.get(i)));
-                CreatContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
+                CreatGroupContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
             }
             createdContacts = true;
         }
@@ -176,25 +172,32 @@ public class DragDropTracking
         down.setVisible(false);
     }
     
-    public void CreatContactPopup(String name, int width)
+    public void CreatGroupContactPopup(String name, int width)
     {
         DragDropTestFrame tmp;
-        listFrame.add(tmp = new DragDropTestFrame());
-        tmp.setPopUpType(false, width);
+       // dragDropFrame.setPopUpType(0, 1);
+        listFrame.add(tmp = new DragDropTestFrame(1));
         tmp.setMessage(name);
+        tmp.setPopUpType(1, width);
         tmp.setVisible(false);
         ++numberOfContact;
         tmp.setNumberOfContact(numberOfContact);
         PopupEntered = true;
     }
     
-    public void ShowMiniPopUp()
+    public void ShowGroupMiniPopUp()
     {
-        if (PopupEntered == true) {
+        if (PopupEntered == true) 
+        {
+            System.out.println("787878");
             int cnt = 0;
-            while (cnt < numberOfContact) {
+            while (cnt < numberOfContact) 
+            {
+                System.out.println("7****");
                 listFrame.get(cnt).visible(true);
+                
                 listFrame.get(cnt).determineStateOfVisibility();
+                
                 showPopup = false;
                 ++cnt;
             }
@@ -202,8 +205,18 @@ public class DragDropTracking
         }
     }
     
+    public void ShowMiniPopUp(int cnt)
+    {
+        if (PopupEntered == true) 
+        {
+            HideGroupMiniPopUp();
+            listFrame.get(cnt).visible(true);
+            ++cnt;
+            PopupEntered = false;
+        }
+    }
     
-    public void HideMiniPopUp()
+    public void HideGroupMiniPopUp()
     {
         if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false) {
             PopupEntered = true;

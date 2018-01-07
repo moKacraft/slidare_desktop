@@ -74,6 +74,10 @@ public class KeyListener implements NativeKeyListener
         if (TrackingInfo.listKeyName == null)
             return;
         
+         if (KeyEventString.matches( "Left Control") == true) {
+                KeyEventString = "Ctrl";
+                
+        }
         /*if (NativeKeyEvent.getKeyText(e.getKeyCode()).matches( "Left Control") == true) {
             key1 = "Ctrl";
         }*/
@@ -88,7 +92,7 @@ public class KeyListener implements NativeKeyListener
         if (ActiveKeys.size() != TrackingInfo.listKeyName.size())
         {
             DragDropTracking.dragDropTracking.hideBubble();
-            DragDropTracking.dragDropTracking.HideMiniPopUp();
+            DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
         }
     }
 

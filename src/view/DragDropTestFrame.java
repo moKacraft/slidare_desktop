@@ -13,29 +13,41 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.color.*;
 import java.awt.Point;
+import java.util.ArrayList;
+import model.GroupInfo;
 
 import javafx.scene.shape.Circle;
+import model.GroupInfo;
 import model.TrackingInfo;
 import service.ConfigManager;
 import service.ServiceFactory;
+import java.util.List;
 /**
  *
  * @author Timothy
  */
+
 public class DragDropTestFrame extends javax.swing.JFrame {
 private static final long serialVersionUID = 1L;
 private JLabel myJLabel;
+private JFrame myJLabel1;
+private JFrame myJLabel2;
+private JFrame myJLabel3;
 private Boolean isMain = false;
 public static int numberOfFrame = 0;
+public static int ID = 0;
 public  int numberOfContact = 0;
 public MyDragDropListener  myDragDropListener;
 public double currentAngle = 0.0;
-public Point.Double position;
+public Point.Double position = new Point.Double(0,0);
+public enum type {MASTER, GROUP, USER};
+static public List<GroupInfo> groups;
+public GroupInfo concernedGroupInfo;
 //private Object cfg;
 
 
 
-public DragDropTestFrame() 
+public DragDropTestFrame(int type) 
 {
  /*Circle circle = new Circle();
 circle.setCenterX(100.0f);
@@ -44,30 +56,49 @@ circle.setRadius(50.0f); */
     // Set the frame title
     super("Drag and drop test");
     // Set the size
-
+    groups = new ArrayList<GroupInfo>() ; 
 
     // Create the label
     myJLabel = new JLabel("Drag something here!", (int) CENTER_ALIGNMENT);
 
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
-    myDragDropListener = new MyDragDropListener(true);
+    myDragDropListener = new MyDragDropListener(true, type);
 
     // Connect the label with a drag and drop listener
     new DropTarget(myJLabel, myDragDropListener);
+    if (type == 1)
+    {
+     myJLabel1 = new JFrame("Contact1"); /*("Contact1", (int) CENTER_ALIGNMENT);*/
+     myJLabel2 = new JFrame("Contact2");
+     myJLabel3 = new JFrame("Contact3");
+     //myJLabel.setText("Contact1");
+  /*  myJLabel1.getContentPane().add(BorderLayout.CENTER, myJLabel1);
+    myJLabel2.getContentPane().add(BorderLayout.CENTER, myJLabel2);
+    myJLabel3.getContentPane().add(BorderLayout.CENTER, myJLabel3);
+     myJLabel2.getContentPane().setBackground(new Color(78, 198,233));
+      myJLabel3.getContentPane().setBackground(new Color(78, 198,233));
+     myJLabel1.getContentPane().setBackground(new Color(78, 198,233));*/
 
+}       
+// Show the frame
+    
    // // Add the label to the content
     this.getContentPane().add(BorderLayout.CENTER, myJLabel);
     this.getContentPane().setBackground(new Color(78, 198,233));
     // Show the frame
     this.setVisible(false);
-    
-
 }
 
 public void visible(Boolean state)
 {
     this.setVisible(state);
+    if (myJLabel1 != null)
+        myJLabel1.setVisible(state);
+    if (myJLabel2 != null)
+        myJLabel2.setVisible(state);
+    if (myJLabel3 != null)
+        myJLabel3.setVisible(state);
     
 }
 
@@ -78,7 +109,6 @@ public void setMessage(String text)
 
 public void setNumberOfContact(int nb)
 {
-    
     numberOfContact = nb;
     numberOfFrame = nb;
 }
@@ -91,8 +121,8 @@ public  Point.Double rotation(Point.Double p, double theta) {
         currentAngle = (currentAngle + 360) % 360; */
 
     System.out.println("currentAngle:" + currentAngle);
-    Double x = position.x;
-    Double y = position.y;
+    Double x = p.x;
+    Double y = p.y;
     Double cx = 15.0 + 75.0;
     Double cy = 15.0 + 75.0;
     Double xrot = Math.cos(theta) * (x-cx) - Math.sin(theta) * (y - cy) + cx;
@@ -105,32 +135,61 @@ public  Point.Double rotation(Point.Double p, double theta) {
 public void setPosition(Point.Double p)
 {
     this.setLocation((int)p.x,(int) p.y);
+    position = new Point.Double(p.x, p.y);
 }
 
 public void determineStateOfVisibility()
 {
     
-    if (currentAngle >= 0 && currentAngle <= 105)
+    if (position != null && position.x <= 10 || position.y <= 10)
     {
-        this.setVisible(true);
+        this.setVisible(false);
+        myJLabel1.setVisible(false);
+          myJLabel2.setVisible(false);
+        myJLabel3.setVisible(false);
+
     }
     else
     {
-        this.setVisible(false);     
+       this.setVisible(true);
+       myJLabel1.setVisible(true);
+       myJLabel1.setSize(50, 50 );
+       myJLabel1.setLocation((int)position.x, (int)position.y + 100);
+       myJLabel2.setVisible(true);
+       myJLabel2.setSize(50, 50 );
+       myJLabel2.setLocation((int)position.x, (int)position.y + 200);
+       myJLabel3.setVisible(true);
+       myJLabel3.setSize(50, 50 );
+       myJLabel3.setLocation((int)position.x, (int)position.y + 300);
+
+     //  myJLabel1.setShape(new Ellipse2D.Double(0,0,50,50));
     }
 }
 
-public void setPopUpType(Boolean state, int width)
+public void MoveObjectsToPosition()
+{
+    if (position.x <= 10 || position.y <= 10)
+    {
+        this.setVisible(false);
+    }
+    else
+    {
+        this.setVisible(true);  
+    }
+}
+
+
+public void setPopUpType(int state, int width)
 {
     if (TrackingInfo.connect == false)
     {
-    System.out.println("RETUNED");
-        
+        System.out.println("RETUNED");   
         return;
     }
-    System.out.println("PAssed");
-    if (state == true)
-    {
+    ID += 1;
+    //System.out.println("Pssed");
+    if (state == 0)
+    {   
         System.out.println("pop");
         this.setLocation(15,15);
         this.setBackground(new Color(78, 198,233));
@@ -140,8 +199,9 @@ public void setPopUpType(Boolean state, int width)
         this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
         this.setAlwaysOnTop(true);
     }
-    else
+    if (state == 1) /* Group*/
     {
+      System.out.print("hahah");
       this.setSize(120, 120 );
       this.setLocation(150 * width,60 /** (numberOfFrame % 5)*/);
       System.out.print("initial Location:" +this.getLocation());
@@ -151,6 +211,12 @@ public void setPopUpType(Boolean state, int width)
       position = new Point.Double(this.getLocation().x, this.getLocation().y);
       //currentAngle = 35 * (numberOfFrame);
       //this.rotat rotation
+      /*concernedGroupInfo = new GroupInfo();
+      concernedGroupInfo.ids.add(ID);
+      concernedGroupInfo.dragDropFrames.add(this);
+      concernedGroupInfo.position = position; 
+      groups.add(concernedGroupInfo);*/
+      
       this.setBackground(new Color(78, 198,233));
       this.toFront();
       this.setUndecorated(true);
@@ -159,15 +225,46 @@ public void setPopUpType(Boolean state, int width)
     this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
    // this.set
      
-           this.setVisible(true);
-        this.setAlwaysOnTop(true);
+    this.setVisible(true);
+    this.setAlwaysOnTop(true);
    // this.setSize(300, 200);
    //this.setVisible(true);
-     
-       
     }
         
+    if (state == 1)
+    {      
+        
+
+   // myJLabel.setBackground(new Color(78, 198,233));
+    // Create the drag and drop listener
+   
+    // Connect the label with a drag and drop listener
     
+      myJLabel1.setSize(50, 50 );
+      myJLabel1.setLocation((int)position.x, (int)position.y + 100);
+      myJLabel2.setSize(50, 50 );
+      myJLabel2.setLocation((int)position.x, (int)position.y + 200);     
+      myJLabel3.setSize(50, 50 );
+      myJLabel3.setLocation((int)position.x, (int)position.y + 300);
+            
+
+    //System.out.print("initial Location:" +this.getLocation());
+      //position = new Point.Double(this.getLocation().x, this.getLocation().y);
+      ///Point.Double pd = this.rotation(new Point.Double(this.getLocation().x,this.getLocation().y), Math.toRadians(35 * (numberOfFrame)));
+      //this.setLocation((int)(pd.x) - 60,(int)(pd.y) - 60);
+      //position = new Point.Double(this.getLocation().x, this.getLocation().y);
+      //currentAngle = 35 * (numberOfFrame);
+      //this.rotat rotation
+      myJLabel1.setBackground(new Color(78, 198,233));
+      myJLabel2.setBackground(new Color(78, 198,233));
+      myJLabel3.setBackground(new Color(78, 198,233));
+      
+        //this.setShape(new RoundRectangle2D.Double(0,0,getWidth(),getHeight()),50,50);
+   // this.set
+     
+    //this.setVisible(true);
+    this.setAlwaysOnTop(true);
+    }
 }
 
 public void setTextFrame (String text)

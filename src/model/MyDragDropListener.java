@@ -39,13 +39,24 @@ public class MyDragDropListener implements DropTargetListener
     public static Boolean ActivatePopUps = false;
     public static int valueDragDrop = 0;
     public int concernedDragDrop;
+    public int type;
+    public static int groupType = 0;
+    public int concernedGroupType;
     // public List<JSONObject> listContacts = new ArrayList<JSONObject>();
     
-    public MyDragDropListener(Boolean state)
+    public MyDragDropListener(Boolean state, int _type)
     {
         MainPopUp = state;
         concernedDragDrop = valueDragDrop;
         ++valueDragDrop;
+         type = _type;
+         if (type == 1)
+         {
+             concernedGroupType = groupType;
+             ++groupType;
+             
+         }
+     
     }
     
     
@@ -154,12 +165,19 @@ public class MyDragDropListener implements DropTargetListener
     {
         System.out.println("wwwwwwwwwwwwwww");
         
-        if (concernedDragDrop == 0 && ActivatePopUps == false) {
+        if (type ==0 && ActivatePopUps == false) {
             System.out.println("ooooooooooooo");
             ActivatePopUps = true;
-            DragDropTracking.dragDropTracking.ShowMiniPopUp();
+            DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
             //MainView.mainView.ShowMiniPopUp();
         }
+        if (type ==1 && ActivatePopUps == true)
+        {
+            System.out.println("ooooooooooooo");
+            DragDropTracking.dragDropTracking.ShowMiniPopUp(concernedGroupType);
+            //MainView.mainView.ShowMiniPopUp();
+        }
+   
     }
     
     @Override
