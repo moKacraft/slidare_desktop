@@ -52,7 +52,7 @@ public class EventlogController extends Controller implements Initializable
         frameBrowser.setLocationRelativeTo(null);
         frameBrowser.setVisible(true);
         
-        browser.loadURL("http://34.227.142.101:8080/streaming");
+        browser.loadURL("http://34.223.153.180:8090/streaming");
     }
     
     @FXML

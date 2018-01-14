@@ -223,7 +223,7 @@ public class ConnectController extends Controller implements Initializable
     public void setupConnections(String userName)
     {
         try {
-            socket = IO.socket("http://34.227.142.101:8090");
+            socket = IO.socket("http://34.238.153.180:8090");
             System.out.println("socket init");
             socket.on("server ready", new Emitter.Listener() {
                 @Override
@@ -237,7 +237,7 @@ public class ConnectController extends Controller implements Initializable
                         public void run() {
                             try {
                                 java.net.Socket sock;
-                                sock = new java.net.Socket("34.227.142.101", (int)args[0]);
+                                sock = new java.net.Socket("34.238.153.180", (int)args[0]);
                                 OutputStream is = sock.getOutputStream();
                                 FileInputStream fis = new FileInputStream((String)args[1]);
                                 BufferedInputStream bis = new BufferedInputStream(fis);
@@ -291,7 +291,7 @@ public class ConnectController extends Controller implements Initializable
                                     String transferId = (String) args[2];
                                     try {
                                         FileOutputStream fos = new FileOutputStream((String) args[3]);
-                                        java.net.Socket sock = new java.net.Socket("34.227.142.101", (int)args[1]);
+                                        java.net.Socket sock = new java.net.Socket("34.238.153.180", (int)args[1]);
                                         InputStream is = sock.getInputStream();
                                         byte[] buffer = new byte[4096];
                                         int ret;
