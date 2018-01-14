@@ -197,12 +197,18 @@ public class TrackingServiceStub implements TrackingService
 				if (!groupsName.isEmpty())
 				{
 					int size = groupsName.size();
+                                        System.out.println("Size :::: " + size);
 					for (String groupid : groupsName) 
 					{
-						if (size > 1 && groupid == "0")
+						if (size > 1 && groupid == "0") {
 							continue;
+                                                }
+                                                System.out.println("groupid:  " + groupid);
+                                                System.out.println("groupname:  " + groupsName);
+                                                //Ici ca plante
 						groupName = getGroup(groupid).getName();
 						projectsMap.get(groupName).add(contact.getId());
+                                                
 					}
 				}
 
