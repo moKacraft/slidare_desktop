@@ -47,9 +47,9 @@
                 <Menu mnemonicParsing="false" text="%Menubar_help">
                     <items>
                         <!-- <MenuItem id="eventlog" mnemonicParsing="false" onAction="#switchScene" text="%Menubar_eventlog" /> -->
-                        <MenuItem id="stream" mnemonicParsing="false" onAction="#switchScene" text="stream" />
-<!--                        <SeparatorMenuItem />
-                        <MenuItem mnemonicParsing="false" onAction="#aboutUs" text="%Menubar_helpabout" />-->
+<!--                        <MenuItem id="stream" mnemonicParsing="false" onAction="#switchScene" text="stream" />
+                        <SeparatorMenuItem />-->
+                        <MenuItem mnemonicParsing="false" onAction="#aboutUs" text="%Menubar_helpabout" />
                     </items>
                 </Menu>
             </menus>
