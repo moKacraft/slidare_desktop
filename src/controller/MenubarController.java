@@ -109,8 +109,6 @@ public class MenubarController implements Initializable
                 case "managedragdrop":
                     Main.loadScene("/view/DragDropTracking.fxml", "DragDrop_title");
                     break;
-		case "eventlog":
-                    break;
                 case "stream":
                     Main.socket.emit("init streaming");
                     break;
