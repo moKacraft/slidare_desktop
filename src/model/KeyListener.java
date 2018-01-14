@@ -96,6 +96,7 @@ public class KeyListener implements NativeKeyListener
         {
             DragDropTracking.dragDropTracking.hideBubble();
             DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
+            DragDropTracking.dragDropTracking.HideMiniPopUp();
         }
     }
 

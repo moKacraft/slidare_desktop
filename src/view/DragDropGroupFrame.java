@@ -31,7 +31,7 @@ public class DragDropGroupFrame extends javax.swing.JFrame {
 private static final long serialVersionUID = 1L;
 private JLabel myJLabel;
 private List<DragDropContactFrame> listNames;
-private List<String> listEmailAddresses;
+public List<String> listEmailAddresses;
 private Boolean isMain = false;
 public static int numberOfFrame = 0;
 public static int ID = 0;
@@ -64,7 +64,7 @@ circle.setRadius(50.0f); */
 
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
-    myDragDropListener = new MyDragDropListener(true, type);
+    myDragDropListener = new MyDragDropListener(true, type, "", this);
     // Connect the label with a drag and drop listener
     new DropTarget(myJLabel, myDragDropListener);
     if (type == 1)
@@ -117,7 +117,8 @@ public void setPeopleInGroup(String names)
     DragDropContactFrame tmpDDCF = new DragDropContactFrame(names);
     tmpDDCF.setPopUpType(200,100);
     tmpDDCF.visible(false);
-    listNames.add(tmpDDCF);       
+    listNames.add(tmpDDCF);  
+    listEmailAddresses.add(names);
 }
 
 
@@ -167,8 +168,8 @@ public  Point.Double rotation(Point.Double p, double theta) {
     System.out.println("currentAngle:" + currentAngle);
     Double x = p.x;
     Double y = p.y;
-    Double cx = 15.0 + 75.0;
-    Double cy = 15.0 + 75.0;
+    Double cx = 102.5;
+    Double cy = 102.5;
     Double xrot = Math.cos(theta) * (x-cx) - Math.sin(theta) * (y - cy) + cx;
     Double yrot = Math.sin(theta) * (x-cx) + Math.cos(theta) * (y-cy) + cy;
     p  = new Point.Double(xrot, yrot);
@@ -185,7 +186,7 @@ public void setPosition(Point.Double p)
 public void determineStateOfVisibility()
 {
     
-    if (position != null && position.x <= 10 || position.y <= 10)
+    if (position != null && position.x <= 30 || position.y <= 30)
     {
         this.setVisible(false);
          for (int inc = 0;inc < listNames.size() ; ++inc)

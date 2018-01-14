@@ -27,6 +27,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import utils.security.encryption;
+import view.DragDropGroupFrame;
 
 /**
  *
@@ -46,9 +47,12 @@ public class MyDragDropListener implements DropTargetListener
     public Boolean canDeactivate2 =false;
     public static int groupType = 0;
     public int concernedGroupType = 0;
+    private static Boolean leftBoundaries = false;
+    public String email;
+    public DragDropGroupFrame group;
     // public List<JSONObject> listContacts = new ArrayList<JSONObject>();
     
-    public MyDragDropListener(Boolean state, int _type)
+    public MyDragDropListener(Boolean state, int _type, String _email, DragDropGroupFrame _group)
     {
         MainPopUp = state;
         concernedDragDrop = valueDragDrop;
@@ -58,15 +62,17 @@ public class MyDragDropListener implements DropTargetListener
          {
              concernedGroupType = groupType;
              ++groupType;
+             group = _group;
              
          }
-     
+     email = _email;
     }
     
     
-    @Override
-    public void drop(DropTargetDropEvent event) 
+    public void sendPackage(DropTargetDropEvent event, String _email,  String[] users)
     {
+        if (type == 3)
+            return;
         event.acceptDrop(DnDConstants.ACTION_COPY);
         
         // Get the transfer which can provide the dropped item data
@@ -97,8 +103,8 @@ public class MyDragDropListener implements DropTargetListener
                                 
                                 System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
-                                String[] users = new String[1];
-                                users[0] =  (String)(DragDropTracking.listGroups.get(concernedDragDrop - 1).get("email"));
+                               
+                                //users[0] =  /*(String)(DragDropTracking.listGroups.get(concernedDragDrop - 1).get("email"))*/_email;
                                 
                                 System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
                                 
@@ -161,6 +167,36 @@ public class MyDragDropListener implements DropTargetListener
         }
         // Inform that the drop is complete
         event.dropComplete(true);
+          ActivatePopUps = false;
+          ActivateMiniPopUps = false;
+
+            //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
+          DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
+          DragDropTracking.dragDropTracking.HideMiniPopUp();
+    }
+    
+    
+    @Override
+    public void drop(DropTargetDropEvent event) 
+    {
+        if (type == 2)
+        {
+          String[] users = new String[1];
+          users[0] =  /*(String)(DragDropTracking.listGroups.get(concernedDragDrop - 1).get("email"))*/email;
+          sendPackage(event, email, users);
+        }
+         if (type == 1 && group.listEmailAddresses != null)
+        { 
+             String[] users = new String[group.listEmailAddresses.size()];
+            for (int inc = 0;inc < group.listEmailAddresses.size() ; ++inc)
+        {
+            users[inc] = group.listEmailAddresses.get(inc);
+            
+             //listNames.get(inc).setLocation((int)position.x, (int)position.y + 100 * (inc +1));
+            
+        }  
+            sendPackage(event, email,users);
+        }
         
     }
     
@@ -189,6 +225,10 @@ public class MyDragDropListener implements DropTargetListener
             ActivateMiniPopUps = true;
              
          }
+           if (type == 3)
+           {
+             leftBoundaries = false;  
+           }
    
     }
     
@@ -201,7 +241,15 @@ public class MyDragDropListener implements DropTargetListener
             ActivatePopUps = false;
             //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
         }
-        if (type == 3) 
+        if (type == 2)
+        {
+         leftBoundaries = true;
+        }
+         if (type == 1)
+        {
+         leftBoundaries = true;
+        }
+        if (type == 3 && leftBoundaries == false) 
         {
             System.out.println("2222");
            ActivatePopUps = false;

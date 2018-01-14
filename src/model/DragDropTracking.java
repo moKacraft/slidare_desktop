@@ -109,19 +109,17 @@ public class DragDropTracking
         
     }
     
-    public void MouseInput(int x, int y, int type )
+    public void MouseInput(int type)
     {
         double rotationValue = 0.0;
+        //System.out.println("x: " +  rotationValue);
+      
         if (type == 0)
-            rotationValue = (double)y;
-        if (type == 1)
-            rotationValue = (double)x;
+            rotationValue = -0.006;
+         if (type == 1)
+            rotationValue = 0.006;
         System.out.println("x: " +  rotationValue);
-        rotationValue = (-rotationValue  + 120 );//Value Size;
-        //rotationValue = -rotationValue;
-        rotationValue = rotationValue / 120/100;
-        if (type == 0)
-            rotationValue = -rotationValue;     
+        
        for (int i = 0; i < listFrame.size(); i++)
        {
            Point.Double p  = listFrame.get(i).rotation(new Point.Double(listFrame.get(i).position.x,listFrame.get(i).position.y),/*listFrame.get(i).currentAngle + */rotationValue);

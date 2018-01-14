@@ -63,7 +63,7 @@ circle.setRadius(50.0f); */
 
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
-    myDragDropListener = new MyDragDropListener(true, 3);
+    myDragDropListener = new MyDragDropListener(true, 3, "", null);
     // Connect the label with a drag and drop listener
     new DropTarget(myJLabel, myDragDropListener);
     //setMessage(name);

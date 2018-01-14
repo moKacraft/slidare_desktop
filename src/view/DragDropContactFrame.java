@@ -43,6 +43,7 @@ public Point.Double position = new Point.Double(0,0);
 public enum type {MASTER, GROUP, USER};
 static public List<GroupInfo> groups;
 public GroupInfo concernedGroupInfo;
+public String email;
 //private Object cfg;
 
 
@@ -63,10 +64,11 @@ circle.setRadius(50.0f); */
 
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
-    myDragDropListener = new MyDragDropListener(true, 2);
+    myDragDropListener = new MyDragDropListener(true, 2, name, null);
     // Connect the label with a drag and drop listener
     new DropTarget(myJLabel, myDragDropListener);
     setMessage(name);
+    email = name;
      //myJLabel1 = new JFrame("Contact1"); /*("Contact1", (int) CENTER_ALIGNMENT);*/
      //myJLabel2 = new JFrame("Contact2");
      //myJLabel3 = new JFrame("Contact3");
@@ -100,17 +102,11 @@ public void setMessage(String text)
 
 
 
-public void setNumberOfContact(int nb)
-{
-    numberOfContact = nb;
-    numberOfFrame = nb;
-}
-
 
 
 public void setPosition(Point.Double p)
 {
-    this.setLocation((int)p.x,(int) p.y);
+    this.setLocation((int)p.x,(int) p.y + 10);
     position = new Point.Double(p.x, p.y);
 }
 
@@ -124,7 +120,7 @@ public void setPopUpType(int sizex, int sizey)
       this.setBackground(new Color(78, 198,233));
       this.toFront();
       this.setUndecorated(true);
-      this.setShape(new RoundRectangle2D.Double (10, 10, 100, 100, 50, 50));
+      this.setShape(new RoundRectangle2D.Double (10, 0, 100, 100, 20, 20));
       this.setSize(sizex,sizey);
     //this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
    // this.set

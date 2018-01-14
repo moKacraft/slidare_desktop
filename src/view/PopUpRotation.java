@@ -43,7 +43,7 @@ public class PopUpRotation extends javax.swing.JFrame
     
     // Connect the label with a drag and drop listener
     new DropTarget(myJLabel, popUpListener);
-    popUpListener.type = type;
+    popUpListener.types = type;
    // // Add the label to the content
     this.getContentPane().add(BorderLayout.CENTER, myJLabel);
     this.getContentPane().setBackground(new Color(100, 100,100,20));

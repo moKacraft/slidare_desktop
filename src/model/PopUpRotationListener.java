@@ -20,7 +20,7 @@ import java.awt.Point;
 public class PopUpRotationListener  implements DropTargetListener{
 
     
-    public int type = 0;
+    public int types = 0;
     public Point.Double point;
     public DragDropTracking ddt;
     private boolean  enter = false;
@@ -38,7 +38,7 @@ public class PopUpRotationListener  implements DropTargetListener{
         {
         System.out.println(dtde.getLocation());
         point = new Point.Double(dtde.getLocation().x,dtde.getLocation().y);
-        ddt.MouseInput((int)point.x, (int)point.y, type);
+        ddt.MouseInput(types);
         }
     }
 
