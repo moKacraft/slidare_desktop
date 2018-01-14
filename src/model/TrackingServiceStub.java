@@ -30,11 +30,9 @@ public class TrackingServiceStub implements TrackingService
 	AccountBusiness accountBusiness = new AccountBusiness();
 
 	Account account;
+        public static TrackingService TSS = null;
 
-	public ContactsBusiness getContactsBusiness()
-	{
-		return (this.contactsctrl);
-	}
+
 	
 	/**
 	 * Group list associate with contactid<br /><br />
@@ -45,6 +43,7 @@ public class TrackingServiceStub implements TrackingService
 	{
 		final Map<String, ObservableList<String>> map = new TreeMap<String, ObservableList<String>>();
 		projectsMap = FXCollections.observableMap(map);
+                TSS  = this;
 
 //		for (String s : contactsctrl.getGroupList())
 //		{
@@ -261,6 +260,7 @@ public class TrackingServiceStub implements TrackingService
 	{
 		return (this.contactsctrl);
 	}
+        
 	
 //	private static <T> List<T> newList(T... items)
 //	{

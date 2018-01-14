@@ -20,7 +20,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import model.TrackingInfo;
-import view.DragDropTestFrame;
+import view.DragDropGroupFrame;
 import utils.streaming.Settings;
 
 /**

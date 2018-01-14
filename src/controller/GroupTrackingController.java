@@ -45,7 +45,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class GroupTrackingController extends Controller implements Initializable
 {
-
 //	@FXML
 //	private ListView<String> list;
     @FXML
@@ -232,6 +231,7 @@ public class GroupTrackingController extends Controller implements Initializable
     {
         if (model == null) {
             model = new TrackingServiceStub();
+            //this.TSS = model;
             displayedProjectNames = model.getProjectNames();
         }
         projectsView.clear();

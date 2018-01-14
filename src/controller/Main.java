@@ -79,6 +79,7 @@ public class Main extends Application
                 try
                 {
                     DragDropTracking dragDropTracking = new DragDropTracking();
+                    System.out.println("eazeazeazehazehazehazhazehaze");
                 }
                 catch (NativeHookException ex)
                 {
@@ -88,7 +89,7 @@ public class Main extends Application
             else
             {
                 page = (AnchorPane) FXMLLoader.load(Main.class.getResource("/view/connect.fxml"), bundle);
-                
+                //DragDropTracking dragDropTracking = new DragDropTracking();
             }
             Scene scene = new Scene(page);
             primaryStage.setScene(scene);

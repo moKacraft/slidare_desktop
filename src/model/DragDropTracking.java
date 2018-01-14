@@ -2,6 +2,7 @@
 package model;
 
 import com.oracle.deploy.update.Updater;
+import controller.GroupTrackingController;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,9 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ObservableMap;
 import model.KeyListener;
 import org.jnativehook.GlobalScreen;
-import view.DragDropTestFrame;
+import view.DragDropGroupFrame;
 import model.MouseListener;
 import org.jnativehook.NativeHookException;
 import utils.streaming.Settings;
@@ -29,16 +31,17 @@ import view.PopUpRotation;
  */
 public class DragDropTracking 
 {
-    private DragDropTestFrame dragDropFrame;
+    private DragDropGroupFrame dragDropFrame;
     private MouseListener mouseListener;
     private KeyListener keyListener;
-    private  List<DragDropTestFrame> listFrame = new ArrayList<DragDropTestFrame>();
+    private  List<DragDropGroupFrame> listFrame = new ArrayList<DragDropGroupFrame>();
     private boolean PopupEntered = true;
+    private boolean PopupMiniEntered = true;
     public static DragDropTracking dragDropTracking;
     private boolean showPopup = false;
-    private int numberOfContact = 0;
+    private int numberOfGroupContact = 0;
     private boolean createdContacts = false;
-    public  static List<JSONObject> listContacts = new ArrayList<JSONObject>();
+    public  static List<JSONObject> listGroups = new ArrayList<JSONObject>();
     
     private Settings settings = Settings.getTimSettingInstance("tim.properties");
 
@@ -53,13 +56,10 @@ public class DragDropTracking
     
     public DragDropTracking() throws NativeHookException
     {
-        dragDropFrame = new DragDropTestFrame(0);
-        dragDropFrame.setPopUpType(0, 1);
-        dragDropTracking = this;
-        this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
+        System.out.println("kokkoko");
         this.APIManager = (APIManager) ServiceFactory.getAPIManager();
         this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
-        
+        this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
         GlobalScreen.registerNativeHook();
         Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
         logger.setLevel(Level.OFF);
@@ -83,6 +83,10 @@ public class DragDropTracking
         int countValid = 0;
         String tmp = "aze";
         Boolean state = false;
+        dragDropTracking = this;
+        dragDropFrame = new DragDropGroupFrame(0);
+        dragDropFrame.setPopUpType(0);
+        dragDropFrame.setVisible(false);
       while (state == false && tmp != "")
         {
             String strKeyName = "key" + String.valueOf(cnt);
@@ -144,20 +148,51 @@ public class DragDropTracking
         //System.out.println("987");
         APIManager manager = (APIManager) ServiceFactory.getAPIManager();
 //     System.out.println(this.cfg.getConfig().getToken());
-        manager.userContacts(this.cfg.getConfig().getToken());
-
+       // manager.userContacts(this.cfg.getConfig().getToken());
+        manager.fetchGroups(this.cfg.getConfig().getToken());
+        //manager.userContact(token, id)
+        //manager.us
+        //this.packageManager.
         this.packageManager.setJSONObject(this.APIManager.getLastResponse());
-        JSONObject contacts = this.packageManager.getJSONOBject();
-        JSONArray arr = (JSONArray) contacts.get("contacts");
-        if (arr == null) {
+        JSONObject groups = this.packageManager.getJSONOBject();
+        JSONArray arr = (JSONArray) groups.get("groups");
+        
+        
+        //manager.fetchGroups(this.cfg.getConfig().getToken());
+        //manager.userContact(token, id)
+        //manager.us
+        //this.packageManager.
+        //this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+        //JSONObject groups = this.packageManager.getJSONOBject();
+        //JSONArray arr = (JSONArray) groups.get("groups");
+       // JSONArray users = (JSONArray) groups.get("users");
+        if (arr == null) 
+        {
+            System.out.println("rrr");
             return;
         }
-
-        if (createdContacts  == false) {
+//Replace By group contact
+        if (createdContacts  == false) 
+        {
+            /*ObservableMap<String, Group> pair = TrackingServiceStub.TSS.getGroups();
+           // TrackingServiceStub.TSS.get
+             for (Group s : pair.values()) 
+             {
+                 System.out.println(s.getName());
+                 System.out.println("value= " + s.getUsers());
+                CreatGroupContactPopup(s.getName(), (List<String>)((JSONObject)s.getUsers()));
+               }*/
+             //pair.values().
+            //TrackingServiceStub.
             for (int i = 0;i < arr.size() ; i++) {
+                System.out.println("pp");
                 ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
-                listContacts.add(((JSONObject) arr.get(i)));
-                CreatGroupContactPopup((String)((JSONObject) arr.get(i)).get("first_name"), (i/5) + 2);
+               if ( (List<String>)((JSONObject) arr.get(i)).get("users") != null)
+               {
+                listGroups.add(((JSONObject) arr.get(i)));
+                CreatGroupContactPopup((String)((JSONObject) arr.get(i)).get("name"), (List<String>)((JSONObject) arr.get(i)).get("users"));
+               // List<String> strs =  (List<String>)((JSONObject) arr.get(i)).get("users");
+               }
             }
             createdContacts = true;
         }
@@ -172,33 +207,42 @@ public class DragDropTracking
         down.setVisible(false);
     }
     
-    public void CreatGroupContactPopup(String name, int width)
+    public void CreatGroupContactPopup(String name, List<String> strs)
     {
-        DragDropTestFrame tmp;
+        DragDropGroupFrame tmp;
        // dragDropFrame.setPopUpType(0, 1);
-        listFrame.add(tmp = new DragDropTestFrame(1));
+        listFrame.add(tmp = new DragDropGroupFrame(1));
         tmp.setMessage(name);
-        tmp.setPopUpType(1, width);
+        //tmp
+        tmp.setPopUpType(1);
         tmp.setVisible(false);
-        ++numberOfContact;
-        tmp.setNumberOfContact(numberOfContact);
+        ++numberOfGroupContact;
+         if (strs != null)
+                for (int inc = 0; inc < strs.size() ; inc++)
+                {
+                   System.out.println("**: " + strs.get(inc));
+                   tmp.setPeopleInGroup(strs.get(inc));
+                
+                }
+        tmp.setDragDropBoundaries();       
+        tmp.setNumberOfContact(numberOfGroupContact);
         PopupEntered = true;
+       
     }
     
     public void ShowGroupMiniPopUp()
     {
         if (PopupEntered == true) 
         {
+            // PopupMiniEntered = true;
             System.out.println("787878");
             int cnt = 0;
-            while (cnt < numberOfContact) 
+            while (cnt < numberOfGroupContact) 
             {
                 System.out.println("7****");
                 listFrame.get(cnt).visible(true);
-                
                 listFrame.get(cnt).determineStateOfVisibility();
-                
-                showPopup = false;
+                //showPopup = false;
                 ++cnt;
             }
             PopupEntered = false;
@@ -207,13 +251,24 @@ public class DragDropTracking
     
     public void ShowMiniPopUp(int cnt)
     {
-        if (PopupEntered == true) 
+        if (PopupMiniEntered == true) 
         {
+            System.out.println("lmlml:" + cnt);
             HideGroupMiniPopUp();
+            listFrame.get(cnt).SetContactsPosition();
             listFrame.get(cnt).visible(true);
-            ++cnt;
-            PopupEntered = false;
+            //listFrame.get(cnt).SetContactsPosition();
+            PopupMiniEntered = false;
         }
+    }
+     
+    public void HideMiniPopUp(int cnt)
+    {
+            PopupMiniEntered = true;
+            listFrame.get(cnt).hideContacts();
+             //showPopup = false;
+        //    ++cnt;
+            
     }
     
     public void HideGroupMiniPopUp()
@@ -221,9 +276,12 @@ public class DragDropTracking
         if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false) {
             PopupEntered = true;
             int cnt = 0;
-            while (cnt < numberOfContact) {
+            System.out.println("fff");
+            while (cnt < numberOfGroupContact) 
+            {
                 listFrame.get(cnt).visible(false);
-                showPopup = false;
+                //HideMiniPopUp(cnt);
+                //showPopup = false;
                 ++cnt;
             }
         }

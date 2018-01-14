@@ -16,7 +16,6 @@ public interface TrackingService
     public ObservableList<String> getAccountMenu();
     public ContactsBusiness getContactsBusiness();
     
-	public ContactsBusiness getContactsBusiness();
 	
     public Account getAccount();
     public void saveAccount(Account accountEdited);

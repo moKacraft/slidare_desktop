@@ -36,12 +36,16 @@ public class MyDragDropListener implements DropTargetListener
 {
  
     public Boolean MainPopUp = false;
-    public static Boolean ActivatePopUps = false;
+    public static Boolean ActivateMiniPopUps = false;
+     public static Boolean ActivatePopUps = false;
     public static int valueDragDrop = 0;
     public int concernedDragDrop;
     public int type;
+    public Boolean canDeactivate1 =false;
+  
+    public Boolean canDeactivate2 =false;
     public static int groupType = 0;
-    public int concernedGroupType;
+    public int concernedGroupType = 0;
     // public List<JSONObject> listContacts = new ArrayList<JSONObject>();
     
     public MyDragDropListener(Boolean state, int _type)
@@ -94,7 +98,7 @@ public class MyDragDropListener implements DropTargetListener
                                 System.out.println(f.getName());
                                 System.out.println("File path inside is '" + file + "'.");
                                 String[] users = new String[1];
-                                users[0] =  (String)(DragDropTracking.listContacts.get(concernedDragDrop - 1).get("email"));
+                                users[0] =  (String)(DragDropTracking.listGroups.get(concernedDragDrop - 1).get("email"));
                                 
                                 System.out.println("users[0]" + users[0] + "\nf.getname " + f.getName());
                                 
@@ -166,33 +170,65 @@ public class MyDragDropListener implements DropTargetListener
         System.out.println("wwwwwwwwwwwwwww");
         
         if (type ==0 && ActivatePopUps == false) {
-            System.out.println("ooooooooooooo");
+            System.out.println("heyeheyhey");
             ActivatePopUps = true;
             DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
             //MainView.mainView.ShowMiniPopUp();
         }
-        if (type ==1 && ActivatePopUps == true)
+        if (type == 1 && ActivateMiniPopUps == false)
         {
             System.out.println("ooooooooooooo");
             DragDropTracking.dragDropTracking.ShowMiniPopUp(concernedGroupType);
+            
+            //DragDropTracking.dragDropTracking.
             //MainView.mainView.ShowMiniPopUp();
         }
+         if (type == 2)
+         {
+            System.out.println("cccccccc");
+            ActivateMiniPopUps = true;
+             
+         }
    
     }
     
     @Override
     public void dragExit(DropTargetEvent event)
     {
-        if (concernedDragDrop == 0) {
+        if (type == 0 && concernedDragDrop == 0) 
+        {
+             System.out.println("11111");
             ActivatePopUps = false;
+            //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
         }
+        if (type == 3) 
+        {
+            System.out.println("2222");
+            ActivatePopUps = false;
+            ActivateMiniPopUps = false;
+
+            //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
+            DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
+            DragDropTracking.dragDropTracking.HideMiniPopUp(concernedGroupType);
+          
+        }
+       /* if (ActivatePopUps = false && ActivateMiniPopUps == false)
+        {
+          System.out.println("stopmebytheT");
+          DragDropTracking.dragDropTracking.HideGroupMiniPopUp();  
+        }*/
+         System.out.println("vvvvvvvv");
+         
+        
     }
     
     @Override
     public void dragOver(DropTargetDragEvent event) 
     {
-    }
     
+     
+     
+    }
     @Override
     public void dropActionChanged(DropTargetDragEvent event) 
     {

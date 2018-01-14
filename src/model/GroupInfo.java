@@ -6,7 +6,7 @@
 package model;
 import java.awt.Point;
 import java.util.List;
-import view.DragDropTestFrame;
+import view.DragDropGroupFrame;
 /**
  *
  * @author Timothy
@@ -14,6 +14,6 @@ import view.DragDropTestFrame;
 public class GroupInfo 
 {
     public Point.Double position;
-    public List<DragDropTestFrame> dragDropFrames;
+    public List<DragDropGroupFrame> dragDropFrames;
     public List<Integer> ids;
 }

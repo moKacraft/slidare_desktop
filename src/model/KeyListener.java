@@ -62,7 +62,10 @@ public class KeyListener implements NativeKeyListener
         if (ActiveKeys.size() == TrackingInfo.listKeyName.size())
         {
             //System.out.println("YOLO");
-            DragDropTracking.dragDropTracking.showBubble();         
+            if (DragDropTracking.dragDropTracking == null)
+                System.out.println("yolomotherfucker");
+            DragDropTracking.dragDropTracking.showBubble();
+            //DragDropTracking.dragDropTracking.
         }
     }
 
