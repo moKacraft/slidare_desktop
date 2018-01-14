@@ -108,19 +108,17 @@ public void setPosition(Point.Double p)
 
 public void setPopUpType(int sizex, int sizey)
 {
-   
-      
       this.setBackground(new Color(255, 255,255));
       //this.toFront();
       this.setUndecorated(true);
-      this.setShape(new RoundRectangle2D.Double (10, 10, sizex, sizey, 50, 50));
+      this.setShape(new RoundRectangle2D.Double (-25, -20, sizex, sizey, 50, 50));
       this.setSize(sizex,sizey);
     //this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
    // this.set
      
-    this.setVisible(true);
+    this.setVisible(false);
     this.setAlwaysOnTop(false);
-   // this.setSize(300, 200);
+   // this.setSize(300, 200);E
    //this.setVisible(true);
     }
         

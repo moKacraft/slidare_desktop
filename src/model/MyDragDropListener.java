@@ -204,12 +204,12 @@ public class MyDragDropListener implements DropTargetListener
         if (type == 3) 
         {
             System.out.println("2222");
-            ActivatePopUps = false;
+           ActivatePopUps = false;
             ActivateMiniPopUps = false;
 
             //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
             DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
-            DragDropTracking.dragDropTracking.HideMiniPopUp(concernedGroupType);
+            DragDropTracking.dragDropTracking.HideMiniPopUp();
           
         }
        /* if (ActivatePopUps = false && ActivateMiniPopUps == false)

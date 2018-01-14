@@ -185,7 +185,7 @@ public class DragDropTracking
              //pair.values().
             //TrackingServiceStub.
             for (int i = 0;i < arr.size() ; i++) {
-                System.out.println("pp");
+                //System.out.println("pp");
                 ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
                if ( (List<String>)((JSONObject) arr.get(i)).get("users") != null)
                {
@@ -257,15 +257,24 @@ public class DragDropTracking
             HideGroupMiniPopUp();
             listFrame.get(cnt).SetContactsPosition();
             listFrame.get(cnt).visible(true);
+            listFrame.get(cnt).showBoundaries(true);
             //listFrame.get(cnt).SetContactsPosition();
             PopupMiniEntered = false;
         }
     }
      
-    public void HideMiniPopUp(int cnt)
+    public void HideMiniPopUp()
     {
             PopupMiniEntered = true;
-            listFrame.get(cnt).hideContacts();
+             int cnt = 0;
+            System.out.println("fff");
+            while (cnt < numberOfGroupContact) 
+            {
+                listFrame.get(cnt).hideContacts();
+                 listFrame.get(cnt).showBoundaries(false);
+                ++cnt;
+            }
+            
              //showPopup = false;
         //    ++cnt;
             

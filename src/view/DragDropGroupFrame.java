@@ -97,9 +97,14 @@ circle.setRadius(50.0f); */
 public void visible(Boolean state)
 {
     this.setVisible(state);
-    Boundaries.setVisible(state);
+    //Boundaries.setVisible(state);
     
    
+}
+
+public void showBoundaries(Boolean state)
+{
+     Boundaries.setVisible(state);
 }
 
 public void setMessage(String text)
@@ -137,8 +142,8 @@ public void  setDragDropBoundaries()
 {
    Boundaries = new DragDropBoundaries("");
    
-   Boundaries.setPopUpType(100, 100 + listNames.size() * 100);
-   Boundaries.setLocation((int)position.x, (int) position.y);
+   Boundaries.setPopUpType(200, 140 + listNames.size() * 120);
+   Boundaries.setLocation((int)position.x - 50, (int) position.y -20);
 }
 
 public void SetContactsPosition()
@@ -147,7 +152,7 @@ public void SetContactsPosition()
         {
              listNames.get(inc).setLocation((int)position.x, (int)position.y + 100 * (inc +1));
              listNames.get(inc).visible(true);
-             Boundaries.setLocation((int)position.x, (int) position.y);
+             Boundaries.setLocation((int)position.x -25, (int) position.y -20);
         }
      
 }

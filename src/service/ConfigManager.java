@@ -64,7 +64,7 @@ public class ConfigManager implements iService
      */
     public void loadBase()
     {
-        load(this.getPathFor("config"));
+       // load(this.getPathFor("config"));
     }
     
     /**
