@@ -60,8 +60,9 @@ circle.setRadius(50.0f); */
   
 
     // Create the label
-    myJLabel = new JLabel("Drag something here!", (int) CENTER_ALIGNMENT);
-
+    myJLabel = new JLabel("");
+myJLabel.setVerticalTextPosition(JLabel.CENTER);
+myJLabel.setHorizontalTextPosition(JLabel.LEFT);
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener
     myDragDropListener = new MyDragDropListener(true, 2, name, null);
@@ -97,7 +98,10 @@ public void visible(Boolean state)
 
 public void setMessage(String text)
 {
-    myJLabel.setText(text);
+    text =  text.replace("@", ".");
+    String[] parts = text.split("\\.");
+    parts[0] = "         " + parts[0];
+    myJLabel.setText(parts[0]);
 }
 
 

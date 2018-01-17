@@ -203,17 +203,14 @@ public class MyDragDropListener implements DropTargetListener
     @Override
     public void dragEnter(DropTargetDragEvent event)
     {
-        System.out.println("wwwwwwwwwwwwwww");
-        
+       
         if (type ==0 && ActivatePopUps == false) {
-            System.out.println("heyeheyhey");
             ActivatePopUps = true;
             DragDropTracking.dragDropTracking.ShowGroupMiniPopUp();
             //MainView.mainView.ShowMiniPopUp();
         }
         if (type == 1 && ActivateMiniPopUps == false)
         {
-            System.out.println("ooooooooooooo");
             DragDropTracking.dragDropTracking.ShowMiniPopUp(concernedGroupType);
             
             //DragDropTracking.dragDropTracking.
@@ -221,7 +218,6 @@ public class MyDragDropListener implements DropTargetListener
         }
          if (type == 2)
          {
-            System.out.println("cccccccc");
             ActivateMiniPopUps = true;
              
          }
@@ -237,8 +233,7 @@ public class MyDragDropListener implements DropTargetListener
     {
         if (type == 0 && concernedDragDrop == 0) 
         {
-             System.out.println("11111");
-            ActivatePopUps = false;
+          ActivatePopUps = false;
             //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
         }
         if (type == 2)
@@ -251,8 +246,7 @@ public class MyDragDropListener implements DropTargetListener
         }
         if (type == 3 && leftBoundaries == false) 
         {
-            System.out.println("2222");
-           ActivatePopUps = false;
+            ActivatePopUps = false;
             ActivateMiniPopUps = false;
 
             //DragDropTracking.dragDropTracking.HideGroupMiniPopUp();
@@ -265,7 +259,6 @@ public class MyDragDropListener implements DropTargetListener
           System.out.println("stopmebytheT");
           DragDropTracking.dragDropTracking.HideGroupMiniPopUp();  
         }*/
-         System.out.println("vvvvvvvv");
          
         
     }

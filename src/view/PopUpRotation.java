@@ -35,7 +35,7 @@ public class PopUpRotation extends javax.swing.JFrame
 
 
     // Create the label
-    myJLabel = new JLabel("Drag something here!", (int) CENTER_ALIGNMENT);
+    myJLabel = new JLabel("", (int) CENTER_ALIGNMENT);
 
    // myJLabel.setBackground(new Color(78, 198,233));
     // Create the drag and drop listener

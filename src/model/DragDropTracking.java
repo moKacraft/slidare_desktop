@@ -56,7 +56,6 @@ public class DragDropTracking
     
     public DragDropTracking() throws NativeHookException
     {
-        System.out.println("kokkoko");
         this.APIManager = (APIManager) ServiceFactory.getAPIManager();
         this.cfg = (ConfigManager) ServiceFactory.getConfigManager();
         this.packageManager = (PackageManager) ServiceFactory.getPackageManager();
@@ -166,7 +165,6 @@ public class DragDropTracking
        // JSONArray users = (JSONArray) groups.get("users");
         if (arr == null) 
         {
-            System.out.println("rrr");
             return;
         }
 //Replace By group contact
@@ -233,11 +231,9 @@ public class DragDropTracking
         if (PopupEntered == true) 
         {
             // PopupMiniEntered = true;
-            System.out.println("787878");
             int cnt = 0;
             while (cnt < numberOfGroupContact) 
             {
-                System.out.println("7****");
                 listFrame.get(cnt).visible(true);
                 listFrame.get(cnt).determineStateOfVisibility();
                 //showPopup = false;
@@ -251,7 +247,6 @@ public class DragDropTracking
     {
         if (PopupMiniEntered == true) 
         {
-            System.out.println("lmlml:" + cnt);
             HideGroupMiniPopUp();
             listFrame.get(cnt).SetContactsPosition();
             listFrame.get(cnt).visible(true);
@@ -265,8 +260,7 @@ public class DragDropTracking
     {
             PopupMiniEntered = true;
              int cnt = 0;
-            System.out.println("fff");
-            while (cnt < numberOfGroupContact) 
+           while (cnt < numberOfGroupContact) 
             {
                 listFrame.get(cnt).hideContacts();
                  listFrame.get(cnt).showBoundaries(false);
@@ -283,8 +277,7 @@ public class DragDropTracking
         if (PopupEntered == false && listFrame != null && listFrame.isEmpty() == false) {
             PopupEntered = true;
             int cnt = 0;
-            System.out.println("fff");
-            while (cnt < numberOfGroupContact) 
+           while (cnt < numberOfGroupContact) 
             {
                 listFrame.get(cnt).visible(false);
                 //HideMiniPopUp(cnt);
