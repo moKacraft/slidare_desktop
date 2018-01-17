@@ -111,7 +111,7 @@ public void setPopUpType(int sizex, int sizey)
      
       //this.toFront();
       this.setUndecorated(true);
-       this.setBackground(new Color(255, 255,255, 50));
+      this.setBackground(new Color(255, 255,255, 50));
       this.setShape(new RoundRectangle2D.Double (-25, -20, sizex, sizey, 50, 50));
       this.setSize(sizex,sizey);
     //this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
