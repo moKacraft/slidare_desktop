@@ -83,7 +83,7 @@ circle.setRadius(50.0f); */
     
    // // Add the label to the content
     this.getContentPane().add(BorderLayout.CENTER, myJLabel);
-    this.getContentPane().setBackground(new Color(255, 255,255));
+    this.getContentPane().setBackground(new Color(255, 255,255, 0));
     // Show the frame
     this.setVisible(false);
 }
@@ -108,9 +108,10 @@ public void setPosition(Point.Double p)
 
 public void setPopUpType(int sizex, int sizey)
 {
-      this.setBackground(new Color(255, 255,255));
+     
       //this.toFront();
       this.setUndecorated(true);
+       this.setBackground(new Color(255, 255,255, 50));
       this.setShape(new RoundRectangle2D.Double (-25, -20, sizex, sizey, 50, 50));
       this.setSize(sizex,sizey);
     //this.setShape(new Ellipse2D.Double(0,0,getWidth(),getHeight()));
