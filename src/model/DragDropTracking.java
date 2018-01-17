@@ -44,7 +44,7 @@ public class DragDropTracking
     public  static List<JSONObject> listGroups = new ArrayList<JSONObject>();
     
     private Settings settings = Settings.getTimSettingInstance("tim.properties");
-
+    private  List<String> listAddresses;    
     private PackageManager packageManager;
     private APIManager APIManager;
     private ConfigManager cfg;
@@ -82,6 +82,7 @@ public class DragDropTracking
         int countValid = 0;
         String tmp = "aze";
         Boolean state = false;
+        listAddresses = new ArrayList<String>();
         dragDropTracking = this;
         dragDropFrame = new DragDropGroupFrame(0);
         dragDropFrame.setPopUpType(0);
@@ -155,6 +156,12 @@ public class DragDropTracking
         JSONArray arr = (JSONArray) groups.get("groups");
         
         
+        manager.userContacts(this.cfg.getConfig().getToken());
+        this.packageManager.setJSONObject(this.APIManager.getLastResponse());
+        JSONObject users = this.packageManager.getJSONOBject();
+        System.out.println(users);
+        JSONArray arrContact = (JSONArray) users.get("contacts");
+        //JSONArray Contact = (JSONArray) arrContact.get("email");
         //manager.fetchGroups(this.cfg.getConfig().getToken());
         //manager.userContact(token, id)
         //manager.us
@@ -167,6 +174,7 @@ public class DragDropTracking
         {
             return;
         }
+        Boolean state = false;
 //Replace By group contact
         if (createdContacts  == false) 
         {
@@ -185,11 +193,18 @@ public class DragDropTracking
                 ///      System.out.println((String)((JSONObject) arr.get(i)).get("first_name"));
                if ( (List<String>)((JSONObject) arr.get(i)).get("users") != null)
                {
-                listGroups.add(((JSONObject) arr.get(i)));
+                   state = true;
+                //listGroups.add(((JSONObject) arr.get(i)));
                 CreatGroupContactPopup((String)((JSONObject) arr.get(i)).get("name"), (List<String>)((JSONObject) arr.get(i)).get("users"));
                // List<String> strs =  (List<String>)((JSONObject) arr.get(i)).get("users");
                }
             }
+              for (int i = 0;i < arrContact.size() ; i++) 
+                {
+                    listAddresses.add((String)((JSONObject) arrContact.get(i)).get("email"));
+                  //  listGroups. add("Default");
+              }
+            CreatGroupContactPopup("default", listAddresses);   
             createdContacts = true;
         }
     }
