@@ -165,15 +165,13 @@ public  Point.Double rotation(Point.Double p, double theta) {
    /* if (currentAngle < 0)
         currentAngle = (currentAngle + 360) % 360; */
 
-    System.out.println("currentAngle:" + currentAngle);
-    Double x = p.x;
+     Double x = p.x;
     Double y = p.y;
     Double cx = 102.5;
     Double cy = 102.5;
     Double xrot = Math.cos(theta) * (x-cx) - Math.sin(theta) * (y - cy) + cx;
     Double yrot = Math.sin(theta) * (x-cx) + Math.cos(theta) * (y-cy) + cy;
     p  = new Point.Double(xrot, yrot);
-    System.out.println("Point:" + p);
     return (p);
 }
 

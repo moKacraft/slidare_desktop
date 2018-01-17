@@ -114,9 +114,9 @@ public class DragDropTracking
         //System.out.println("x: " +  rotationValue);
       
         if (type == 0)
-            rotationValue = -0.006;
+            rotationValue = -0.02;
          if (type == 1)
-            rotationValue = 0.006;
+            rotationValue = 0.02;
         System.out.println("x: " +  rotationValue);
         
        for (int i = 0; i < listFrame.size(); i++)
